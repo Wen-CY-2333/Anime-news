@@ -1,0 +1,54 @@
+# Compiled output
+target/
+build/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Configuration files
+application-local.properties
+application-dev.properties
+application-test.properties
+
+# Database files
+myH2.mv.db
+myH2.trace.db
+
+# Maven files
+*.jar
+*.war
+*.ear
+.mvn/
+
+# Gradle files (if applicable)
+.gradle/
+gradle-wrapper.jar
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Testing
+*.xml.versionsBackup
+
+# Misc
+*.class
+*.bak
+*.orig

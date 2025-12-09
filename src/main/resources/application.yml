@@ -1,0 +1,27 @@
+#web服务配置
+server:
+  port: 3399 #端口号为3399
+
+#spring配置
+spring:
+  h2: # h2数据库
+    console: # 管理平台
+      path: /h2
+      enabled: true
+  datasource: # 数据库链接
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./myH2
+    username: root
+    password: root
+    druid: # 数据库链接池
+      stat-view-servlet: # 管理平台
+        login-username: root
+        login-password: root
+  jpa: # jpa
+    show-sql: true # 显示sql
+    hibernate:
+      ddl-auto: update # 自动创建表
+  devtools:
+    restart:
+      exclude: public/**
+
