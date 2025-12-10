@@ -8,33 +8,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.anime_news.dao.NewsDao;
 import com.example.anime_news.pojo.News;
+import com.example.anime_news.service.NewsService;
 
 @Controller
-public class IndexController {
+public class NewsController {
     @Autowired
-    private NewsDao newsDao;
+    private NewsService newsService;
 
     // 新增新闻
     @RequestMapping("/add/model")
     @ResponseBody
     public News addByModel(@ModelAttribute("news") News news) {
-        return newsDao.save(news);
+        return newsService.save(news);
     }
 
     // 删除新闻
     @RequestMapping("/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable Long id) {
-        newsDao.deleteById(id);
+        newsService.deleteById(id);
     }
 
     // 查询所有新闻
     @RequestMapping("/list")
     public ModelAndView newsList() {
         ModelAndView modelAndView = new ModelAndView("list");
-        modelAndView.addObject("newsList", newsDao.findAll());
+        modelAndView.addObject("newsList", newsService.findAll());
         return modelAndView;
     }
 
