@@ -21,8 +21,11 @@ $(document).ready(function () {
                 $('form')[0].reset();
                 // 刷新表格
                 refreshNewsTable();
+                setTimeout(function () {
+                    alert('添加成功');
+                }, 100);// 添加延时，添加并刷新后显示成功提示
             },
-            error: function (xhr, status, error) {
+            error: function (error) {
                 console.error('Error adding news:', error);
             }
         });
@@ -42,7 +45,7 @@ function refreshNewsTable() {
             // 更新当前页面的表格
             $('#news-table-container').html(tableHtml);
         },
-        error: function (xhr, status, error) {
+        error: function (error) {
             console.error('Error refreshing table:', error);
         }
     });
@@ -50,11 +53,11 @@ function refreshNewsTable() {
 
 // 删除新闻
 function deleteNews(id) {
-    $.post('/delete/' + id, function (data) {
+    $.post('/delete/' + id, function () {
         // 删除成功后刷新表格
         refreshNewsTable();
         setTimeout(function () {
             alert('删除成功');
-        }, 500);// 添加延时，删除并刷新后显示成功提示
+        }, 100);// 添加延时，删除并刷新后显示成功提示
     });
 }
