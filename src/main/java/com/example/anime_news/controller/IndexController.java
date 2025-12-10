@@ -3,6 +3,7 @@ package com.example.anime_news.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,13 @@ public class IndexController {
     @ResponseBody
     public News addByModel(@ModelAttribute("news") News news) {
         return newsDao.save(news);
+    }
+
+    // 删除新闻
+    @RequestMapping("/delete/{id}")
+    @ResponseBody
+    public void delete(@PathVariable Long id) {
+        newsDao.deleteById(id);
     }
 
     // 查询所有新闻
