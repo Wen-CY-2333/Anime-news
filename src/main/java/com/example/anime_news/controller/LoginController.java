@@ -33,7 +33,7 @@ public class LoginController {
     
     //注册
     @RequestMapping("/doregister")
-    public String doregister(String username, String password) {
+    public String doregister(String username, String password, String avatar) {
 
         //检查用户名是否已存在
         User existingUser = userService.findTopByName(username);
@@ -45,6 +45,7 @@ public class LoginController {
         User user = new User();
         user.setName(username);
         user.setPassword(password);
+        user.setAvatar(avatar);
         userService.save(user);
         
         // 注册成功后自动登录

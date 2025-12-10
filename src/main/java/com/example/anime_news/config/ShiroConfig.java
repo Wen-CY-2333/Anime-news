@@ -22,6 +22,8 @@ public class ShiroConfig {
         cd.addPathDefinition("/dologin", "anon");
         cd.addPathDefinition("/doregister", "anon");
         cd.addPathDefinition("/h2/**", "anon");
+        cd.addPathDefinition("/css/**", "anon");
+        cd.addPathDefinition("/js/**", "anon");
         cd.addPathDefinition("/logout", "logout");
         cd.addPathDefinition("/**", "authc");
         return cd;

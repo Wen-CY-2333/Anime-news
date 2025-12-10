@@ -1,5 +1,7 @@
 package com.example.anime_news.controller;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.anime_news.pojo.News;
+import com.example.anime_news.pojo.User;
 import com.example.anime_news.service.NewsService;
+
 
 @Controller
 public class NewsController {
@@ -35,7 +39,13 @@ public class NewsController {
     public ModelAndView newsList() {
         ModelAndView modelAndView = new ModelAndView("list");
         modelAndView.addObject("newsList", newsService.findAll());
+        // 获取当前用户头像与用户名
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getPrincipal();
+        modelAndView.addObject("avatar", user.getAvatar());
+        modelAndView.addObject("username", user.getName());
+        modelAndView.addObject("newsList", newsService.findAll());
+
         return modelAndView;
     }
-
 }

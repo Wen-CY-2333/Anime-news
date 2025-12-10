@@ -25,4 +25,6 @@ public class User {
     private String name;
     @ApiModelProperty("密码")
     private String password;
+    @ApiModelProperty("头像")
+    private String avatar;
 }
