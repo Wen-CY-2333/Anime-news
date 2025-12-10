@@ -25,3 +25,9 @@ spring:
     restart:
       exclude: public/**
 
+
+shiro:
+  loginUrl: /login
+  successUrl: /list
+  unauthorizedUrl: /login
+
