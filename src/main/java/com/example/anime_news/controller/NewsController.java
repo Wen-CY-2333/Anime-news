@@ -1,5 +1,6 @@
 package com.example.anime_news.controller;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +35,7 @@ public class NewsController {
 
     // 查询所有新闻并获取当前用户名和头像
     @RequestMapping("/list")
+    @RequiresRoles("admin")
     public ModelAndView newsList() {
         ModelAndView mv = new ModelAndView("list");
         mv.addObject("newsList", newsService.findAll());

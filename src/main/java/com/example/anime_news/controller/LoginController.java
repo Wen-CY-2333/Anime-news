@@ -45,6 +45,7 @@ public class LoginController {
         user.setName(username);
         user.setPassword(password);
         user.setAvatar(avatar);
+        user.setRole("user");
         userService.save(user);
         
         // 注册成功后自动登录

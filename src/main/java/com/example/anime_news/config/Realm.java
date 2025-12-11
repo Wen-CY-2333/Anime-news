@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import com.example.anime_news.dao.UserDao;
@@ -20,9 +21,13 @@ public class Realm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doGetAuthorizationInfo'");
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        User user = (User) principals.getPrimaryPrincipal();
+        if (user != null && user.getRole() != null) {
+            authorizationInfo.addRole(user.getRole());
+        }
+        return authorizationInfo;
     }
 
     @Override
