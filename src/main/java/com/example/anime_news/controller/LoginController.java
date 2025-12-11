@@ -24,7 +24,7 @@ public class LoginController {
     public String dologin(String username, String password) {
         try {
             SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password));
-            return "redirect:/list";
+            return "redirect:/";
         } catch (Exception e) {
             return "redirect:/login";
         }

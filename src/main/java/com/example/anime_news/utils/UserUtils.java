@@ -12,4 +12,10 @@ public class UserUtils {
         Subject subject = SecurityUtils.getSubject();
         return (User) subject.getPrincipal();
     }
+    
+    //检查当前用户是否为管理员
+    public static boolean isAdmin() {
+        User user = getCurrentUser();
+        return user != null && "admin".equals(user.getRole());
+    }
 }

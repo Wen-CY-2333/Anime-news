@@ -3,12 +3,19 @@ $(document).ready(function () {
     $('form').submit(function (e) {
         e.preventDefault(); // 阻止默认提交行为
 
+        //获取当前时间
+        var currentTime = new Date().getTime();
+
         // 获取表单数据
         var formData = {
             url: $('#url').val(),
             title: $('#title').val(),
-            image: $('#image').val()
+            image: $('#image').val(),
+            tags: $('#tags').val(),
+            content: $('#content').val(),
+            time: currentTime
         };
+        
         // 发送AJAX请求
         $.ajax({
             type: 'POST',

@@ -22,14 +22,19 @@ public class ShiroConfig {
     @Bean
     public ShiroFilterChainDefinition filter() { 
         DefaultShiroFilterChainDefinition cd = new DefaultShiroFilterChainDefinition();
+        cd.addPathDefinition("/", "anon"); // 允许根路径匿名访问
         cd.addPathDefinition("/login", "anon");
         cd.addPathDefinition("/dologin", "anon");
         cd.addPathDefinition("/doregister", "anon");
         cd.addPathDefinition("/h2/**", "anon");
         cd.addPathDefinition("/css/**", "anon");
         cd.addPathDefinition("/js/**", "anon");
+        cd.addPathDefinition("/img/**", "anon");
         cd.addPathDefinition("/logout", "logout");
-        cd.addPathDefinition("/**", "authc");
+        cd.addPathDefinition("/list", "authc");
+        cd.addPathDefinition("/add", "authc");
+        cd.addPathDefinition("/add/**", "authc");
+        cd.addPathDefinition("/delete/**", "authc");
         return cd;
     }
     

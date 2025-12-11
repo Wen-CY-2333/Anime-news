@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.anime_news.pojo.News;
+import com.example.anime_news.pojo.User;
 import com.example.anime_news.service.NewsService;
 import com.example.anime_news.utils.UserUtils;
 
@@ -51,6 +52,29 @@ public class NewsController {
         ModelAndView mv = new ModelAndView("add");
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        return mv;
+    }
+
+    // 首页
+    @RequestMapping("/")
+    public ModelAndView index() {
+        ModelAndView mv = new ModelAndView("index");
+        mv.addObject("newsList", newsService.findAll());
+        
+        // 检查用户是否已登录
+        User currentUser = UserUtils.getCurrentUser();
+        if (currentUser != null) {
+            mv.addObject("userName", currentUser.getName());
+            mv.addObject("avatar", currentUser.getAvatar());
+            mv.addObject("isAdmin", UserUtils.isAdmin());
+            mv.addObject("isLogin", true);
+        } else {
+            mv.addObject("userName", "游客");
+            mv.addObject("avatar", "/img/avatar.jpg");
+            mv.addObject("isAdmin", false);
+            mv.addObject("isLogin", false);
+        }
+        
         return mv;
     }
 }
