@@ -33,12 +33,22 @@ public class NewsController {
         newsService.deleteById(id);
     }
 
-    // 查询所有新闻并获取当前用户名和头像
+    // 新闻列表页面
     @RequestMapping("/list")
     @RequiresRoles("admin")
     public ModelAndView newsList() {
         ModelAndView mv = new ModelAndView("list");
         mv.addObject("newsList", newsService.findAll());
+        mv.addObject("userName", UserUtils.getCurrentUser().getName());
+        mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        return mv;
+    }
+    
+    // 新增新闻页面
+    @RequestMapping("/add")
+    @RequiresRoles("admin")
+    public ModelAndView add() {
+        ModelAndView mv = new ModelAndView("add");
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
         return mv;
