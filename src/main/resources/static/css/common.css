@@ -1,0 +1,12 @@
+/** 鼠标样式 开始**/
+/** 普通指针样式**/
+body {
+    cursor: url(https://img.alicdn.com/imgextra/i4/3037771681/TB2LdUrj9tkpuFjy0FhXXXQzFXa_!!3037771681.png), default;
+}
+
+/** 链接指针样式**/
+a:hover {
+    cursor: url(https://img.alicdn.com/imgextra/i4/3037771681/TB2paoVj3JlpuFjSspjXXcT.pXa_!!3037771681.png), pointer;
+}
+
+/** 鼠标样式 结束**/
