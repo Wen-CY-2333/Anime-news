@@ -11,11 +11,39 @@
     <!-- 仿知乎背景组件 -->
     <link rel="stylesheet" type="text/css" href="/css/zhihu-background.css">
     <script type="text/javascript" src="/js/zhihu-background.js"></script>
+    <!-- 看板娘组件 -->
+    <link rel="stylesheet" type="text/css" href="/live2d/css/live2d.css">
+    <script src="/live2d/js/jquery-ui.min.js"></script>
+    <script src="/live2d/js/live2d.js"></script>
+    <!-- 音乐组件 -->
+    <link rel="stylesheet" href="/bg-music/bg-music.css" />
+    <script src="/bg-music/bg-music.js"></script>
 </head>
 
 <body>
     <!-- canvas-仿知乎背景 -->
     <canvas id="canvas"></canvas>
+
+    <!-- live2d看板娘-start -->
+    <div id="landlord">
+        <div class="message"></div>
+        <canvas id="live2d" width="340" height="850" class="live2d"></canvas>
+        <!-- 630 -->
+        <div class="hide-button">隐藏</div>
+        <div class="switch-button">切换</div>
+    </div>
+
+    <script src="/live2d/js/message.js"></script>
+    <script src="/live2d/js/start.js"></script>
+    <!-- live2d看板娘-end -->
+
+    <!-- 音频元素 -->
+    <audio id="bg-music" loop>
+        <source src="/bg-music/bg-music.flac" type="audio/flac">
+    </audio>
+
+    <!-- 专辑封面 -->
+    <div class="album-cover" id="album-cover"></div>
 
     <div class="container">
         <!-- 导航菜单 -->
