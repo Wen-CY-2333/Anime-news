@@ -11,7 +11,7 @@ $(document).ready(function () {
             url: $('#url').val(),
             title: $('#title').val(),
             image: $('#image').val(),
-            tags: $('#tags').val(),
+            tag: $('#tag').val(),
             content: $('#content').val(),
             time: currentTime
         };

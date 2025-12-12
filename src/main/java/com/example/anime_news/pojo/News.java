@@ -36,8 +36,8 @@ public class News {
     private String image;
     @ApiModelProperty(value = "创建修改时间", example = "1")
     private Long time;
-    @ApiModelProperty("标签组")
-    private String tags;
+    @ApiModelProperty("标签")
+    private String tag;
     @ApiModelProperty("新闻简介")
     private String content;
 }
