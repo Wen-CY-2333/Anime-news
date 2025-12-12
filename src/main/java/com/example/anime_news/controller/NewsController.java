@@ -23,7 +23,14 @@ public class NewsController {
     // 新增新闻
     @RequestMapping("/add/model")
     @ResponseBody
-    public News addByModel(@ModelAttribute("news") News news) {
+    public News addByModel(@ModelAttribute News news) {
+        return newsService.save(news);
+    }
+
+    // 更新新闻
+    @RequestMapping("/edit/model")
+    @ResponseBody
+    public News editByModel(@ModelAttribute News news) {
         return newsService.save(news);
     }
 
@@ -32,6 +39,21 @@ public class NewsController {
     @ResponseBody
     public void delete(@PathVariable Long id) {
         newsService.deleteById(id);
+    }
+
+    // 编辑新闻页面
+    @RequestMapping("/edit/{id}")
+    @RequiresRoles("admin")
+    public ModelAndView edit(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("edit");
+        News news = newsService.findAll().stream()
+                .filter(n -> n.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("新闻不存在"));
+        mv.addObject("news", news);
+        mv.addObject("userName", UserUtils.getCurrentUser().getName());
+        mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        return mv;
     }
 
     // 新闻列表页面
