@@ -131,9 +131,9 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="#" class="text-dark text-decoration-none">tag</a>
-                                <span class="badge bg-primary rounded-pill">cnt</span>
+                            <li class="list-group-item d-flex justify-content-between align-items-center" th:each="entry : ${tagCountMap}">
+                                <a href="#" class="text-dark text-decoration-none" th:text="${entry.key}">tag</a>
+                                <span class="badge bg-primary rounded-pill" th:text="${entry.value}">cnt</span>
                             </li>
                         </ul>
                     </div>

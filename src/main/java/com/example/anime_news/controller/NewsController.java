@@ -82,6 +82,7 @@ public class NewsController {
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView("index");
         mv.addObject("newsList", newsService.findAll());
+        mv.addObject("tagCountMap", newsService.countTags());
         
         // 检查用户是否已登录
         User currentUser = UserUtils.getCurrentUser();
