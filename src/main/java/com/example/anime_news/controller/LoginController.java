@@ -24,7 +24,7 @@ public class LoginController {
     public String dologin(String username, String password) {
         try {
             SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password));
-            return "redirect:/";
+            return "redirect:/home";
         } catch (Exception e) {
             return "redirect:/login";
         }
@@ -51,7 +51,7 @@ public class LoginController {
         // 注册成功后自动登录
         try {
             SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password));
-            return "redirect:/list";
+            return "redirect:/home";
         } catch (Exception e) {
             return "redirect:/login";
         }

@@ -29,6 +29,6 @@ spring:
 
 shiro:
   loginUrl: /login
-  successUrl: /
+  successUrl: /home
   unauthorizedUrl: /login
 
