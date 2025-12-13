@@ -57,12 +57,5 @@ public class LoginController {
         }
     }
 
-    //登出
-    @RequestMapping("/logout")
-    public String logout() {
-        SecurityUtils.getSubject().logout();
-        return "redirect:/login";
-    }
-
 }
 
