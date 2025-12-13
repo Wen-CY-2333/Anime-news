@@ -2,6 +2,7 @@ package com.example.anime_news.service;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,20 @@ import com.example.anime_news.pojo.User;
 public class UserService {
     @Autowired
     private UserDao userDao;
+    
+    // 初始化管理员账号
+    @PostConstruct // 应用启动时执行
+    public void initAdmin() {
+        User haveAdmin = userDao.findTopByName("admin");
+        if (haveAdmin == null) {
+            User admin = new User();
+            admin.setName("miku");
+            admin.setPassword("39");
+            admin.setAvatar("/img/avatar.jpg");
+            admin.setRole("admin");
+            userDao.save(admin);
+        }
+    }
 
     public User save(User user) {
         return userDao.save(user);
@@ -29,5 +44,4 @@ public class UserService {
         return userDao.findTopByName(name);
     }
 
-    
 }
