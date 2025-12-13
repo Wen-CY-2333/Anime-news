@@ -30,6 +30,7 @@ public class ShiroConfig {
         cd.addPathDefinition("/css/**", "anon");
         cd.addPathDefinition("/js/**", "anon");
         cd.addPathDefinition("/img/**", "anon");
+        cd.addPathDefinition("/canvas-nest/**", "anon");
         cd.addPathDefinition("/logout", "logout");
         cd.addPathDefinition("/**", "authc");
         return cd;
