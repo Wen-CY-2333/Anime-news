@@ -13,6 +13,9 @@ public class NewsService {
     @Autowired
     private NewsDao newsDao;
 
+    @Autowired
+    private LikeService likeService;
+    
     public News save(News news) {
         return newsDao.save(news);
     }
@@ -22,6 +25,21 @@ public class NewsService {
     }
 
     public List<News> findAll() {
-        return newsDao.findAll();
+        List<News> newsList = newsDao.findAll();
+        for (News news : newsList){
+            long likeCount = likeService.getLikeCount(news.getId());
+            news.setLikeCount((int) likeCount);
+        }
+        return newsList;
     }
+    public News findById(Long id) {
+        News news = newsDao.findById(id).orElse(null);
+        if (news != null) {
+            long likeCount = likeService.getLikeCount(news.getId());
+            news.setLikeCount((int) likeCount);
+        }
+        return news;
+    }
+
+
 }

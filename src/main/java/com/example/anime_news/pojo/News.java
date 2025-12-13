@@ -40,4 +40,6 @@ public class News {
     private String tag;
     @ApiModelProperty("新闻简介")
     private String content;
+    @ApiModelProperty("点赞数")
+    private Integer likeCount = 0;
 }
