@@ -4,7 +4,11 @@ $(document).ready(function () {
         e.preventDefault(); // 阻止默认提交行为
 
         //获取当前时间
-        var currentTime = new Date().getTime();
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        var currentTime = year + '-' + month + '-' + day;
 
         // 获取表单数据
         var formData = {
