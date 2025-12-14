@@ -9,15 +9,15 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import com.example.anime_news.dao.UserDao;
 import com.example.anime_news.pojo.User;
+import com.example.anime_news.service.UserService;
 
 public class Realm extends AuthorizingRealm {
 
-    private UserDao userDao;
+    private UserService userService;
 
-    public Realm(UserDao userDao) {
-        this.userDao = userDao;
+    public Realm(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Realm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0) throws AuthenticationException {
         String name = ((UsernamePasswordToken) arg0).getUsername();
-        User user = userDao.findTopByName(name);
+        User user = userService.findTopByName(name);
         if (user == null) {
             throw new AuthenticationException("用户不存在");
         }
