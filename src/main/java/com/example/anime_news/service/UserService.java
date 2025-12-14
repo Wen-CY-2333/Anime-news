@@ -17,7 +17,7 @@ public class UserService {
     // 初始化管理员账号
     @PostConstruct // 应用启动时执行
     public void initAdmin() {
-        User haveAdmin = userDao.findTopByName("admin");
+        User haveAdmin = userDao.findTopByRole("admin");
         if (haveAdmin == null) {
             User admin = new User();
             admin.setName("miku");

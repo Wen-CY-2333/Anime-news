@@ -9,4 +9,6 @@ import com.example.anime_news.pojo.User;
 @Repository
 public interface UserDao extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     User findTopByName(String name);
+
+    User findTopByRole(String role);
 }
