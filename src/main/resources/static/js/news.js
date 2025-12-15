@@ -43,8 +43,8 @@ $(document).ready(function() {
             success: function(response) {
                 // 关闭模态框
                 $('#editNewsModal').modal('hide');
-                // 刷新表格
-                refreshUserTable();
+                // 刷新页面
+                window.location.reload();
             },
             error: function(error) {
                 console.error('编辑新闻失败:', error);
@@ -91,8 +91,8 @@ $(document).ready(function() {
             success: function(response) {
                 // 关闭模态框
                 $('#addNewsModal').modal('hide');
-                // 刷新表格
-                refreshUserTable();
+                // 刷新页面
+                window.location.reload();
             },
             error: function(error) {
                 console.error('发布新闻失败:', error);
@@ -100,20 +100,3 @@ $(document).ready(function() {
         });
     });
 });
-
-// 刷新表格
-function refreshUserTable() {
-    $.ajax({
-        type: 'GET',
-        url: '/news',
-        success: function (response) {
-            // 从响应中提取表格内容
-            var tableHtml = $(response).find('table').html();
-            // 更新当前页面的表格
-            $('table').html(tableHtml);
-        },
-        error: function (error) {
-            console.error('刷新表格失败:', error);
-        }
-    });
-}
