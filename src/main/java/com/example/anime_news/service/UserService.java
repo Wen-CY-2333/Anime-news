@@ -44,4 +44,8 @@ public class UserService {
         return userDao.findTopByName(name);
     }
 
+    public User findById(Long id) {
+        return userDao.findById(id).orElse(null);
+    }
+
 }

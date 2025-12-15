@@ -22,6 +22,14 @@ public class NewsService {
     public void deleteById(Long id) {
         newsDao.deleteById(id);
     }
+    
+    public void deleteAll() {
+        newsDao.deleteAll();
+    }
+
+    public News findByTitle(String title) {
+        return newsDao.findByTitle(title);
+    }
 
     public List<News> findAll() {
         return newsDao.findAll();
@@ -40,5 +48,9 @@ public class NewsService {
         }
         
         return tagCountMap;
+    }
+
+    public News findById(Long id) {
+        return newsDao.findById(id).orElse(null);
     }
 }

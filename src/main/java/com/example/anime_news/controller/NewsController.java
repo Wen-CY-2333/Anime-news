@@ -20,15 +20,17 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
     
-    // 新增新闻
-    @RequestMapping("/add/model")
+    // 添加新闻
+    @RequestMapping("/add")
+    @RequiresRoles("admin")
     @ResponseBody
     public News addByModel(@ModelAttribute News news) {
         return newsService.save(news);
     }
 
-    // 更新新闻
-    @RequestMapping("/edit/model")
+    // 编辑新闻
+    @RequestMapping("/edit")
+    @RequiresRoles("admin")
     @ResponseBody
     public News editByModel(@ModelAttribute News news) {
         return newsService.save(news);
@@ -36,42 +38,26 @@ public class NewsController {
 
     // 删除新闻
     @RequestMapping("/delete/{id}")
+    @RequiresRoles("admin")
     @ResponseBody
     public void delete(@PathVariable Long id) {
         newsService.deleteById(id);
     }
 
-    // 编辑新闻页面
+    // 通过id查询新闻信息，用于填充编辑新闻的模态框
     @RequestMapping("/edit/{id}")
     @RequiresRoles("admin")
-    public ModelAndView edit(@PathVariable Long id) {
-        ModelAndView mv = new ModelAndView("edit");
-        News news = newsService.findAll().stream()
-                .filter(n -> n.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("新闻不存在"));
-        mv.addObject("news", news);
-        mv.addObject("userName", UserUtils.getCurrentUser().getName());
-        mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
-        return mv;
+    @ResponseBody
+    public News getNewsById(@PathVariable Long id) {
+        return newsService.findById(id);
     }
 
-    // 新闻列表页面
-    @RequestMapping("/list")
+    // 新闻管理页面
+    @RequestMapping("/news")
     @RequiresRoles("admin")
     public ModelAndView newsList() {
-        ModelAndView mv = new ModelAndView("list");
+        ModelAndView mv = new ModelAndView("news");
         mv.addObject("newsList", newsService.findAll());
-        mv.addObject("userName", UserUtils.getCurrentUser().getName());
-        mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
-        return mv;
-    }
-    
-    // 新增新闻页面
-    @RequestMapping("/add")
-    @RequiresRoles("admin")
-    public ModelAndView add() {
-        ModelAndView mv = new ModelAndView("add");
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
         return mv;

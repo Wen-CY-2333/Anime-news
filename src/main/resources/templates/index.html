@@ -30,10 +30,13 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${isAdmin}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/list">新闻列表</a>
+                                    <a class="nav-link" href="/news">新闻管理</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/add">发布新闻</a>
+                                    <a class="nav-link" href="/user/list">用户管理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/spider">爬虫管理</a>
                                 </li>
                             </ul>
                             <div class="d-flex ms-auto">
@@ -67,14 +70,14 @@
                         <div th:each="news : ${newsList}" class="mb-4 pb-4 border-bottom">
                             <div class="d-flex align-items-start g-3">
                                 <img th:src="${news.image}" th:alt="${news.title}" class="img-fluid rounded shadow-sm"
-                                    style="height: 150px; object-fit: cover;">
+                                    style="height: 150px; max-width: 30%; object-fit: cover;">
                                 <div class="flex-grow-1 ms-4">
                                     <div class="news-content-box" style="width: 96%;">
                                         <h3 class="h6 font-weight-bold"
                                             style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;">
                                             <a th:href="${news.url}" th:text="${news.title}"
                                                 class="text-dark text-decoration-none" target="_blank"
-                                                style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;"></a>
+                                                style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;font-size: 18px;"></a>
                                         </h3>
                                         <p class="text-muted small mt-1"
                                             style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;"

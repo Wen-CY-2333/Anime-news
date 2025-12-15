@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>添加</title>
+    <title>爬虫管理</title>
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <script src="/js/jquery/jquery.min.js"></script>
-    <script src="/js/add.js"></script>
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <style>
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            background-color: #e9ecef;
+        }
+    </style>
 </head>
 
 <body>
     <!-- 添加仿知乎登录页面canvas-nest背景 -->
-    <iframe src="/canvas-nest/index.html" frameborder="0" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; border: none;"></iframe>
+    <iframe src="/canvas-nest/index.html" frameborder="0"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; border: none;"></iframe>
 
     <div class="container">
-
         <!-- 导航菜单 -->
         <div class="card rounded-3 overflow-hidden mb-5 shadow">
             <div class="card-body">
@@ -35,7 +43,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user/list">用户管理</a>
                                 </li>
-                                <li class="nav-item">   
+                                <li class="nav-item">
                                     <a class="nav-link" href="/spider">爬虫管理</a>
                                 </li>
                             </ul>
@@ -47,10 +55,7 @@
                 </nav>
             </div>
         </div>
-    </div>
 
-    <div class="container mt-5">
-        <!-- 添加新闻表单 -->
         <div class="card rounded-3 overflow-hidden mb-5 shadow">
             <!-- 头像盒子 -->
             <div class="avatar-box"
@@ -64,44 +69,29 @@
                     T(java.time.LocalTime).now().getHour() < 14 ? '中午好，' + userName : 
                     T(java.time.LocalTime).now().getHour() < 18 ? '下午好，' + userName : 
                     '晚上好，' + userName}" class="card-title mb-4 text-secondary"></h1>
-                <p class="card-text text-muted">请填写新闻信息</p>
-                <form action="/add/model" method="post">
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label for="url" class="form-label">URL:</label>
-                            <input type="text" id="url" name="url" class="form-control" required>
-                        </div>
+                <p class="card-text text-muted">可以在这里添加爬虫任务</p>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="startPage" class="form-label">起始页</label>
+                        <input type="number" class="form-control" id="startPage" name="startPage" min="1" max="100" value="1" required>
                     </div>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label for="title" class="form-label">标题:</label>
-                            <input type="text" id="title" name="title" class="form-control" required>
-                        </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="endPage" class="form-label">结束页</label>
+                        <input type="number" class="form-control" id="endPage" name="endPage" min="1" max="100" value="10" required>
                     </div>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label for="image" class="form-label">封面:</label>
-                            <input type="text" id="image" name="image" class="form-control" required>
-                        </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-outline-secondary" id="crawlBtn">开始爬取</button>
+                        <button type="button" class="btn btn-outline-danger" id="clearBtn">清空数据库</button>
+                        <div class="result" id="result" style="display: none;"></div>
                     </div>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label for="tag" class="form-label">标签:</label>
-                            <input type="text" id="tag" name="tag" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label for="content" class="form-label">简介:</label>
-                            <textarea id="content" name="content" class="form-control" required></textarea>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <button type="button" id="submitBtn" class="btn btn-outline-secondary">添加</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -112,6 +102,8 @@
             </div>
         </div>
     </div>
+
+    <script src="/js/spider.js"></script>
 </body>
 
 </html>
