@@ -8,14 +8,14 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.anime_news.dao.UserDao;
+import com.example.anime_news.service.UserService;
 
 @Configuration
 public class ShiroConfig {
 
     @Bean
-    public org.apache.shiro.realm.Realm realm(UserDao userDao) {
-        return new Realm(userDao);
+    public org.apache.shiro.realm.Realm realm(UserService userService) {
+        return new Realm(userService);
     }
 
     // 配置Shiro过滤链，定义URL路径和对应的Shiro拦截器 
@@ -30,6 +30,7 @@ public class ShiroConfig {
         cd.addPathDefinition("/css/**", "anon");
         cd.addPathDefinition("/js/**", "anon");
         cd.addPathDefinition("/img/**", "anon");
+        cd.addPathDefinition("/canvas-nest/**", "anon");
         cd.addPathDefinition("/logout", "logout");
         cd.addPathDefinition("/**", "authc");
         return cd;
