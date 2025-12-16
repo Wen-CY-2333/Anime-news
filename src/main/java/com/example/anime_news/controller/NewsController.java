@@ -3,9 +3,10 @@ package com.example.anime_news.controller;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +23,7 @@ public class NewsController {
     private NewsService newsService;
     
     // 添加新闻
-    @RequestMapping("/add")
+    @PostMapping("/add")
     @RequiresRoles("admin")
     @ResponseBody
     public News addByModel(@ModelAttribute News news) {
@@ -30,7 +31,7 @@ public class NewsController {
     }
 
     // 编辑新闻
-    @RequestMapping("/edit")
+    @PostMapping("/edit")
     @RequiresRoles("admin")
     @ResponseBody
     public News editByModel(@ModelAttribute News news) {
@@ -38,7 +39,7 @@ public class NewsController {
     }
 
     // 删除新闻
-    @RequestMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     @RequiresRoles("admin")
     @ResponseBody
     public void delete(@PathVariable Long id) {
@@ -46,7 +47,7 @@ public class NewsController {
     }
 
     // 通过id查询新闻信息，用于填充编辑新闻的模态框
-    @RequestMapping("/edit/{id}")
+    @GetMapping("/edit/{id}")
     @RequiresRoles("admin")
     @ResponseBody
     public News getNewsById(@PathVariable Long id) {
@@ -54,7 +55,7 @@ public class NewsController {
     }
 
     // 新闻管理页面
-    @RequestMapping("/news")
+    @GetMapping("/news")
     @RequiresRoles("admin")
     public ModelAndView newsList(@RequestParam(defaultValue = "0") int page, 
                                  @RequestParam(defaultValue = "10") int size) {
@@ -69,7 +70,7 @@ public class NewsController {
     }
 
     // 首页
-    @RequestMapping("/home")
+    @GetMapping("/home")
     public ModelAndView index(@RequestParam(defaultValue = "0") int page, 
                               @RequestParam(defaultValue = "8") int size) {
         ModelAndView mv = new ModelAndView("index");

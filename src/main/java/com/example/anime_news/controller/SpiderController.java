@@ -3,7 +3,8 @@ package com.example.anime_news.controller;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +21,7 @@ public class SpiderController {
     private NewsService newsService;
     
     // 爬虫页面
-    @RequestMapping("/spider")
+    @GetMapping("/spider")
     @RequiresRoles("admin")
     public ModelAndView spiderPage() {
         ModelAndView mv = new ModelAndView("spider");
@@ -30,7 +31,7 @@ public class SpiderController {
     }
     
     // 爬取新闻并保存到数据库
-    @RequestMapping(value = "/spider/crawl", produces = "text/plain;charset=UTF-8")
+    @PostMapping(value = "/spider/crawl", produces = "text/plain;charset=UTF-8")
     @RequiresRoles("admin")
     @ResponseBody
     public String crawlNews(@RequestParam(defaultValue = "1") int startPage,
@@ -45,7 +46,7 @@ public class SpiderController {
     }
     
     // 清空数据库中的新闻
-    @RequestMapping(value = "/spider/clear", produces = "text/plain;charset=UTF-8")
+    @PostMapping(value = "/spider/clear", produces = "text/plain;charset=UTF-8")
     @RequiresRoles("admin")
     @ResponseBody
     public String clearNews() {

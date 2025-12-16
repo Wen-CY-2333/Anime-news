@@ -1,11 +1,6 @@
 #web服务配置
 server:
   port: 3399 #端口号为3399
-  servlet:   # 解决中文乱码问题
-    encoding:
-      charset: UTF-8
-      force: true
-      enabled: true
 
 #spring配置
 spring:
@@ -30,7 +25,6 @@ spring:
   devtools:
     restart:
       exclude: public/**
-
 
 shiro:
   loginUrl: /login

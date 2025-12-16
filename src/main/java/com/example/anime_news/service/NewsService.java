@@ -44,7 +44,7 @@ public class NewsService {
     
     // 分页查询所有新闻
     public Page<News> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, org.springframework.data.domain.Sort.by("time").descending());
         return newsDao.findAll(pageable);
     }
     

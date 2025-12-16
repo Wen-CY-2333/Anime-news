@@ -4,8 +4,10 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,35 +25,35 @@ public class UserController {
     private UserService userService;
 
     // 添加用户
-    @RequestMapping(path = "/add")
+    @PostMapping(path = "/add")
     @ResponseBody
     public User addByModel(@ModelAttribute User user) {
         return userService.save(user);
     }
 
     // 修改用户信息
-    @RequestMapping(path = "/edit")
+    @PostMapping(path = "/edit")
     @ResponseBody
     public User saveEditUser(@ModelAttribute User user) {
         return userService.save(user);
     }
 
     // 删除用户
-    @RequestMapping(path = "/delete/{id}")
+    @PostMapping(path = "/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable Long id) {
         userService.deleteById(id);
     }
 
     // 通过id查询用户信息，用于填充编辑用户的模态框
-    @RequestMapping(path = "/edit/{id}")
+    @GetMapping(path = "/edit/{id}")
     @ResponseBody
     public User editByModel(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     // 用户管理页面
-    @RequestMapping(path = "/list")
+    @GetMapping(path = "/list")
     public ModelAndView list(Model model, @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         ModelAndView mv = new ModelAndView("users");

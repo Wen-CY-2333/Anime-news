@@ -58,7 +58,7 @@ $(document).ready(function() {
         if (confirm('确定要删除这条新闻吗？')) {
             // 发送DELETE请求
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '/delete/' + id,
                 success: function(response) {
                     // 刷新页面
