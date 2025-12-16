@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.anime_news.dao.NewsDao;
@@ -31,8 +34,18 @@ public class NewsService {
         return newsDao.findByTitle(title);
     }
 
+    public News findById(Long id) {
+        return newsDao.findById(id).orElse(null);
+    }
+
     public List<News> findAll() {
         return newsDao.findAll();
+    }
+    
+    // 分页查询所有新闻
+    public Page<News> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return newsDao.findAll(pageable);
     }
     
     // 统计所有标签及其出现次数
@@ -50,7 +63,4 @@ public class NewsService {
         return tagCountMap;
     }
 
-    public News findById(Long id) {
-        return newsDao.findById(id).orElse(null);
-    }
 }

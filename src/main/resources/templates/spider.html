@@ -8,14 +8,6 @@
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
-    <style>
-        .result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.375rem;
-            background-color: #e9ecef;
-        }
-    </style>
 </head>
 
 <body>
@@ -70,18 +62,20 @@
                     T(java.time.LocalTime).now().getHour() < 18 ? '下午好，' + userName : 
                     '晚上好，' + userName}" class="card-title mb-4 text-secondary"></h1>
                 <p class="card-text text-muted">可以在这里添加爬虫任务</p>
-                
+
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <label for="startPage" class="form-label">起始页</label>
-                        <input type="number" class="form-control" id="startPage" name="startPage" min="1" max="100" value="1" required>
+                        <input type="number" class="form-control" id="startPage" name="startPage" min="1" max="100"
+                            value="1" required>
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <label for="endPage" class="form-label">结束页</label>
-                        <input type="number" class="form-control" id="endPage" name="endPage" min="1" max="100" value="10" required>
+                        <input type="number" class="form-control" id="endPage" name="endPage" min="1" max="100"
+                            value="10" required>
                     </div>
                 </div>
 
@@ -89,7 +83,12 @@
                     <div class="col-md-6">
                         <button type="button" class="btn btn-outline-secondary" id="crawlBtn">开始爬取</button>
                         <button type="button" class="btn btn-outline-danger" id="clearBtn">清空数据库</button>
-                        <div class="result" id="result" style="display: none;"></div>
+                        <div class="result" id="result" style="
+                            display: none;
+                            margin-top: 1rem;
+                            padding: 1rem;
+                            border-radius: 0.375rem;
+                            background-color: #e9ecef;"></div>
                     </div>
                 </div>
             </div>

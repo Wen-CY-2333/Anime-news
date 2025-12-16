@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,19 +56,25 @@ public class NewsController {
     // 新闻管理页面
     @RequestMapping("/news")
     @RequiresRoles("admin")
-    public ModelAndView newsList() {
+    public ModelAndView newsList(@RequestParam(defaultValue = "0") int page, 
+                                 @RequestParam(defaultValue = "10") int size) {
         ModelAndView mv = new ModelAndView("news");
-        mv.addObject("newsList", newsService.findAll());
+        mv.addObject("page", newsService.findAll(page, size));
+        mv.addObject("newsList", newsService.findAll(page, size).getContent());
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        mv.addObject("currentPage", page);
+        mv.addObject("pageSize", size);
         return mv;
     }
 
     // 首页
     @RequestMapping("/home")
-    public ModelAndView index() {
+    public ModelAndView index(@RequestParam(defaultValue = "0") int page, 
+                              @RequestParam(defaultValue = "8") int size) {
         ModelAndView mv = new ModelAndView("index");
-        mv.addObject("newsList", newsService.findAll());
+        mv.addObject("page", newsService.findAll(page, size));
+        mv.addObject("newsList", newsService.findAll(page, size).getContent());
         mv.addObject("tagCountMap", newsService.countTags());
         
         // 检查用户是否已登录
@@ -84,6 +91,8 @@ public class NewsController {
             mv.addObject("isLogin", false);
         }
         
+        mv.addObject("currentPage", page);
+        mv.addObject("pageSize", size);
         return mv;
     }
 }
