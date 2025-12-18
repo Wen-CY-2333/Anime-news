@@ -1,0 +1,29 @@
+/* 优化像素字体配置 */
+@font-face {
+    font-family: 'PixelFont';
+    src: url('/fonts/RuiZiTaiKongPaoKuXiangSuJian-Shan-ChaoHei(REEJI-TaikoRunGB-Flash-Heavy)-2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+/* 精确应用样式到导航栏标题 */
+#pixel-brand {
+    font-family: 'PixelFont', 'Courier New', monospace !important;
+    font-size: 24px !important;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3) !important;
+    letter-spacing: 1px;
+}
+
+/** 鼠标样式 开始**/
+/** 普通指针样式**/
+body {
+    cursor: url(https://img.alicdn.com/imgextra/i4/3037771681/TB2LdUrj9tkpuFjy0FhXXXQzFXa_!!3037771681.png), default;
+}
+
+/** 链接指针样式**/
+a:hover {
+    cursor: url(https://img.alicdn.com/imgextra/i4/3037771681/TB2paoVj3JlpuFjSspjXXcT.pXa_!!3037771681.png), pointer;
+}
+
+/** 鼠标样式 结束**/

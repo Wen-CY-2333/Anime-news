@@ -7,6 +7,7 @@
     <title>新闻管理</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/news.js"></script>
@@ -15,7 +16,7 @@
 <body>
     <!-- 添加仿知乎登录页面canvas-nest背景 -->
     <iframe src="/canvas-nest/index.html" frameborder="0"
-        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; border: none;"></iframe>
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe>
 
     <div class="container">
         <!-- 导航菜单 -->
@@ -23,7 +24,11 @@
             <div class="card-body">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
                     <div class="container-fluid">
-                        <a class="navbar-brand text-secondary" href="/home">Anime-News</a>
+                        <a class="navbar-brand d-flex align-items-center" href="/home">
+                            <img src="/favicon.ico" alt="Anime-News"
+                                style="height: 90px; width: 90px; margin-top: -30px; margin-bottom: -30px;">
+                            <span id="pixel-brand" class="navbar-brand text-secondary" style="margin-left: 20px;">次元资讯</span>
+                        </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                             aria-label="Toggle navigation">

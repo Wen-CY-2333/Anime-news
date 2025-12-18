@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.anime_news.pojo.News;
-import com.example.anime_news.pojo.User;
 import com.example.anime_news.service.NewsService;
 import com.example.anime_news.utils.UserUtils;
 
