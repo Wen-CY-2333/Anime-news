@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -19,6 +20,9 @@
         <div id="login-card" class="card rounded-3 overflow-hidden mb-5 shadow-lg">
             <h2 class="text-center py-3" >登录</h2>
             <form action="/dologin" method="post" class="p-4">
+                <div th:if="${loginError != null}" class="login-error alert alert-danger text-center mb-3" role="alert">
+                    <span th:text="${loginError}"></span>
+                </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" name="username" placeholder="请输入用户名" required>
                 </div>
@@ -38,6 +42,9 @@
         <div id="register-card" class="card rounded-3 overflow-hidden mb-5 shadow-lg" style="display: none;">
             <h2 class="text-center py-3">注册</h2>
             <form action="/doregister" method="post" class="p-4">
+                <div th:if="${registerError != null}" class="register-error alert alert-danger text-center mb-3" role="alert">
+                    <span th:text="${registerError}"></span>
+                </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" name="avatar" placeholder="请输入头像URL" required>
                 </div>
