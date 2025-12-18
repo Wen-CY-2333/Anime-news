@@ -32,6 +32,15 @@ public class LoginController {
             SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password));
             // 使用Shiro内置的SavedRequest功能跳转回之前请求的页面
             SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+            
+            // 测试
+            // System.out.println("=== SavedRequest 调试信息 ===");
+            // System.out.println("savedRequest 是否为 null: " + (savedRequest == null));
+            // if (savedRequest != null) {
+            //     System.out.println("原始请求URL: " + savedRequest.getRequestUrl());
+            // }
+            // System.out.println("=========================");
+
             if (savedRequest != null) {
                 String requestUrl = savedRequest.getRequestUrl();
                 return "redirect:" + requestUrl;
