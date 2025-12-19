@@ -63,6 +63,7 @@ public class UserController {
         mv.addObject("pageSize", size);
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        mv.addObject("isLogin", true);
         return mv;
     }
 }

@@ -61,6 +61,7 @@ public class NewsController {
         mv.addObject("newsList", newsService.findAll(page, size).getContent());
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        mv.addObject("isLogin", true);
         mv.addObject("currentPage", page);
         mv.addObject("pageSize", size);
         return mv;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.anime_news.dao.NewsDao;
@@ -44,7 +45,7 @@ public class NewsService {
     
     // 分页查询所有新闻
     public Page<News> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, org.springframework.data.domain.Sort.by("time").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("time").descending());
         return newsDao.findAll(pageable);
     }
     
@@ -61,6 +62,17 @@ public class NewsService {
         }
         
         return tagCountMap;
+    }
+    
+    // 根据标签查询新闻
+    public List<News> findByTag(String tag) {
+        return newsDao.findByTag(tag);
+    }
+    
+    // 分页查询指定标签的新闻
+    public Page<News> findByTag(String tag, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("time").descending());
+        return newsDao.findByTag(tag, pageable);
     }
 
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理</title>
+    <title>用户管理 - AnimeNews</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
@@ -34,7 +34,17 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <ul class="navbar-nav mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/tag?tag=动画&page=0&size=8">动画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/tag?tag=漫画&page=0&size=8">漫画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/tag?tag=漫展&page=0&size=8">漫展</a>
+                                </li>
+                                <!-- 管理员菜单 -->
                                 <li class="nav-item">
                                     <a class="nav-link" href="/news/">新闻管理</a>
                                 </li>
@@ -45,8 +55,9 @@
                                     <a class="nav-link" href="/spider/">爬虫管理</a>
                                 </li>
                             </ul>
-                            <div class="d-flex">
-                                <a th:href="@{/logout}" class="btn btn-outline-danger me-2">退出登录</a>
+                            <div class="d-flex ms-auto">
+                                <a th:href="@{/login}" class="btn btn-outline-primary me-2" th:if="${!isLogin}">登录</a>
+                                <a th:href="@{/logout}" class="btn btn-outline-danger me-2" th:if="${isLogin}">退出登录</a>
                             </div>
                         </div>
                     </div>
@@ -131,11 +142,10 @@
                             </li>
 
                             <!-- 页码 -->
-                            <!-- 显示当前页附近的页码，最多8个 -->
                             <!-- 计算开始和结束页码，最多显示8个页码 -->
                             <th:block
                                 th:with="start=${currentPage - 3 < 0 ? 0 : currentPage - 3}, 
-                                                          end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
+                                        end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
                                 <!-- 显示前面的页码和省略号 -->
                                 <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''"
                                     th:if="${start > 0}">

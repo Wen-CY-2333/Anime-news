@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首页 - AnimeNews</title>
+    <title th:text="${tag} + ' - AnimeNews'">标签 - AnimeNews</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
@@ -14,7 +14,8 @@
 
 <body>
     <!-- 添加仿知乎登录页面canvas-nest背景 -->
-    <iframe src="/canvas-nest/index.html" frameborder="0" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe>
+    <iframe src="/canvas-nest/index.html" frameborder="0"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe>
 
     <div class="container">
 
@@ -26,7 +27,8 @@
                         <a class="navbar-brand d-flex align-items-center" href="/home">
                             <img src="/favicon.ico" alt="Anime-News"
                                 style="height: 90px; width: 90px; margin-top: -30px; margin-bottom: -30px;">
-                            <span id="pixel-brand" class="navbar-brand text-secondary" style="margin-left: 20px;">次元资讯</span>
+                            <span id="pixel-brand" class="navbar-brand text-secondary"
+                                style="margin-left: 20px;">次元资讯</span>
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -82,7 +84,7 @@
             <div class="col-md-8">
                 <div class="card rounded-3 overflow-hidden mb-5 shadow">
                     <div class="card-header bg-light text-dark">
-                        <h3 class="h6 mb-0">全部</h3>
+                        <h3 class="h6 mb-0">标签: [[${currentTag}]]</h3>
                     </div>
                     <div class="card-body">
                         <!-- 新闻项列表 -->
@@ -94,8 +96,8 @@
                                     <div class="news-content-box" style="width: 96%;">
                                         <h3 class="h6 font-weight-bold"
                                             style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;">
-                                            <a target="_blank" th:href="@{/news/content/{id}(id=${news.id})}" th:text="${news.title}"
-                                                class="text-dark text-decoration-none"
+                                            <a target="_blank" th:href="@{/news/content/{id}(id=${news.id})}"
+                                                th:text="${news.title}" class="text-dark text-decoration-none"
                                                 style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;font-size: 18px;"></a>
                                         </h3>
                                         <p class="text-muted small mt-1"
@@ -120,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- 分页组件 -->
                         <div class="bg-white">
                             <div class="d-flex justify-content-center">
@@ -128,48 +130,57 @@
                                     <ul class="pagination" style="gap: 5px;">
                                         <!-- 上一页 -->
                                         <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
-                                            <a class="page-link rounded-3" th:href="@{/home(page=${currentPage - 1},size=${pageSize})}" 
+                                            <a class="page-link rounded-3"
+                                                th:href="@{/tag(tag=${currentTag},page=${currentPage - 1},size=${pageSize})}"
                                                 aria-label="上一页">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
-                                        
+
                                         <!-- 页码 -->
                                         <!-- 计算开始和结束页码，最多显示8个页码 -->
-                                        <th:block th:with="start=${currentPage - 3 < 0 ? 0 : currentPage - 3}, 
-                                                          end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
+                                        <th:block
+                                            th:with="start=${currentPage - 3 < 0 ? 0 : currentPage - 3}, 
+                                                    end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
                                             <!-- 显示前面的页码和省略号 -->
-                                        <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''" th:if="${start > 0}">
-                                            <a class="page-link rounded-3" th:href="@{/home(page=0,size=${pageSize})}" th:text="1"></a>
-                                        </li>
-                                        
-                                        <li class="page-item disabled" th:if="${start > 1}">
-                                            <span class="page-link rounded-3">...</span>
-                                        </li>
-                                        
-                                        <!-- 显示中间的页码，最多8个 -->
-                                        <li class="page-item" 
-                                            th:each="i : ${#numbers.sequence(start, end)}" 
-                                            th:classappend="${currentPage == i} ? 'active' : ''">
-                                            <a class="page-link rounded-3" th:href="@{/home(page=${i},size=${pageSize})}" th:text="${i + 1}"></a>
-                                        </li>
-                                        
-                                        <!-- 显示后面的省略号和最后一页 -->
-                                        <li class="page-item disabled" th:if="${end < page.totalPages - 2}">
-                                            <span class="page-link rounded-3">...</span>
-                                        </li>
-                                        
-                                        <li class="page-item" 
-                                            th:classappend="${currentPage == page.totalPages - 1} ? 'active' : ''" 
-                                            th:if="${end < page.totalPages - 1}">
-                                            <a class="page-link" th:href="@{/home(page=${page.totalPages - 1},size=${pageSize})}" th:text="${page.totalPages}" style="border-radius: 5px;"></a>
-                                        </li>
+                                            <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''"
+                                                th:if="${start > 0}">
+                                                <a class="page-link rounded-3"
+                                                    th:href="@{/tag(tag=${currentTag},page=0,size=${pageSize})}"
+                                                    th:text="1"></a>
+                                            </li>
+
+                                            <li class="page-item disabled" th:if="${start > 1}">
+                                                <span class="page-link rounded-3">...</span>
+                                            </li>
+
+                                            <!-- 显示中间的页码，最多8个 -->
+                                            <li class="page-item" th:each="i : ${#numbers.sequence(start, end)}"
+                                                th:classappend="${currentPage == i} ? 'active' : ''">
+                                                <a class="page-link rounded-3"
+                                                    th:href="@{/tag(tag=${currentTag},page=${i},size=${pageSize})}"
+                                                    th:text="${i + 1}"></a>
+                                            </li>
+
+                                            <!-- 显示后面的省略号和最后一页 -->
+                                            <li class="page-item disabled" th:if="${end < page.totalPages - 2}">
+                                                <span class="page-link rounded-3">...</span>
+                                            </li>
+
+                                            <li class="page-item"
+                                                th:classappend="${currentPage == page.totalPages - 1} ? 'active' : ''"
+                                                th:if="${end < page.totalPages - 1}">
+                                                <a class="page-link"
+                                                    th:href="@{/tag(tag=${currentTag},page=${page.totalPages - 1},size=${pageSize})}"
+                                                    th:text="${page.totalPages}" style="border-radius: 5px;"></a>
+                                            </li>
                                         </th:block>
-                                        
+
                                         <!-- 下一页 -->
                                         <li class="page-item"
                                             th:classappend="${currentPage == page.totalPages - 1} ? 'disabled' : ''">
-                                            <a class="page-link rounded-3" th:href="@{/home(page=${currentPage + 1},size=${pageSize})}" 
+                                            <a class="page-link rounded-3"
+                                                th:href="@{/tag(tag=${currentTag},page=${currentPage + 1},size=${pageSize})}"
                                                 aria-label="下一页">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
@@ -177,7 +188,7 @@
                                     </ul>
                                 </nav>
                             </div>
-                            
+
                             <!-- 分页信息 -->
                             <div class="text-center text-muted">
                                 <span>第 <strong th:text="${currentPage + 1}"></strong> 页 / 共 <strong
@@ -215,11 +226,11 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center" th:each="entry : ${tagCountMap}">
-                                <a th:href="@{/tag(tag=${entry.key}, page=0, size=8)}" 
-                                   class="text-decoration-none" 
-                                   th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
-                                   th:text="${entry.key}">tag</a>
+                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                th:each="entry : ${tagCountMap}">
+                                <a th:href="@{/tag(tag=${entry.key}, page=0, size=8)}" class="text-decoration-none"
+                                    th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
+                                    th:text="${entry.key}">tag</a>
                                 <span class="badge bg-primary rounded-pill" th:text="${entry.value}">cnt</span>
                             </li>
                         </ul>

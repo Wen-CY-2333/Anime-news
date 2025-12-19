@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${news.title}">内容</title>
+    <title th:text="${news.title}">内容 - AnimeNews</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
@@ -34,15 +34,25 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${isAdmin}">
+                            <ul class="navbar-nav mb-2 mb-lg-0">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="/tag?tag=动画&page=0&size=8">动画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/tag?tag=漫画&page=0&size=8">漫画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/tag?tag=漫展&page=0&size=8">漫展</a>
+                                </li>
+                                <!-- 管理员菜单 -->
+                                <li class="nav-item" th:if="${isAdmin}">
                                     <a class="nav-link" href="/news/">新闻管理</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:if="${isAdmin}">
                                     <a class="nav-link" href="/user/">用户管理</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/spider/">爬虫管理</a>    
+                                <li class="nav-item" th:if="${isAdmin}">
+                                    <a class="nav-link" href="/spider/">爬虫管理</a>
                                 </li>
                             </ul>
                             <div class="d-flex ms-auto">
@@ -152,7 +162,10 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center" th:each="entry : ${tagCountMap}">
-                                <a href="#" class="text-dark text-decoration-none" th:text="${entry.key}">tag</a>
+                                <a th:href="@{/tag(tag=${entry.key}, page=0, size=8)}" 
+                                   class="text-decoration-none" 
+                                   th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
+                                   th:text="${entry.key}">tag</a>
                                 <span class="badge bg-primary rounded-pill" th:text="${entry.value}">cnt</span>
                             </li>
                         </ul>

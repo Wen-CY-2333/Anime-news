@@ -1,5 +1,8 @@
 package com.example.anime_news.dao;
 
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -13,11 +16,11 @@ import com.example.anime_news.pojo.News;
  */
 @Repository
 public interface NewsDao extends JpaRepository<News, Long>, JpaSpecificationExecutor<News> {
-    /**
-     * 根据标题查询新闻
-     * @param title 新闻标题
-     * @return 新闻实体
-     */
+    
     News findByTitle(String title);
+    
+    List<News> findByTag(String tag);
+    
+    Page<News> findByTag(String tag, Pageable pageable);
 
 }

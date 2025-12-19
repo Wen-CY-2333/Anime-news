@@ -8,17 +8,8 @@ import com.example.anime_news.pojo.User;
 
 @Repository
 public interface UserDao extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
-    /**
-     * 根据用户名查询用户
-     * @param name 用户名
-     * @return 用户实体
-     */
+    
     User findTopByName(String name);
 
-    /**
-     * 根据角色查询用户
-     * @param role 角色
-     * @return 用户实体
-     */
     User findTopByRole(String role);
 }
