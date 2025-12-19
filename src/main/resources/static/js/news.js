@@ -5,11 +5,12 @@ $(document).ready(function() {
         // 发送请求获取新闻信息
         $.ajax({
             type: 'GET',
-            url: '/edit/' + id,
+            url: '/news/find/' + id,
             success: function(news) {
                 // 填充编辑表单
                 $('#editNewsId').val(news.id);
                 $('#editNewsTitle').val(news.title);
+                $('#editNewsNote').val(news.note);
                 $('#editNewsContent').val(news.content);
                 $('#editNewsUrl').val(news.url);
                 $('#editNewsImage').val(news.image);
@@ -28,6 +29,7 @@ $(document).ready(function() {
         var formData = {
             id: $('#editNewsId').val(),
             title: $('#editNewsTitle').val(),
+            note: $('#editNewsNote').val(),
             content: $('#editNewsContent').val(),
             url: $('#editNewsUrl').val(),
             image: $('#editNewsImage').val(),
@@ -38,9 +40,9 @@ $(document).ready(function() {
         // 发送POST请求
         $.ajax({
             type: 'POST',
-            url: '/edit',
+            url: '/news/edit',
             data: formData,
-            success: function(response) {
+            success: function() {
                 // 关闭模态框
                 $('#editNewsModal').modal('hide');
                 // 刷新页面
@@ -52,15 +54,15 @@ $(document).ready(function() {
         });
     });
 
-    // 删除
+    // 删除按钮
     $('.delete-btn').click(function() {
         var id = $(this).data('id');
         if (confirm('确定要删除这条新闻吗？')) {
             // 发送DELETE请求
             $.ajax({
                 type: 'POST',
-                url: '/delete/' + id,
-                success: function(response) {
+                url: '/news/delete/' + id,
+                success: function() {
                     // 刷新页面
                     window.location.reload();
                 },
@@ -71,11 +73,12 @@ $(document).ready(function() {
         }
     });
 
-    // 发布新闻模态框的保存按钮
+    // 发布新闻按钮
     $('#saveAddNewsBtn').click(function() {
         // 获取表单数据
         var formData = {
             title: $('#addNewsTitle').val(),
+            note: $('#addNewsNote').val(),
             content: $('#addNewsContent').val(),
             url: $('#addNewsUrl').val(),
             image: $('#addNewsImage').val(),
@@ -86,9 +89,9 @@ $(document).ready(function() {
         // 发送POST请求
         $.ajax({
             type: 'POST',
-            url: '/add',
+            url: '/news/add',
             data: formData,
-            success: function(response) {
+            success: function() {
                 // 关闭模态框
                 $('#addNewsModal').modal('hide');
                 // 刷新页面

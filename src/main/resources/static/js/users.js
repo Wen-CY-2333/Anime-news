@@ -44,7 +44,7 @@ $(document).ready(function () {
         var id = $(this).data('id');
         $.ajax({
             type: 'GET',
-            url: '/user/edit/' + id,
+            url: '/user/find/' + id,
             success: function (user) {
                 // 填充表单
                 $('#editUserId').val(user.id);

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,8 @@ import com.example.anime_news.service.SpiderService;
 import com.example.anime_news.utils.UserUtils;
 
 @Controller
+@RequestMapping("/spider")
+@RequiresRoles("admin")
 public class SpiderController {
     @Autowired
     private SpiderService spiderService;
@@ -21,8 +24,7 @@ public class SpiderController {
     private NewsService newsService;
     
     // 爬虫页面
-    @GetMapping("/spider")
-    @RequiresRoles("admin")
+    @GetMapping("/")
     public ModelAndView spiderPage() {
         ModelAndView mv = new ModelAndView("spider");
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
@@ -31,11 +33,10 @@ public class SpiderController {
     }
     
     // 爬取新闻并保存到数据库
-    @PostMapping(value = "/spider/crawl", produces = "text/plain;charset=UTF-8")
-    @RequiresRoles("admin")
+    @PostMapping(value = "/crawl", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String crawlNews(@RequestParam(defaultValue = "1") int startPage,
-                            @RequestParam(defaultValue = "10") int endPage) {
+    public String crawlNews(@RequestParam int startPage,
+                            @RequestParam int endPage) {
         try {
             int[] newsCount = spiderService.crawlNews(startPage, endPage);
             return "成功爬取并保存 " + newsCount[0] + " 条新闻，" + newsCount[1] + " 条新闻已存在";
@@ -46,8 +47,7 @@ public class SpiderController {
     }
     
     // 清空数据库中的新闻
-    @PostMapping(value = "/spider/clear", produces = "text/plain;charset=UTF-8")
-    @RequiresRoles("admin")
+    @PostMapping(value = "/clear", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String clearNews() {
         try {

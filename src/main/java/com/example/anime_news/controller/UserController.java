@@ -46,14 +46,14 @@ public class UserController {
     }
 
     // 通过id查询用户信息，用于填充编辑用户的模态框
-    @GetMapping(path = "/edit/{id}")
+    @GetMapping(path = "/find/{id}")
     @ResponseBody
     public User editByModel(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     // 用户管理页面
-    @GetMapping(path = "/list")
+    @GetMapping(path = "/")
     public ModelAndView list(Model model, @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         ModelAndView mv = new ModelAndView("users");

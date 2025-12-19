@@ -29,11 +29,17 @@ public class SpiderService {
             System.out.println("第 " + i + " 页爬取完成，共爬取 " + count[0] + " 条新闻，" + count[1] + " 条新闻已存在");
             newsCount[0] += count[0];
             newsCount[1] += count[1];
+            try {
+                Thread.sleep(1000);     // 慢点爬，爬一页停一秒，防止进黑名单
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return newsCount;
     }
     
-    // 爬取单页新闻
+    // 单页新闻解析方法
     public int[] crawlSinglePage(int page) throws IOException {
         int[] result = new int[2];
         result[0] = 0;
@@ -63,7 +69,7 @@ public class SpiderService {
             
             // 解析摘要
             String summary = excerpt.select(".note").text();
-            news.setContent(summary);
+            news.setNote(summary);
             
             // 解析时间
             String time = excerpt.select(".meta time").get(1).text();
@@ -85,12 +91,34 @@ public class SpiderService {
             String newsUrl = excerpt.select(".focus a").attr("href");
             news.setUrl(newsUrl);
 
+            // 解析新闻内容
+            crawlNewsContent(newsUrl, news);
+
             // 保存新闻到数据库
             newsService.save(news);
             result[0]++;
         }
+
         return result;
+    }
+
+    // 解析新闻内容方法
+    public void crawlNewsContent(String newsUrl, News news) throws IOException {
+        // 连接网站并获取文档
+        Document doc = Jsoup.connect(newsUrl)
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0")
+                .timeout(10000)
+                .get();
         
+        Element contentEl = doc.selectFirst(".content .article-content");
+
+        // 相对路径转换为绝对路径
+        contentEl.select("img").forEach(img -> {
+            img.attr("src", BASE_URL + img.attr("src"));
+        });
+
+        //保存新闻内容
+        news.setContent(contentEl.html());
     }
     
 }

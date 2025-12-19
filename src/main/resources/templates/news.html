@@ -37,13 +37,13 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/news">新闻管理</a>
+                                    <a class="nav-link" href="/news/">新闻管理</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/user/list">用户管理</a>
+                                    <a class="nav-link" href="/user/">用户管理</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/spider">爬虫管理</a>
+                                    <a class="nav-link" href="/spider/">爬虫管理</a>    
                                 </li>
                             </ul>
                             <div class="d-flex">
@@ -90,8 +90,8 @@
                                 <th class="text-center align-middle">ID</th>
                                 <th class="text-center align-middle">封面</th>
                                 <th class="text-center align-middle">标题</th>
-                                <th class="text-center align-middle">简介</th>
-                                <th class="text-center align-middle">URL</th>
+                                <th class="text-center align-middle">摘要</th>
+                                <th class="text-center align-middle">来源链接</th>
                                 <th class="text-center align-middle">标签</th>
                                 <th class="text-center align-middle">时间</th>
                                 <th class="text-center align-middle">操作</th>
@@ -108,8 +108,8 @@
                                     style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;"
                                     th:text="${item.title}"></td>
                                 <td class="text-center align-middle"
-                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 300px;"
-                                    th:text="${item.content}"></td>
+                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;"
+                                    th:text="${item.note}"></td>
                                 <td class="text-center align-middle"
                                     style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;">
                                     <a th:href="${item.url}" th:text="${item.url}" target="_blank"
@@ -220,8 +220,13 @@
                             <input type="text" class="form-control" id="addNewsTitle" name="title" required>
                         </div>
                         <div class="mb-3">
-                            <label for="addNewsContent" class="form-label">摘要</label>
-                            <textarea class="form-control" id="addNewsContent" name="content" rows="3"
+                            <label for="addNewsNote" class="form-label">摘要</label>
+                            <textarea class="form-control" id="addNewsNote" name="note" rows="3"
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addNewsContent" class="form-label">内容</label>
+                            <textarea class="form-control" id="addNewsContent" name="content" rows="5"
                                 required></textarea>
                         </div>
                         <div class="mb-3">
@@ -233,7 +238,7 @@
                             <input type="text" class="form-control" id="addNewsImage" name="image" required>
                         </div>
                         <div class="mb-3">
-                            <label for="addtNewsTag" class="form-label">标签</label>
+                            <label for="addNewsTag" class="form-label">标签</label>
                             <input type="text" class="form-control" id="addNewsTag" name="tag" required>
                         </div>
                         <div class="mb-3">
@@ -266,8 +271,13 @@
                             <input type="text" class="form-control" id="editNewsTitle" name="title" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editNewsContent" class="form-label">摘要</label>
-                            <textarea class="form-control" id="editNewsContent" name="content" rows="3"
+                            <label for="editNewsNote" class="form-label">摘要</label>
+                            <textarea class="form-control" id="editNewsNote" name="note" rows="3"
+                                required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editNewsContent" class="form-label">内容</label>
+                            <textarea class="form-control" id="editNewsContent" name="content" rows="5"
                                 required></textarea>
                         </div>
                         <div class="mb-3">
