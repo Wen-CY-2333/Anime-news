@@ -47,6 +47,7 @@
                                     <a class="nav-link" href="/tag?tag=漫展&page=0&size=8">漫展</a>
                                 </li>
                                 <!-- 管理员菜单 -->
+                                <span class="navbar-text me-2 ms-2" th:if="${isAdmin}">|</span>
                                 <li class="nav-item" th:if="${isAdmin}">
                                     <a class="nav-link" href="/news/">新闻管理</a>
                                 </li>
