@@ -48,7 +48,7 @@ public class UserService {
     
     //分页查询所有用户
     public Page<User> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("role"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by("role", "name"));
         return userDao.findAll(pageable);
     }
 
