@@ -38,10 +38,6 @@ public class NewsService {
     public News findById(Long id) {
         return newsDao.findById(id).orElse(null);
     }
-
-    public List<News> findAll() {
-        return newsDao.findAll();
-    }
     
     // 分页查询所有新闻
     public Page<News> findAll(int page, int size) {

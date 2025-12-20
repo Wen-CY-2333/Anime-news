@@ -29,7 +29,6 @@ public class SpiderController {
         ModelAndView mv = new ModelAndView("spider");
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
-        mv.addObject("isLogin", true);
         return mv;
     }
     

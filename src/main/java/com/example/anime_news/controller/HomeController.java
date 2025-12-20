@@ -23,10 +23,9 @@ public class HomeController {
 
     // 首页
     @GetMapping({ "/home" })
-    public ModelAndView index(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "8") int size) {
+    public ModelAndView home(@RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "8") int size) {
         ModelAndView mv = new ModelAndView("index");
-        mv.addObject("page", newsService.findAll(page, size));
         mv.addObject("newsList", newsService.findAll(page, size).getContent());
         mv.addObject("tagCountMap", newsService.countTags());
 
@@ -44,6 +43,7 @@ public class HomeController {
             mv.addObject("isLogin", false);
         }
 
+        mv.addObject("page", newsService.findAll(page, size));
         mv.addObject("currentPage", page);
         mv.addObject("pageSize", size);
         return mv;

@@ -54,14 +54,15 @@ public class NewsController {
 
     // 新闻管理页面
     @GetMapping("/")
-    public ModelAndView newsList(@RequestParam(defaultValue = "0") int page, 
-                                 @RequestParam(defaultValue = "10") int size) {
+    public ModelAndView news(@RequestParam(defaultValue = "0") int page, 
+                             @RequestParam(defaultValue = "8") int size) {
         ModelAndView mv = new ModelAndView("news");
-        mv.addObject("page", newsService.findAll(page, size));
         mv.addObject("newsList", newsService.findAll(page, size).getContent());
+
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
-        mv.addObject("isLogin", true);
+
+        mv.addObject("page", newsService.findAll(page, size));
         mv.addObject("currentPage", page);
         mv.addObject("pageSize", size);
         return mv;

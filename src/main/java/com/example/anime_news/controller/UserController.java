@@ -3,7 +3,6 @@ package com.example.anime_news.controller;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,45 +24,47 @@ public class UserController {
     private UserService userService;
 
     // 添加用户
-    @PostMapping(path = "/add")
+    @PostMapping("/add")
     @ResponseBody
     public User addByModel(@ModelAttribute User user) {
         return userService.save(user);
     }
 
     // 修改用户信息
-    @PostMapping(path = "/edit")
+    @PostMapping("/edit")
     @ResponseBody
-    public User saveEditUser(@ModelAttribute User user) {
+    public User editByModel(@ModelAttribute User user) {
         return userService.save(user);
     }
 
     // 删除用户
-    @PostMapping(path = "/delete/{id}")
+    @PostMapping("/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable Long id) {
         userService.deleteById(id);
     }
 
-    // 通过id查询用户信息，用于填充编辑用户的模态框
-    @GetMapping(path = "/find/{id}")
+    // 通过id查询用户信息
+    @GetMapping("/find/{id}")
     @ResponseBody
-    public User editByModel(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     // 用户管理页面
-    @GetMapping(path = "/")
-    public ModelAndView list(Model model, @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+    @GetMapping("/")
+    public ModelAndView users(@RequestParam(defaultValue = "0") int page, 
+                              @RequestParam(defaultValue = "8") int size) {
         ModelAndView mv = new ModelAndView("users");
-        mv.addObject("page", userService.findAll(page, size));
         mv.addObject("userList", userService.findAll(page, size).getContent());
-        mv.addObject("currentPage", page);
-        mv.addObject("pageSize", size);
+
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
         mv.addObject("isLogin", true);
+
+        mv.addObject("page", userService.findAll(page, size));
+        mv.addObject("currentPage", page);
+        mv.addObject("pageSize", size);
         return mv;
     }
 }
