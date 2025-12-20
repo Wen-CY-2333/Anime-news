@@ -27,7 +27,8 @@
                         <a class="navbar-brand d-flex align-items-center" href="/home">
                             <img src="/favicon.ico" alt="Anime-News"
                                 style="height: 90px; width: 90px; margin-top: -30px; margin-bottom: -30px;">
-                            <span id="pixel-brand" class="navbar-brand text-secondary" style="margin-left: 20px;">次元资讯</span>
+                            <span id="pixel-brand" class="navbar-brand text-secondary"
+                                style="margin-left: 20px;">次元资讯</span>
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -140,55 +141,62 @@
             </div>
             <!-- 分页组件 -->
             <div class="bg-white mb-3">
+                <!-- 页码 -->
                 <div class="d-flex justify-content-center">
                     <nav aria-label="Page navigation">
                         <ul class="pagination" style="gap: 5px;">
                             <!-- 上一页 -->
                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
-                                <a class="page-link rounded-3" th:href="@{/news(page=${currentPage - 1},size=${pageSize})}" 
-                                    aria-label="上一页">
+                                <a class="page-link rounded-3"
+                                    th:href="@{/news/(page=${currentPage - 1},size=${pageSize})}" aria-label="上一页">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            
-                            <!-- 页码 -->
+
                             <!-- 计算开始和结束页码，最多显示8个页码 -->
                             <th:block
                                 th:with="start=${currentPage - 3 < 0 ? 0 : currentPage - 3}, 
-                                                      end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
-                                <!-- 显示前面的页码和省略号 -->
-                            <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''" th:if="${start > 0}">
-                                <a class="page-link rounded-3" th:href="@{/news(page=0,size=${pageSize})}" th:text="1"></a>
-                            </li>
-                            
-                            <li class="page-item disabled" th:if="${start > 1}">
-                                <span class="page-link rounded-3">...</span>
-                            </li>
-                            
-                            <!-- 显示中间的页码，最多8个 -->
-                            <li class="page-item" 
-                                th:each="i : ${#numbers.sequence(start, end)}" 
-                                th:classappend="${currentPage == i} ? 'active' : ''">
-                                <a class="page-link rounded-3" th:href="@{/news(page=${i},size=${pageSize})}" th:text="${i + 1}"></a>
-                            </li>
-                            
-                            <!-- 显示后面的省略号和最后一页 -->
-                            <li class="page-item disabled" th:if="${end < page.totalPages - 2}">
-                                <span class="page-link rounded-3">...</span>
-                            </li>
-                            
-                            <li class="page-item" 
-                                th:classappend="${currentPage == page.totalPages - 1} ? 'active' : ''" 
-                                th:if="${end < page.totalPages - 1}">
-                                <a class="page-link" th:href="@{/news(page=${page.totalPages - 1},size=${pageSize})}" th:text="${page.totalPages}" style="border-radius: 5px;"></a>
-                            </li>
+                                         end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
+
+                                <!-- 第一页 -->
+                                <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''"
+                                    th:if="${start > 0}">
+                                    <a class="page-link rounded-3" th:href="@{/news/(page=0,size=${pageSize})}"
+                                        th:text="1"></a>
+                                </li>
+
+                                <!-- 省略号 -->
+                                <li class="page-item disabled" th:if="${start > 1}">
+                                    <span class="page-link rounded-3">...</span>
+                                </li>
+
+                                <!-- 中间的页码 -->
+                                <li class="page-item" th:each="i : ${#numbers.sequence(start, end)}"
+                                    th:classappend="${currentPage == i} ? 'active' : ''">
+                                    <a class="page-link rounded-3" th:href="@{/news/(page=${i},size=${pageSize})}"
+                                        th:text="${i + 1}"></a>
+                                </li>
+
+                                <!-- 省略号 -->
+                                <li class="page-item disabled" th:if="${end < page.totalPages - 2}">
+                                    <span class="page-link rounded-3">...</span>
+                                </li>
+
+                                <!-- 最后一页 -->
+                                <li class="page-item"
+                                    th:classappend="${currentPage == page.totalPages - 1} ? 'active' : ''"
+                                    th:if="${end < page.totalPages - 1}">
+                                    <a class="page-link rounded-3"
+                                        th:href="@{/news/(page=${page.totalPages - 1},size=${pageSize})}"
+                                        th:text="${page.totalPages}" style="border-radius: 5px;"></a>
+                                </li>
                             </th:block>
 
                             <!-- 下一页 -->
                             <li class="page-item"
                                 th:classappend="${currentPage == page.totalPages - 1} ? 'disabled' : ''">
-                                <a class="page-link rounded-3" th:href="@{/news(page=${currentPage + 1},size=${pageSize})}" 
-                                    aria-label="下一页">
+                                <a class="page-link rounded-3"
+                                    th:href="@{/news/(page=${currentPage + 1},size=${pageSize})}" aria-label="下一页">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -231,8 +239,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="addNewsNote" class="form-label">摘要</label>
-                            <textarea class="form-control" id="addNewsNote" name="note" rows="3"
-                                required></textarea>
+                            <textarea class="form-control" id="addNewsNote" name="note" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="addNewsContent" class="form-label">内容</label>
@@ -282,8 +289,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="editNewsNote" class="form-label">摘要</label>
-                            <textarea class="form-control" id="editNewsNote" name="note" rows="3"
-                                required></textarea>
+                            <textarea class="form-control" id="editNewsNote" name="note" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="editNewsContent" class="form-label">内容</label>
