@@ -23,15 +23,6 @@ public class SpiderController {
     @Autowired
     private NewsService newsService;
     
-    // 爬虫页面
-    @GetMapping("/")
-    public ModelAndView spiderPage() {
-        ModelAndView mv = new ModelAndView("spider");
-        mv.addObject("userName", UserUtils.getCurrentUser().getName());
-        mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
-        return mv;
-    }
-    
     // 爬取新闻并保存到数据库
     @PostMapping(value = "/crawl", produces = "text/plain;charset=UTF-8")
     @ResponseBody
@@ -57,5 +48,14 @@ public class SpiderController {
             e.printStackTrace();
             return "清空数据库失败: " + e.getMessage();
         }
+    }
+    
+    // 爬虫页面
+    @GetMapping("/")
+    public ModelAndView spiderPage() {
+        ModelAndView mv = new ModelAndView("spider");
+        mv.addObject("userName", UserUtils.getCurrentUser().getName());
+        mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        return mv;
     }
 }

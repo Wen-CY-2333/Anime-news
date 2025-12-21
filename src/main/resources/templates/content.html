@@ -36,13 +36,13 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/tag?tag=动画&page=0&size=8">动画</a>
+                                    <a class="nav-link" href="/home?tag=动画&page=0&size=8">动画</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/tag?tag=漫画&page=0&size=8">漫画</a>
+                                    <a class="nav-link" href="/home?tag=漫画&page=0&size=8">漫画</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/tag?tag=漫展&page=0&size=8">漫展</a>
+                                    <a class="nav-link" href="/home?tag=漫展&page=0&size=8">漫展</a>
                                 </li>
                                 <!-- 管理员菜单 -->
                                 <span class="navbar-text me-2 ms-2" th:if="${isAdmin}">|</span>
@@ -162,8 +162,9 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center" th:each="entry : ${tagCountMap}">
-                                <a th:href="@{/tag(tag=${entry.key}, page=0, size=8)}" 
+                                <a th:href="@{/home(tag=${entry.key}, page=0, size=8)}" 
                                    class="text-decoration-none" 
+                                   target="_blank"
                                    th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
                                    th:text="${entry.key}">tag</a>
                                 <span class="badge bg-primary rounded-pill" th:text="${entry.value}">cnt</span>

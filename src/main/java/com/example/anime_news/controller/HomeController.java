@@ -1,11 +1,13 @@
 package com.example.anime_news.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.anime_news.pojo.News;
 import com.example.anime_news.pojo.User;
 import com.example.anime_news.service.NewsService;
 import com.example.anime_news.utils.UserUtils;
@@ -23,10 +25,19 @@ public class HomeController {
 
     // 首页
     @GetMapping({ "/home" })
-    public ModelAndView home(@RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "8") int size) {
-        ModelAndView mv = new ModelAndView("index");
-        mv.addObject("newsList", newsService.findAll(page, size).getContent());
+    public ModelAndView home(
+            @RequestParam(required = false) String tag,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int size) {
+        ModelAndView mv = new ModelAndView("home");
+
+        // 使用Specification实现多字段搜索
+        Page<News> newsPage = newsService.search(keyword, tag, page, size);
+        mv.addObject("newsList", newsPage.getContent());
+        mv.addObject("page", newsPage);
+        mv.addObject("currentTag", tag != null && !tag.isEmpty() ? tag : "全部");
+        mv.addObject("currentKeyword", keyword);
         mv.addObject("tagCountMap", newsService.countTags());
 
         // 检查用户是否已登录
@@ -43,7 +54,6 @@ public class HomeController {
             mv.addObject("isLogin", false);
         }
 
-        mv.addObject("page", newsService.findAll(page, size));
         mv.addObject("currentPage", page);
         mv.addObject("pageSize", size);
         return mv;

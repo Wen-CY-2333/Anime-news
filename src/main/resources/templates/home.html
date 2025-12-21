@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首页 - AnimeNews</title>
+    <title th:text="${currentTag} != '全部' ? (${currentTag} + ' - AnimeNews') : 'AnimeNews'"></title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
@@ -38,13 +38,13 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/tag?tag=动画&page=0&size=8">动画</a>
+                                    <a class="nav-link" href="/home?tag=动画&page=0&size=8">动画</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/tag?tag=漫画&page=0&size=8">漫画</a>
+                                    <a class="nav-link" href="/home?tag=漫画&page=0&size=8">漫画</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/tag?tag=漫展&page=0&size=8">漫展</a>
+                                    <a class="nav-link" href="/home?tag=漫展&page=0&size=8">漫展</a>
                                 </li>
                                 <!-- 管理员菜单 -->
                                 <span class="navbar-text me-2 ms-2" th:if="${isAdmin}">|</span>
@@ -71,21 +71,33 @@
         <!-- 搜索框 -->
         <div class="card rounded-3 overflow-hidden mb-3 shadow">
             <div class="card-body">
-                <div class="input-group gap-2">
+                <form action="/home" method="get" class="input-group gap-2">
                     <input type="text" class="form-control rounded-3" placeholder="搜索新闻" aria-label="搜索新闻"
-                        aria-describedby="button-search">
-                    <button class="btn btn-primary rounded-3" type="button" id="button-search">搜索</button>
-                </div>
+                        aria-describedby="button-search" name="keyword" id="search-input" th:value="${currentKeyword}">
+                    <input type="hidden" name="tag" th:value="${currentTag == '全部' ? '' : currentTag}">
+                    <input type="hidden" name="page" value="0">
+                    <input type="hidden" name="size" value="8">
+                    <button class="btn btn-primary rounded-3" type="submit" id="button-search">搜索</button>
+                </form>
             </div>
 
         </div>
+        
+        <script>
+            // 添加回车键搜索功能
+            document.getElementById('search-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    this.form.submit();
+                }
+            });
+        </script>
 
         <!-- 新闻展示区域 -->
         <div class="row">
             <div class="col-md-8">
                 <div class="card rounded-3 overflow-hidden mb-5 shadow">
                     <div class="card-header bg-light text-dark">
-                        <h3 class="h6 mb-0">全部</h3>
+                        <h3 class="h6 mb-0" th:text="${currentTag}"></h3>
                     </div>
                     <div class="card-body">
                         <!-- 新闻项列表 -->
@@ -133,7 +145,7 @@
                                         <!-- 上一页 -->
                                         <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
                                             <a class="page-link rounded-3"
-                                                th:href="@{/home(page=${currentPage - 1},size=${pageSize})}"
+                                                th:href="${currentTag == '全部'} ? @{/home(page=${currentPage - 1},size=${pageSize})} : @{/home(tag=${currentTag}, page=${currentPage - 1},size=${pageSize})}"
                                                 aria-label="上一页">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
@@ -148,7 +160,7 @@
                                             <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''"
                                                 th:if="${start > 0}">
                                                 <a class="page-link rounded-3"
-                                                    th:href="@{/home(page=0,size=${pageSize})}" th:text="1"></a>
+                                                    th:href="${currentTag == '全部'} ? @{/home(page=0,size=${pageSize})} : @{/home(tag=${currentTag}, page=0,size=${pageSize})}" th:text="1"></a>
                                             </li>
 
                                             <!-- 省略号 -->
@@ -160,7 +172,7 @@
                                             <li class="page-item" th:each="i : ${#numbers.sequence(start, end)}"
                                                 th:classappend="${currentPage == i} ? 'active' : ''">
                                                 <a class="page-link rounded-3"
-                                                    th:href="@{/home(page=${i},size=${pageSize})}"
+                                                    th:href="${currentTag == '全部'} ? @{/home(page=${i},size=${pageSize})} : @{/home(tag=${currentTag}, page=${i},size=${pageSize})}"
                                                     th:text="${i + 1}"></a>
                                             </li>
 
@@ -174,7 +186,7 @@
                                                 th:classappend="${currentPage == page.totalPages - 1} ? 'active' : ''"
                                                 th:if="${end < page.totalPages - 1}">
                                                 <a class="page-link"
-                                                    th:href="@{/home(page=${page.totalPages - 1},size=${pageSize})}"
+                                                    th:href="${currentTag == '全部'} ? @{/home(page=${page.totalPages - 1},size=${pageSize})} : @{/home(tag=${currentTag}, page=${page.totalPages - 1},size=${pageSize})}"
                                                     th:text="${page.totalPages}" style="border-radius: 5px;"></a>
                                             </li>
                                         </th:block>
@@ -183,7 +195,7 @@
                                         <li class="page-item"
                                             th:classappend="${currentPage == page.totalPages - 1} ? 'disabled' : ''">
                                             <a class="page-link rounded-3"
-                                                th:href="@{/home(page=${currentPage + 1},size=${pageSize})}"
+                                                th:href="${currentTag == '全部'} ? @{/home(page=${currentPage + 1},size=${pageSize})} : @{/home(tag=${currentTag}, page=${currentPage + 1},size=${pageSize})}"
                                                 aria-label="下一页">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
@@ -231,7 +243,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center"
                                 th:each="entry : ${tagCountMap}">
-                                <a th:href="@{/tag(tag=${entry.key}, page=0, size=8)}" class="text-decoration-none"
+                                <a th:href="@{/home(tag=${entry.key}, page=0, size=8)}" class="text-decoration-none"
                                     th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
                                     th:text="${entry.key}">tag</a>
                                 <span class="badge bg-primary rounded-pill" th:text="${entry.value}">cnt</span>

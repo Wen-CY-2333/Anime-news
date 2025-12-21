@@ -60,15 +60,31 @@ public class NewsService {
         return tagCountMap;
     }
     
-    // 根据标签查询新闻
-    public List<News> findByTag(String tag) {
-        return newsDao.findByTag(tag);
-    }
-    
-    // 分页查询指定标签的新闻
-    public Page<News> findByTag(String tag, int page, int size) {
+    // 使用Specification实现多字段搜索，整合分页和标签检索
+    public Page<News> search(String keyword, String tag, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("time").descending());
-        return newsDao.findByTag(tag, pageable);
+        return newsDao.findAll((root, query, criteriaBuilder) -> {
+            javax.persistence.criteria.Predicate predicate = criteriaBuilder.conjunction();
+            
+            // 标签搜索
+            if (tag != null && !tag.isEmpty()) {
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("tag"), tag));
+            }
+            
+            // 关键字搜索，支持多字段模糊查询
+            if (keyword != null && !keyword.isEmpty()) {
+                String likeKeyword = "%" + keyword + "%";
+                javax.persistence.criteria.Predicate keywordPredicate = criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("title"), likeKeyword),
+                    criteriaBuilder.like(root.get("note"), likeKeyword),
+                    criteriaBuilder.like(root.get("content"), likeKeyword),
+                    criteriaBuilder.like(root.get("tag"), likeKeyword)
+                );
+                predicate = criteriaBuilder.and(predicate, keywordPredicate);
+            }
+            
+            return predicate;
+        }, pageable);
     }
 
 }
