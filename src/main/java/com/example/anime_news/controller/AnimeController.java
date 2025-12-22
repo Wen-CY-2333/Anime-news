@@ -33,7 +33,7 @@ public class AnimeController {
         mv.addObject("animeList", animePage.getContent());
         mv.addObject("page", animePage);
         
-        // 添加分页信息（与NewsController保持一致）
+        // 添加分页信息
         mv.addObject("currentPage", page);
         mv.addObject("pageSize", size);
         mv.addObject("currentFilter", filter);

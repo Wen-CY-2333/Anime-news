@@ -63,4 +63,27 @@ $(document).ready(function () {
             resultDiv.css('background-color', '#f8d7da');
         });
     });
+
+    // 更新音乐信息按钮
+    $('#musicBtn').on('click', function() {
+        var resultDiv = $('#result');
+        var timeFrom = $('#timeFrom').val();
+        var timeTo = $('#timeTo').val();
+
+        resultDiv.text('正在更新音乐信息...');
+        resultDiv.css('background-color', '#e9ecef');
+        resultDiv.show();
+
+        $.post('/spider/update-music', { timeFrom: timeFrom, timeTo: timeTo }, function (data) {
+            resultDiv.text(data);
+            if (data.indexOf('成功') >= 0) {
+                resultDiv.css('background-color', '#d4edda');
+            } else {
+                resultDiv.css('background-color', '#f8d7da');
+            }
+        }).fail(function () {
+            resultDiv.text('请求失败，请稍后重试');
+            resultDiv.css('background-color', '#f8d7da');
+        });
+    });
 });

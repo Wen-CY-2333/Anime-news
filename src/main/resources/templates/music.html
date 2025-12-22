@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 解决B站图片跨域问题 -->
     <meta name="referrer" content="no-referrer" />
-    <title>去看番 - Anime-News</title>
+    <title>去听歌 - Anime-News</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
@@ -54,7 +54,7 @@
                                     <a class="nav-link" href="/anime/">去看番</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/music/">去听歌</a>
+                                    <a class="nav-link active" href="/music/">去听歌</a>
                                 </li>
                                 <!-- 管理员菜单 -->
                                 <span class="navbar-text me-2 ms-2" th:if="${isAdmin}">|</span>
@@ -83,77 +83,83 @@
             </div>
         </div>
 
-        <!-- 番剧展示区域 -->
+        <!-- 音乐展示区域 -->
         <div class="card rounded-3 overflow-hidden mb-5 shadow">
 
             <div class="card-body">
                 <!-- 标题和筛选器 -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="card-title text-secondary mb-0">更新列表</h3>
+                    <h3 class="card-title text-secondary mb-0">音乐区热门视频</h3>
                     <div class="col-md-6">
                         <div class="d-flex flex-wrap gap-2 justify-content-md-end align-items-center">
                             <!-- 筛选选择器 -->
-                            <select id="animeFilter" class="form-select form-select-sm" style="max-width: 150px;"
-                                onchange="filterAnimeByBackend()">
-                                <option value="all" th:selected="${currentFilter == null or currentFilter == 'all'}">
-                                    最近更新
-                                </option>
-                                <option value="today" th:selected="${currentFilter == 'today'}">今日更新</option>
-                                <option value="1" th:selected="${currentFilter == '1'}">周一</option>
-                                <option value="2" th:selected="${currentFilter == '2'}">周二</option>
-                                <option value="3" th:selected="${currentFilter == '3'}">周三</option>
-                                <option value="4" th:selected="${currentFilter == '4'}">周四</option>
-                                <option value="5" th:selected="${currentFilter == '5'}">周五</option>
-                                <option value="6" th:selected="${currentFilter == '6'}">周六</option>
-                                <option value="7" th:selected="${currentFilter == '7'}">周日</option>
+                            <select id="musicFilter" class="form-select form-select-sm" style="max-width: 200px;"
+                                onchange="filterMusicByBackend()">
+                                <option value="" th:selected="${currentCateId == null}">全部分区</option>
+                                <option value="28" th:selected="${currentCateId == 28}">原创音乐</option>
+                                <option value="31" th:selected="${currentCateId == 31}">翻唱</option>
+                                <option value="30" th:selected="${currentCateId == 30}">VOCALOID·UTAU</option>
+                                <option value="194" th:selected="${currentCateId == 194}">电音</option>
+                                <option value="59" th:selected="${currentCateId == 59}">演奏</option>
+                                <option value="193" th:selected="${currentCateId == 193}">MV</option>
+                                <option value="29" th:selected="${currentCateId == 29}">音乐现场</option>
+                                <option value="130" th:selected="${currentCateId == 130}">音乐综合</option>
                             </select>
-                            <!-- 更新按钮 -->
-                            <!-- <form action="/anime/update" method="post">
-                            <button class="btn btn-primary btn-sm rounded-3" type="submit">更新数据</button>
-                        </form> -->
                         </div>
                     </div>
                 </div>
 
-                <!-- 番剧列表 -->
+                <!-- 音乐列表 -->
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
-                    <!-- 番剧项 -->
-                    <div th:each="anime : ${animeList}" class="col">
+                    <!-- 音乐项 -->
+                    <div th:each="music : ${musicList}" class="col">
                         <div class="card h-100 rounded-4 overflow-hidden shadow-sm border-0 anime-card">
-                            <!-- 番剧封面 -->
+                            <!-- 音乐封面 -->
                             <div class="position-relative anime-cover-wrapper">
                                 <div class="ratio ratio-4x3 anime-cover-container">
-                                    <a th:href="${anime.url}" target="_blank" class="d-block">
-                                        <img th:src="${anime.cover}" th:alt="${anime.title}"
+                                    <a th:href="${music.url}" target="_blank" class="d-block">
+                                        <img th:src="${music.pic}" th:alt="${music.title}"
                                             class="card-img-top object-fit-cover anime-cover">
                                     </a>
                                 </div>
                             </div>
                             <div class="card-body pb-3">
-                                <!-- 番剧标题 -->
+                                <!-- 音乐标题 -->
                                 <h6 class="card-title mb-3 fw-bold anime-title">
-                                    <a th:href="${anime.url}" target="_blank" class="text-dark text-decoration-none"
-                                        th:text="${anime.title}"></a>
+                                    <a th:href="${music.url}" target="_blank" class="text-dark text-decoration-none"
+                                        th:text="${music.title}"></a>
                                 </h6>
 
-                                <!-- 番剧信息 -->
+                                <!-- 音乐信息 -->
                                 <div class="anime-info">
-                                    <!-- 更新日期 -->
+                                    <!-- 作者 -->
                                     <div class="d-flex align-items-center mb-2">
-                                        <i class="bi bi-calendar3 text-primary me-2"></i>
-                                        <small class="text-muted" th:text="${anime.date}"></small>
+                                        <i class="bi bi-person-circle text-primary me-2"></i>
+                                        <small class="text-muted" th:text="${music.author}"></small>
                                     </div>
 
-                                    <!-- 更新集数 -->
+                                    <!-- 分区 -->
                                     <div class="d-flex align-items-center mb-2">
-                                        <i class="bi bi-play-circle text-success me-2"></i>
-                                        <span th:text="${anime.pubIndex}"></span>
+                                        <i class="bi bi-tag text-success me-2"></i>
+                                        <small class="text-muted" th:text="${music.cateName}"></small>
                                     </div>
 
-                                    <!-- 更新时间 -->
+                                    <!-- 播放量 -->
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-play-fill text-info me-2"></i>
+                                        <small class="text-muted" th:text="|${music.play} 播放|"></small>
+                                    </div>
+
+                                    <!-- 评论数 -->
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-chat-dots text-warning me-2"></i>
+                                        <small class="text-muted" th:text="|${music.review} 评论|"></small>
+                                    </div>
+
+                                    <!-- 收藏数 -->
                                     <div class="d-flex align-items-center">
-                                        <i class="bi bi-clock text-info me-2"></i>
-                                        <small class="text-muted" th:text="${anime.pubTime}"></small>
+                                        <i class="bi bi-heart text-danger me-2"></i>
+                                        <small class="text-muted" th:text="|${music.favorites} 收藏|"></small>
                                     </div>
                                 </div>
                             </div>
@@ -165,12 +171,12 @@
                 <div th:if="${page.totalPages > 1}" class="bg-white">
                     <!-- 页码 -->
                     <div class="d-flex justify-content-center">
-                        <nav aria-label="番剧分页">
+                        <nav aria-label="音乐分页">
                             <ul class="pagination" style="gap: 5px;">
                                 <!-- 上一页 -->
                                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
                                     <a class="page-link rounded-3"
-                                        th:href="@{/anime/(filter=${currentFilter}, page=${currentPage - 1}, size=${pageSize})}"
+                                        th:href="@{/music/(cateId=${currentCateId}, page=${currentPage - 1}, size=${pageSize})}"
                                         aria-label="上一页">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
@@ -185,7 +191,7 @@
                                     <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''"
                                         th:if="${start > 0}">
                                         <a class="page-link rounded-3"
-                                            th:href="@{/anime/(filter=${currentFilter}, page=0, size=${pageSize})}"
+                                            th:href="@{/music/(cateId=${currentCateId}, page=0, size=${pageSize})}"
                                             th:text="1"></a>
                                     </li>
 
@@ -198,7 +204,7 @@
                                     <li class="page-item" th:each="i : ${#numbers.sequence(start, end)}"
                                         th:classappend="${currentPage == i} ? 'active' : ''">
                                         <a class="page-link rounded-3"
-                                            th:href="@{/anime/(filter=${currentFilter}, page=${i}, size=${pageSize})}"
+                                            th:href="@{/music/(cateId=${currentCateId}, page=${i}, size=${pageSize})}"
                                             th:text="${i + 1}"></a>
                                     </li>
 
@@ -212,7 +218,7 @@
                                         th:classappend="${currentPage == page.totalPages - 1} ? 'active' : ''"
                                         th:if="${end < page.totalPages - 1}">
                                         <a class="page-link rounded-3"
-                                            th:href="@{/anime/(filter=${currentFilter}, page=${page.totalPages - 1}, size=${pageSize})}"
+                                            th:href="@{/music/(cateId=${currentCateId}, page=${page.totalPages - 1}, size=${pageSize})}"
                                             th:text="${page.totalPages}" style="border-radius: 5px;"></a>
                                     </li>
                                 </th:block>
@@ -221,7 +227,7 @@
                                 <li class="page-item"
                                     th:classappend="${currentPage >= page.totalPages - 1} ? 'disabled' : ''">
                                     <a class="page-link rounded-3"
-                                        th:href="@{/anime/(filter=${currentFilter}, page=${currentPage + 1}, size=${pageSize})}"
+                                        th:href="@{/music/(cateId=${currentCateId}, page=${currentPage + 1}, size=${pageSize})}"
                                         aria-label="下一页">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
@@ -240,10 +246,10 @@
                 </div>
 
                 <!-- 空状态 -->
-                <div th:if="${animeList.isEmpty()}" class="text-center py-5">
+                <div th:if="${musicList.isEmpty()}" class="text-center py-5">
                     <img width="280" height="158" alt=""
                         src="https://s1.hdslb.com/bfs/static/home-v3/assets/timeline-epmty.png">
-                    <h5 class="text-muted">今日暂无番剧更新</h5>
+                    <h5 class="text-muted">暂无音乐数据</h5>
                 </div>
             </div>
         </div>
@@ -258,12 +264,12 @@
 
     <!-- 后端筛选功能JavaScript -->
     <script>
-        function filterAnimeByBackend() {
-            const filter = document.getElementById('animeFilter').value;
-            let url = '/anime/';
+        function filterMusicByBackend() {
+            const filter = document.getElementById('musicFilter').value;
+            let url = '/music/';
 
-            if (filter && filter !== 'all') {
-                url += '?filter=' + encodeURIComponent(filter);
+            if (filter) {
+                url += '?cateId=' + encodeURIComponent(filter);
             }
 
             window.location.href = url;

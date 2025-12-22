@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.anime_news.service.AnimeService;
+import com.example.anime_news.service.MusicService;
 import com.example.anime_news.service.NewsService;
 import com.example.anime_news.utils.UserUtils;
 
@@ -22,6 +23,8 @@ public class SpiderController {
     private AnimeService animeService;
     @Autowired
     private NewsService newsService;
+    @Autowired
+    private MusicService musicService;
     
     // 爬取新闻并保存到数据库
     @PostMapping(value = "/crawl", produces = "text/plain;charset=UTF-8")
@@ -60,6 +63,20 @@ public class SpiderController {
         } catch (Exception e) {
             e.printStackTrace();
             return "更新番剧信息失败: " + e.getMessage();
+        }
+    }
+    
+    // 更新音乐信息
+    @PostMapping(value = "/update-music", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateMusicInfo(@RequestParam String timeFrom,
+                                  @RequestParam String timeTo) {
+        try {
+            musicService.updateMusic(timeFrom, timeTo);
+            return "成功更新音乐信息";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "更新音乐信息失败: " + e.getMessage();
         }
     }
     
