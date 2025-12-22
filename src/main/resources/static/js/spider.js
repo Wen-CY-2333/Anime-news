@@ -24,22 +24,43 @@ $(document).ready(function () {
 
     // 清空按钮
     $('#clearBtn').on('click', function clearNews() {
-    var resultDiv = $('#result');
+        var resultDiv = $('#result');
 
-    resultDiv.text('正在清空数据...');
-    resultDiv.css('background-color', '#e9ecef');
-    resultDiv.show();
+        resultDiv.text('正在清空数据...');
+        resultDiv.css('background-color', '#e9ecef');
+        resultDiv.show();
 
-    $.post('/spider/clear', function (data) {
-        resultDiv.text(data);
-        if (data.indexOf('成功') >= 0) {
-            resultDiv.css('background-color', '#d4edda');
-        } else {
+        $.post('/spider/clear', function (data) {
+            resultDiv.text(data);
+            if (data.indexOf('成功') >= 0) {
+                resultDiv.css('background-color', '#d4edda');
+            } else {
+                resultDiv.css('background-color', '#f8d7da');
+            }
+        }).fail(function () {
+            resultDiv.text('请求失败，请稍后重试');
             resultDiv.css('background-color', '#f8d7da');
-        }
-    }).fail(function () {
-        resultDiv.text('请求失败，请稍后重试');
-        resultDiv.css('background-color', '#f8d7da');
+        });
     });
-});
+
+    // 更新番剧信息按钮
+    $('#animeBtn').on('click', function() {
+        var resultDiv = $('#result');
+
+        resultDiv.text('正在更新番剧信息...');
+        resultDiv.css('background-color', '#e9ecef');
+        resultDiv.show();
+
+        $.post('/spider/update', function (data) {
+            resultDiv.text(data);
+            if (data.indexOf('成功') >= 0) {
+                resultDiv.css('background-color', '#d4edda');
+            } else {
+                resultDiv.css('background-color', '#f8d7da');
+            }
+        }).fail(function () {
+            resultDiv.text('请求失败，请稍后重试');
+            resultDiv.css('background-color', '#f8d7da');
+        });
+    });
 });

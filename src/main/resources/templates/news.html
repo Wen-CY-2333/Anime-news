@@ -37,15 +37,18 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/home?tag=动画&page=0&size=8">动画</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/home?tag=漫画&page=0&size=8">漫画</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/home?tag=漫展&page=0&size=8">漫展</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/home?tag=动画&page=0&size=8">动画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/home?tag=漫画&page=0&size=8">漫画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/home?tag=漫展&page=0&size=8">漫展</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/anime/">去看番</a>
+                                </li>
                                 <!-- 管理员菜单 -->
                                 <span class="navbar-text me-2 ms-2">|</span>
                                 <li class="nav-item">
@@ -53,6 +56,9 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user/">用户管理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/anime-manage/">番剧管理</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/spider/">爬虫管理</a>
@@ -103,7 +109,6 @@
                                 <th class="text-center align-middle">封面</th>
                                 <th class="text-center align-middle">标题</th>
                                 <th class="text-center align-middle">摘要</th>
-                                <th class="text-center align-middle">来源链接</th>
                                 <th class="text-center align-middle">标签</th>
                                 <th class="text-center align-middle">时间</th>
                                 <th class="text-center align-middle">操作</th>
@@ -122,14 +127,12 @@
                                 <td class="text-center align-middle"
                                     style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;"
                                     th:text="${item.note}"></td>
-                                <td class="text-center align-middle"
-                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px;">
-                                    <a th:href="${item.url}" th:text="${item.url}" target="_blank"
-                                        class="text-decoration-none text-info"></a>
-                                </td>
                                 <td class="text-center align-middle" th:text="${item.tag}"></td>
                                 <td class="text-center align-middle" th:text="${item.time}"></td>
                                 <td class="text-center align-middle">
+                                    <a th:href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm me-2">
+                                        <i class="bi bi-link-45deg"></i> 链接
+                                    </a>
                                     <button class="btn btn-outline-primary btn-sm me-2 edit-btn" th:data-id="${item.id}"
                                         data-bs-toggle="modal" data-bs-target="#editNewsModal">修改</button>
                                     <button class="btn btn-outline-danger btn-sm delete-btn"

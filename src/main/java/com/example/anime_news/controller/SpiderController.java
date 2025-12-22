@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.anime_news.service.AnimeService;
 import com.example.anime_news.service.NewsService;
-import com.example.anime_news.service.SpiderService;
 import com.example.anime_news.utils.UserUtils;
 
 @Controller
@@ -19,7 +19,7 @@ import com.example.anime_news.utils.UserUtils;
 @RequiresRoles("admin")
 public class SpiderController {
     @Autowired
-    private SpiderService spiderService;
+    private AnimeService animeService;
     @Autowired
     private NewsService newsService;
     
@@ -29,7 +29,7 @@ public class SpiderController {
     public String crawlNews(@RequestParam int startPage,
                             @RequestParam int endPage) {
         try {
-            int[] newsCount = spiderService.crawlNews(startPage, endPage);
+            int[] newsCount = newsService.crawlNews(startPage, endPage);
             return "成功爬取并保存 " + newsCount[0] + " 条新闻，" + newsCount[1] + " 条新闻已存在";
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,6 +47,19 @@ public class SpiderController {
         } catch (Exception e) {
             e.printStackTrace();
             return "清空数据库失败: " + e.getMessage();
+        }
+    }
+    
+    // 更新番剧信息
+    @PostMapping(value = "/update", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateAnimeInfo() {
+        try {
+            animeService.updateAnime();
+            return "成功更新番剧信息";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "更新番剧信息失败: " + e.getMessage();
         }
     }
     
