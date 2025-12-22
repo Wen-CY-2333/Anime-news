@@ -13,5 +13,6 @@ import com.example.anime_news.pojo.News;
  */
 @Repository
 public interface NewsDao extends JpaRepository<News, Long>, JpaSpecificationExecutor<News> {
-
+    
+    News findByTitle(String title);
 }

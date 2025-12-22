@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -28,17 +29,20 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "主键", example = "1")
     private Long id;
-    @ApiModelProperty("新闻标题")
+    @ApiModelProperty("标题")
     private String title;
     @ApiModelProperty("来源链接")
     private String url;
-    @ApiModelProperty("封面图片")
+    @ApiModelProperty("封面")
     private String image;
     @ApiModelProperty(value = "创建修改时间", example = "1")
     private String time;
     @ApiModelProperty("标签")
     private String tag;
-    @ApiModelProperty("新闻简介")
+    @ApiModelProperty("摘要")
+    private String note;
+    @ApiModelProperty("内容")
+    @Lob
     private String content;
     @ApiModelProperty("点赞数")
     private Integer likeCount = 0;

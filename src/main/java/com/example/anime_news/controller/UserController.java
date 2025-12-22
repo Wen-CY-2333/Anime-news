@@ -12,60 +12,59 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.anime_news.pojo.News;
-import com.example.anime_news.service.NewsService;
+import com.example.anime_news.pojo.User;
+import com.example.anime_news.service.UserService;
 import com.example.anime_news.utils.UserUtils;
 
-
 @Controller
-@RequestMapping("/news")
+@RequestMapping("/user")
 @RequiresRoles("admin")
-public class NewsController {
+public class UserController {
     @Autowired
-    private NewsService newsService;
-    
-    // 添加新闻
+    private UserService userService;
+
+    // 添加用户
     @PostMapping("/add")
     @ResponseBody
-    public void addByModel(@ModelAttribute News news) {
-        newsService.save(news);
+    public User addByModel(@ModelAttribute User user) {
+        return userService.save(user);
     }
 
-    // 编辑新闻
+    // 修改用户信息
     @PostMapping("/edit")
     @ResponseBody
-    public void editByModel(@ModelAttribute News news) {
-        newsService.save(news);
+    public User editByModel(@ModelAttribute User user) {
+        return userService.save(user);
     }
 
-    // 删除新闻
+    // 删除用户
     @PostMapping("/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable Long id) {
-        newsService.deleteById(id);
+        userService.deleteById(id);
     }
 
-    // 通过id查询新闻信息
+    // 通过id查询用户信息
     @GetMapping("/find/{id}")
     @ResponseBody
-    public News getNewsById(@PathVariable Long id) {
-        return newsService.findById(id);
+    public User getUserById(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
-    // 新闻管理页面
+    // 用户管理页面
     @GetMapping("/")
-    public ModelAndView news(@RequestParam(defaultValue = "0") int page, 
-                             @RequestParam(defaultValue = "8") int size) {
-        ModelAndView mv = new ModelAndView("news");
-        mv.addObject("newsList", newsService.findAll(page, size).getContent());
+    public ModelAndView users(@RequestParam(defaultValue = "0") int page, 
+                              @RequestParam(defaultValue = "8") int size) {
+        ModelAndView mv = new ModelAndView("users");
+        mv.addObject("userList", userService.findAll(page, size).getContent());
 
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
+        mv.addObject("isLogin", true);
 
-        mv.addObject("page", newsService.findAll(page, size));
+        mv.addObject("page", userService.findAll(page, size));
         mv.addObject("currentPage", page);
         mv.addObject("pageSize", size);
         return mv;
     }
-
 }

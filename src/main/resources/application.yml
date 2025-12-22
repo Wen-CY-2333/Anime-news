@@ -21,11 +21,9 @@ spring:
     show-sql: true # 显示sql
     hibernate:
       ddl-auto: update # 自动创建表
-    open-in-view: false
   devtools:
     restart:
       exclude: public/**
-
 
 shiro:
   loginUrl: /login

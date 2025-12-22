@@ -1,9 +1,11 @@
 package com.example.anime_news.service;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.anime_news.dao.UserDao;
@@ -36,12 +38,18 @@ public class UserService {
         userDao.deleteById(id);
     }
 
-    public List<User> findAll() {
-        return userDao.findAll();
-    }
-
     public User findTopByName(String name) {
         return userDao.findTopByName(name);
+    }
+
+    public User findById(Long id) {
+        return userDao.findById(id).orElse(null);
+    }
+    
+    //分页查询所有用户
+    public Page<User> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("role", "name"));
+        return userDao.findAll(pageable);
     }
 
 }
