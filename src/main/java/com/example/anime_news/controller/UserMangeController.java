@@ -19,7 +19,7 @@ import com.example.anime_news.utils.UserUtils;
 @Controller
 @RequestMapping("/user")
 @RequiresRoles("admin")
-public class UserController {
+public class UserMangeController {
     @Autowired
     private UserService userService;
 

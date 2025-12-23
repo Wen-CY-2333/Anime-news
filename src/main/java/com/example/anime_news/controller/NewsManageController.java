@@ -12,61 +12,60 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.anime_news.pojo.Anime;
-import org.springframework.data.domain.Page;
-import com.example.anime_news.service.AnimeService;
+import com.example.anime_news.pojo.News;
+import com.example.anime_news.service.NewsService;
 import com.example.anime_news.utils.UserUtils;
 
-@Controller
-@RequestMapping("/anime-manage")
-@RequiresRoles("admin")
-public class AnimeManageController {
-    @Autowired
-    private AnimeService animeService;
 
-    // 添加番剧
+@Controller
+@RequestMapping("/news")
+@RequiresRoles("admin")
+public class NewsManageController {
+    @Autowired
+    private NewsService newsService;
+    
+    // 添加新闻
     @PostMapping("/add")
     @ResponseBody
-    public void addByModel(@ModelAttribute Anime anime) {
-        animeService.save(anime);
+    public void addByModel(@ModelAttribute News news) {
+        newsService.save(news);
     }
 
-    // 编辑番剧
+    // 编辑新闻
     @PostMapping("/edit")
     @ResponseBody
-    public void editByModel(@ModelAttribute Anime anime) {
-        animeService.save(anime);
+    public void editByModel(@ModelAttribute News news) {
+        newsService.save(news);
     }
 
-    // 删除番剧
+    // 删除新闻
     @PostMapping("/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable Long id) {
-        animeService.deleteById(id);
+        newsService.deleteById(id);
     }
 
-    // 通过id查询番剧信息
+    // 通过id查询新闻信息
     @GetMapping("/find/{id}")
     @ResponseBody
-    public Anime getAnimeById(@PathVariable Long id) {
-        return animeService.findById(id);
+    public News getNewsById(@PathVariable Long id) {
+        return newsService.findById(id);
     }
 
-    // 番剧管理页面
+    // 新闻管理页面
     @GetMapping("/")
-    public ModelAndView animeManage(@RequestParam(defaultValue = "0") int page, 
-                                   @RequestParam(defaultValue = "8") int size) {
-        ModelAndView mv = new ModelAndView("anime_manage");
-        
-        Page<Anime> pageResult = animeService.findAll(page, size);
-        mv.addObject("animeList", pageResult.getContent());
+    public ModelAndView news(@RequestParam(defaultValue = "0") int page, 
+                             @RequestParam(defaultValue = "8") int size) {
+        ModelAndView mv = new ModelAndView("news_manage");
+        mv.addObject("newsList", newsService.findAll(page, size).getContent());
 
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
 
-        mv.addObject("page", pageResult);
+        mv.addObject("page", newsService.findAll(page, size));
         mv.addObject("currentPage", page);
         mv.addObject("pageSize", size);
         return mv;
     }
+
 }

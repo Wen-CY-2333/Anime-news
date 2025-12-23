@@ -56,7 +56,7 @@ public class MusicManageController {
     @GetMapping("/")
     public ModelAndView musicManage(@RequestParam(defaultValue = "0") int page, 
                                    @RequestParam(defaultValue = "8") int size) {
-        ModelAndView mv = new ModelAndView("music-manage");
+        ModelAndView mv = new ModelAndView("music_manage");
         
         Page<Music> pageResult = musicService.findAll(page, size);
         mv.addObject("musicList", pageResult.getContent());

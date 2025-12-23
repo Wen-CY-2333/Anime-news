@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // 修改按钮
+    // 编辑新闻按钮点击事件
     $('.edit-btn').click(function() {
         var id = $(this).data('id');
         // 发送请求获取新闻信息
@@ -23,7 +23,7 @@ $(document).ready(function() {
         });
     });
 
-    // 修改模态框的保存按钮
+    // 保存编辑按钮点击事件
     $('#saveEditBtn').click(function() {
         // 获取表单数据
         var formData = {
@@ -46,7 +46,7 @@ $(document).ready(function() {
                 // 关闭模态框
                 $('#editNewsModal').modal('hide');
                 // 刷新页面
-                window.location.reload();
+                location.reload();
             },
             error: function(error) {
                 console.error('编辑新闻失败:', error);
@@ -54,17 +54,17 @@ $(document).ready(function() {
         });
     });
 
-    // 删除按钮
+    // 删除新闻按钮点击事件
     $('.delete-btn').click(function() {
         var id = $(this).data('id');
         if (confirm('确定要删除这条新闻吗？')) {
-            // 发送DELETE请求
+            // 发送POST请求
             $.ajax({
                 type: 'POST',
                 url: '/news/delete/' + id,
                 success: function() {
                     // 刷新页面
-                    window.location.reload();
+                    location.reload();
                 },
                 error: function(error) {
                     console.error('删除新闻失败:', error);
@@ -73,7 +73,7 @@ $(document).ready(function() {
         }
     });
 
-    // 发布新闻按钮
+    // 发布新闻按钮点击事件
     $('#saveAddNewsBtn').click(function() {
         // 获取表单数据
         var formData = {
@@ -95,7 +95,7 @@ $(document).ready(function() {
                 // 关闭模态框
                 $('#addNewsModal').modal('hide');
                 // 刷新页面
-                window.location.reload();
+                location.reload();
             },
             error: function(error) {
                 console.error('发布新闻失败:', error);

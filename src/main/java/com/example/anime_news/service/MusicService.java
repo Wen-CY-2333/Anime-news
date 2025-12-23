@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -38,16 +40,18 @@ public class MusicService {
     }
 
     public Page<Music> findAll(int page, int size) {
-        return musicDao.findAll(PageRequest.of(page, size));
+        Pageable pageable = PageRequest.of(page, size, Sort.by("play").descending());
+        return musicDao.findAll(pageable);
     }
 
     // 根据分区ID分页查询（支持查询所有）
     public Page<Music> findByCateId(Integer cateId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("play").descending());
         if (cateId == null) {
             // 查询所有音乐
-            return musicDao.findAll(PageRequest.of(page, size));
+            return musicDao.findAll(pageable);
         }
-        return musicDao.findByCateId(cateId, PageRequest.of(page, size));
+        return musicDao.findByCateId(cateId, pageable);
     }
     
     // 音乐分区映射

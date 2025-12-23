@@ -12,6 +12,7 @@
     <link href="/css/common.css" rel="stylesheet">
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/js/music_manage.js"></script>
 </head>
 
 <body>
@@ -314,7 +315,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="addMusic()">添加</button>
+                    <button type="button" class="btn btn-primary" id="saveAddMusicBtn">添加</button>
                 </div>
             </div>
         </div>
@@ -395,118 +396,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="editMusic()">保存</button>
+                    <button type="button" class="btn btn-primary" id="saveEditMusicBtn">保存</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
-    <script>
-        // 添加音乐
-        function addMusic() {
-            const form = document.getElementById('addMusicForm');
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            
-            fetch('/music-manage/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert('添加成功！');
-                    location.reload();
-                } else {
-                    alert('添加失败！');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('添加失败！');
-            });
-        }
-
-        // 编辑音乐按钮点击事件
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('edit-music-btn')) {
-                const id = e.target.getAttribute('data-id');
-                fetch('/music-manage/find/' + id)
-                    .then(response => response.json())
-                    .then(music => {
-                        document.getElementById('editMusicId').value = music.id;
-                        document.getElementById('editMusicBvid').value = music.bvid;
-                        document.getElementById('editMusicTitle').value = music.title;
-                        document.getElementById('editMusicPic').value = music.pic;
-                        document.getElementById('editMusicUrl').value = music.url;
-                        document.getElementById('editMusicAuthor').value = music.author;
-                        document.getElementById('editMusicPlay').value = music.play;
-                        document.getElementById('editMusicReview').value = music.review;
-                        document.getElementById('editMusicFavorites').value = music.favorites;
-                        document.getElementById('editMusicCateId').value = music.cateId;
-                        document.getElementById('editMusicCateName').value = music.cateName;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('获取音乐信息失败！');
-                    });
-            }
-        });
-
-        // 保存编辑
-        function editMusic() {
-            const form = document.getElementById('editMusicForm');
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            
-            fetch('/music-manage/edit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert('修改成功！');
-                    location.reload();
-                } else {
-                    alert('修改失败！');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('修改失败！');
-            });
-        }
-
-        // 删除音乐
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('delete-music-btn')) {
-                if (confirm('确定要删除这个音乐吗？')) {
-                    const id = e.target.getAttribute('data-id');
-                    fetch('/music-manage/delete/' + id, {
-                        method: 'POST'
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            alert('删除成功！');
-                            location.reload();
-                        } else {
-                            alert('删除失败！');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('删除失败！');
-                    });
-                }
-            }
-        });
-    </script>
 </body>
 
 </html>
