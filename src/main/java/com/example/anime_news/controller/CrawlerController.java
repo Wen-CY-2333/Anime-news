@@ -10,21 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.anime_news.service.AnimeService;
-import com.example.anime_news.service.MusicService;
+import com.example.anime_news.service.CrawlerService;
 import com.example.anime_news.service.NewsService;
 import com.example.anime_news.utils.UserUtils;
 
 @Controller
-@RequestMapping("/spider")
+@RequestMapping("/crawler")
 @RequiresRoles("admin")
-public class SpiderController {
+public class CrawlerController {
     @Autowired
-    private AnimeService animeService;
+    private CrawlerService crawlerService;
     @Autowired
     private NewsService newsService;
-    @Autowired
-    private MusicService musicService;
     
     // 爬取新闻并保存到数据库
     @PostMapping(value = "/crawl", produces = "text/plain;charset=UTF-8")
@@ -32,7 +29,7 @@ public class SpiderController {
     public String crawlNews(@RequestParam int startPage,
                             @RequestParam int endPage) {
         try {
-            int[] newsCount = newsService.crawlNews(startPage, endPage);
+            int[] newsCount = crawlerService.crawlNews(startPage, endPage);
             return "成功爬取并保存 " + newsCount[0] + " 条新闻，" + newsCount[1] + " 条新闻已存在";
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +55,7 @@ public class SpiderController {
     @ResponseBody
     public String updateAnimeInfo() {
         try {
-            animeService.updateAnime();
+            crawlerService.updateAnime();
             return "成功更新番剧信息";
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +69,7 @@ public class SpiderController {
     public String updateMusicInfo(@RequestParam String timeFrom,
                                   @RequestParam String timeTo) {
         try {
-            musicService.updateMusic(timeFrom, timeTo);
+            crawlerService.updateMusic(timeFrom, timeTo);
             return "成功更新音乐信息";
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,8 +79,8 @@ public class SpiderController {
     
     // 爬虫页面
     @GetMapping("/")
-    public ModelAndView spiderPage() {
-        ModelAndView mv = new ModelAndView("spider");
+    public ModelAndView crawlerPage() {
+        ModelAndView mv = new ModelAndView("crawler");
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
         return mv;

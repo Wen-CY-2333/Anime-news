@@ -9,7 +9,7 @@ $(document).ready(function () {
         resultDiv.css('background-color', '#e9ecef');
         resultDiv.show();
 
-        $.post('/spider/crawl', { startPage: startPage, endPage: endPage }, function (data) {
+        $.post('/crawler/crawl', { startPage: startPage, endPage: endPage }, function (data) {
             resultDiv.text(data);
             if (data.indexOf('成功') >= 0) {
                 resultDiv.css('background-color', '#d4edda');
@@ -30,7 +30,7 @@ $(document).ready(function () {
         resultDiv.css('background-color', '#e9ecef');
         resultDiv.show();
 
-        $.post('/spider/clear', function (data) {
+        $.post('/crawler/clear', function (data) {
             resultDiv.text(data);
             if (data.indexOf('成功') >= 0) {
                 resultDiv.css('background-color', '#d4edda');
@@ -51,7 +51,7 @@ $(document).ready(function () {
         resultDiv.css('background-color', '#e9ecef');
         resultDiv.show();
 
-        $.post('/spider/update', function (data) {
+        $.post('/crawler/update', function (data) {
             resultDiv.text(data);
             if (data.indexOf('成功') >= 0) {
                 resultDiv.css('background-color', '#d4edda');
@@ -74,7 +74,7 @@ $(document).ready(function () {
         resultDiv.css('background-color', '#e9ecef');
         resultDiv.show();
 
-        $.post('/spider/update-music', { timeFrom: timeFrom, timeTo: timeTo }, function (data) {
+        $.post('/crawler/update-music', { timeFrom: timeFrom, timeTo: timeTo }, function (data) {
             resultDiv.text(data);
             if (data.indexOf('成功') >= 0) {
                 resultDiv.css('background-color', '#d4edda');
