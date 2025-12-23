@@ -9,9 +9,8 @@
     <title>去看番 - Anime-News</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap/bootstrap-icons.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/css/anime.css" rel="stylesheet">
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
 </head>
@@ -119,25 +118,25 @@
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
                     <!-- 番剧项 -->
                     <div th:each="anime : ${animeList}" class="col">
-                        <div class="card h-100 rounded-4 overflow-hidden shadow-sm border-0 anime-card">
+                        <div class="card h-100 rounded-4 overflow-hidden shadow-sm border-0 a-card">
                             <!-- 番剧封面 -->
-                            <div class="position-relative anime-cover-wrapper">
-                                <div class="ratio ratio-4x3 anime-cover-container">
+                            <div class="position-relative a-cover-wrapper">
+                                <div class="ratio ratio-4x3 a-cover-container">
                                     <a th:href="${anime.url}" target="_blank" class="d-block">
                                         <img th:src="${anime.cover}" th:alt="${anime.title}"
-                                            class="card-img-top object-fit-cover anime-cover">
+                                            class="card-img-top object-fit-cover a-cover">
                                     </a>
                                 </div>
                             </div>
                             <div class="card-body pb-3">
                                 <!-- 番剧标题 -->
-                                <h6 class="card-title mb-3 fw-bold anime-title">
+                                <h6 class="card-title mb-3 fw-bold a-title">
                                     <a th:href="${anime.url}" target="_blank" class="text-dark text-decoration-none"
                                         th:text="${anime.title}"></a>
                                 </h6>
 
                                 <!-- 番剧信息 -->
-                                <div class="anime-info">
+                                <div class="a-info">
                                     <!-- 更新日期 -->
                                     <div class="d-flex align-items-center mb-2">
                                         <i class="bi bi-calendar3 text-primary me-2"></i>
