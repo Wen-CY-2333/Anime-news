@@ -117,6 +117,7 @@
                                 <th class="text-center align-middle">摘要</th>
                                 <th class="text-center align-middle">标签</th>
                                 <th class="text-center align-middle">时间</th>
+                                <th class="text-center align-middle">访问量</th>
                                 <th class="text-center align-middle">操作</th>
                             </tr>
                         </thead>
@@ -135,6 +136,7 @@
                                     th:text="${item.note}"></td>
                                 <td class="text-center align-middle" th:text="${item.tag}"></td>
                                 <td class="text-center align-middle" th:text="${item.time}"></td>
+                                <td class="text-center align-middle" th:text="${item.visits}"></td>
                                 <td class="text-center align-middle">
                                     <a th:href="${item.url}" target="_blank" class="btn btn-outline-info btn-sm me-2">
                                         <i class="bi bi-link-45deg"></i> 链接

@@ -44,4 +44,6 @@ public class News {
     @ApiModelProperty("内容")
     @Lob
     private String content;
+    @ApiModelProperty("访问量")
+    private Integer visits;
 }
