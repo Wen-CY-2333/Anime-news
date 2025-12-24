@@ -39,6 +39,7 @@ public class HomeController {
         mv.addObject("currentTag", tag != null && !tag.isEmpty() ? tag : "全部");
         mv.addObject("currentKeyword", keyword);
         mv.addObject("tagCountMap", newsService.countTags());
+        mv.addObject("commentCountMap", newsService.countComments());
 
         // 检查用户是否已登录
         User currentUser = UserUtils.getCurrentUser();

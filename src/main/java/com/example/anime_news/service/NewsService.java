@@ -13,11 +13,16 @@ import org.springframework.stereotype.Service;
 
 import com.example.anime_news.dao.NewsDao;
 import com.example.anime_news.pojo.News;
+import com.example.anime_news.service.CommentService;
+
 
 @Service
 public class NewsService {
     @Autowired
     private NewsDao newsDao;
+    
+    @Autowired
+    private CommentService commentService;
 
     public News save(News news) {
         return newsDao.save(news);
@@ -45,6 +50,19 @@ public class NewsService {
         return newsDao.findAll(pageable);
     }
 
+    // 获取所有新闻的评论数映射
+    public Map<Long, Long> countComments() {
+        List<News> newsList = newsDao.findAll();
+        Map<Long, Long> commentCountMap = new HashMap<>();
+        
+        for (News news : newsList) {
+            long count = commentService.countByNewsId(news.getId());
+            commentCountMap.put(news.getId(), count);
+        }
+        
+        return commentCountMap;
+    }
+    
     // 统计所有标签及其出现次数
     public Map<String, Long> countTags() {
         List<News> newsList = newsDao.findAll();

@@ -137,7 +137,7 @@
                                                 <i class="bi bi-heart"></i> 点赞(cnt)
                                             </button>
                                             <button class="btn btn-sm btn-outline-secondary">
-                                                <i class="bi bi-chat"></i> 评论(cnt)
+                                                <i class="bi bi-chat"></i> 评论(<span th:text="${commentCountMap.get(news.id)}"></span>)
                                             </button>
                                             <button class="btn btn-sm btn-outline-secondary">
                                                 <i class="bi bi-share"></i> 分享

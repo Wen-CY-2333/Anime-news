@@ -105,10 +105,10 @@
                         <!-- 互动按钮 -->
                         <div class="d-flex justify-content-center gap-3 mt-5 pt-4 border-top">
                             <button class="btn btn-outline-secondary">
-                                <i class="bi bi-heart"></i> 点赞(cnt)
+                                <i class="bi bi-heart"></i> 点赞
                             </button>
                             <button class="btn btn-outline-secondary">
-                                <i class="bi bi-chat"></i> 评论(cnt)
+                                <i class="bi bi-chat"></i> 评论 (<span th:text="${comments.size()}">0</span>)
                             </button>
                             <button class="btn btn-outline-secondary">
                                 <i class="bi bi-share"></i> 分享
@@ -124,25 +124,17 @@
                     </div>
                     <div class="card-body">
                         <!-- 评论列表 -->
-                        <div class="mb-4 pb-4 border-bottom">
-                            <div class="d-flex align-items-start g-3">
-                                <img src="/img/avatar.jpg" alt="用户头像" class="img-fluid rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
-                                <div class="flex-grow-1 ms-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h6 class="mb-1">用户名</h6>
-                                        <span class="text-xs text-muted">评论时间</span>
-                                    </div>
-                                    <p class="text-muted small">评论内容...</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div th:replace="comments :: comment-list"></div>
                         
                         <!-- 评论输入框 -->
                         <div class="mt-4">
-                            <textarea class="form-control rounded-3 mb-3" rows="3" placeholder="写下你的评论..."></textarea>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary rounded-3">发布评论</button>
-                            </div>
+                            <form id="comment-form" th:action="@{/news/comment}" th:object="${comment}" method="post">
+                                <input type="hidden" id="comment-news-id" th:field="*{newsId}" />
+                                <textarea id="comment-content" th:field="*{commentContent}" class="form-control rounded-3 mb-3" rows="3" placeholder="写下你的评论..." required></textarea>
+                                <div class="d-flex justify-content-end">
+                                    <button id="submit-comment-btn" type="submit" class="btn btn-primary rounded-3">发布评论</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -193,6 +185,7 @@
                 <p class="mb-0">© 2025 Anime-News. </p>
             </div>
         </div>
+
     </div>
 
 </body>

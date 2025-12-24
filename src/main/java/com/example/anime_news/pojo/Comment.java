@@ -1,11 +1,15 @@
 package com.example.anime_news.pojo;
 
 import io.swagger.annotations.ApiModelProperty;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +31,8 @@ public class Comment {
     private Long userId;
     @ApiModelProperty("评论内容")
     private String commentContent;
+    @ApiModelProperty("创建时间")
+    @Column(name = "create_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime;
 }
