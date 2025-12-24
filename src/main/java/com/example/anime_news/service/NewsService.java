@@ -46,7 +46,8 @@ public class NewsService {
 
     // 分页查询所有新闻
     public Page<News> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("time").descending());
+        Sort sort = Sort.by("time").descending().and(Sort.by("visits").descending());
+        Pageable pageable = PageRequest.of(page, size, sort);
         return newsDao.findAll(pageable);
     }
 
@@ -80,7 +81,8 @@ public class NewsService {
 
     // 使用Specification实现多字段搜索，整合分页和标签检索
     public Page<News> search(String keyword, String tag, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("time").descending());
+        Sort sort = Sort.by("time").descending().and(Sort.by("visits").descending());
+        Pageable pageable = PageRequest.of(page, size, sort);
         return newsDao.findAll((root, query, criteriaBuilder) -> {
             javax.persistence.criteria.Predicate predicate = criteriaBuilder.conjunction();
 

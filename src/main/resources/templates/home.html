@@ -94,10 +94,10 @@
             </div>
 
         </div>
-        
+
         <script>
             // 添加回车键搜索功能
-            document.getElementById('search-input').addEventListener('keypress', function(e) {
+            document.getElementById('search-input').addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     this.form.submit();
                 }
@@ -129,7 +129,10 @@
                                             style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;"
                                             th:text="${news.note}"></p>
                                     </div>
-                                    <span class="badge bg-secondary fs-xs mt-2" th:text="${news.tag}"></span>
+                                    <div class="d-flex justify-content-between align-items-center me-3">
+                                        <span class="badge bg-secondary fs-xs mt-2" th:text="${news.tag}"></span>
+                                        <span class="text-xs text-muted text-end" th:text="|访问量：${news.visits}|"></span>
+                                    </div>
                                     <div class="d-flex justify-content-between align-items-center ">
                                         <span class="text-xs text-muted" th:text="${news.time}"></span>
                                         <div class="d-flex gap-2 me-3">
@@ -167,12 +170,13 @@
                                         <th:block
                                             th:with="start=${currentPage - 3 < 0 ? 0 : currentPage - 3}, 
                                                      end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
-                                                     
+
                                             <!-- 第一页 -->
                                             <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''"
                                                 th:if="${start > 0}">
                                                 <a class="page-link rounded-3"
-                                                    th:href="${currentTag == '全部'} ? @{/home(page=0,size=${pageSize})} : @{/home(tag=${currentTag}, page=0,size=${pageSize})}" th:text="1"></a>
+                                                    th:href="${currentTag == '全部'} ? @{/home(page=0,size=${pageSize})} : @{/home(tag=${currentTag}, page=0,size=${pageSize})}"
+                                                    th:text="1"></a>
                                             </li>
 
                                             <!-- 省略号 -->
