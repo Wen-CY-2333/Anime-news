@@ -26,7 +26,7 @@ public class NewsController {
     private CommentService commentService;
 
     // 新闻内容页
-    @GetMapping("/news/{id}")
+    @GetMapping("/{id}")
     public ModelAndView content(@PathVariable Long id) {
         ModelAndView mv = new ModelAndView("news");
         mv.addObject("news", newsService.findById(id));
@@ -47,7 +47,7 @@ public class NewsController {
     }
     
     // 提交评论
-    @PostMapping("/news/comment")
+    @PostMapping("/comment")
     public String submitComment(@ModelAttribute Comment comment) {
         // 设置当前用户ID
         comment.setUserId(UserUtils.getCurrentUser().getId());

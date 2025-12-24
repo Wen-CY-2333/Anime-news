@@ -51,7 +51,7 @@ public class CrawlerController {
     }
     
     // 更新番剧信息
-    @PostMapping(value = "/update", produces = "text/plain;charset=UTF-8")
+    @PostMapping(value = "/update-anime", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String updateAnimeInfo() {
         try {

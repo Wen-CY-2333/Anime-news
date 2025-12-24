@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.anime_news.dao.NewsDao;
 import com.example.anime_news.pojo.News;
-import com.example.anime_news.service.CommentService;
 
 
 @Service

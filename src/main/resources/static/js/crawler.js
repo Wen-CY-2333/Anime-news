@@ -51,7 +51,7 @@ $(document).ready(function () {
         resultDiv.css('background-color', '#e9ecef');
         resultDiv.show();
 
-        $.post('/crawler/update', function (data) {
+        $.post('/crawler/update-anime', function (data) {
             resultDiv.text(data);
             if (data.indexOf('成功') >= 0) {
                 resultDiv.css('background-color', '#d4edda');
