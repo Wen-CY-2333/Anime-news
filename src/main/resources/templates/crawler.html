@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爬虫管理 - AnimeNews</title>
+    <link rel="icon" href="/favicon.ico" type="image/png">
+    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/js/crawler.js"></script>
+</head>
+
+<body>
+    <!-- 添加仿知乎登录页面canvas-nest背景 -->
+    <iframe src="/canvas-nest/index.html" frameborder="0"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe>
+
+    <div class="container">
+        <!-- 导航菜单 -->
+        <div class="card rounded-3 overflow-hidden mb-5 shadow">
+            <div class="card-body">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                    <div class="container-fluid">
+                        <a class="navbar-brand d-flex align-items-center" href="/home">
+                            <img src="/favicon.ico" alt="Anime-News"
+                                style="height: 90px; width: 90px; margin-top: -30px; margin-bottom: -30px;">
+                            <span id="pixel-brand" class="navbar-brand text-secondary" style="margin-left: 20px;">次元资讯</span>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/home?tag=动画&page=0&size=8">动画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/home?tag=漫画&page=0&size=8">漫画</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/home?tag=漫展&page=0&size=8">漫展</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/anime/">去看番</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/music/">去听歌</a>
+                                </li>
+                                <!-- 管理员菜单 -->
+                                <span class="navbar-text me-2 ms-2">|</span>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/news/">新闻管理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user/">用户管理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/anime-manage/">番剧管理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/music-manage/">音乐管理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/crawler/">爬虫管理</a>
+                                </li>
+                            </ul>
+                            <div class="d-flex ms-auto">
+                                <a th:href="@{/logout}" class="btn btn-outline-danger me-2">退出登录</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="card rounded-3 overflow-hidden mb-5 shadow position-relative">
+            <div class="card-body" style="user-select: none; margin: 0 20px;">
+                <div class="row align-items-center">
+                    <!-- 主要内容区域 -->
+                    <div class="col-lg-8">
+                        <h1 th:text="${T(java.time.LocalTime).now().getHour() < 6 ? '晚上好，' + userName : 
+                            T(java.time.LocalTime).now().getHour() < 12 ? '上午好，' + userName : 
+                            T(java.time.LocalTime).now().getHour() < 14 ? '中午好，' + userName : 
+                            T(java.time.LocalTime).now().getHour() < 18 ? '下午好，' + userName : 
+                            '晚上好，' + userName}" class="card-title mb-4 text-secondary"></h1>
+                        <p class="card-text text-muted">可以在这里手动执行爬虫任务</p>
+                        
+                        <!-- 移动端头像显示 -->
+                        <div class="d-lg-none text-center mb-4">
+                            <div class="avatar-box d-inline-block"
+                                style="width: 100px; height: 100px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; overflow: hidden; border: 3px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                                <img th:src="${avatar}" alt="头像" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4" style="width: 60%; margin-left: 0;">
+                    </div>
+                    
+                    <!-- 桌面端头像区域 - 绝对定位 -->
+                    <div class="col-lg-4 position-relative d-none d-lg-block" style="height: 300px;">
+                        <div class="avatar-box position-absolute"
+                            style="bottom: -100px; right: 150px; width: 300px; height: 300px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; border: 5px solid white;">
+                            <img th:src="${avatar}" alt="头像" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h4 class="form-label">手动获取新闻</h4><br>
+                        <label for="startPage" class="form-label">_起始页</label>
+                        <input type="number" class="form-control" id="startPage" name="startPage" min="1" max="100"
+                            value="1" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="endPage" class="form-label">_结束页</label>
+                        <input type="number" class="form-control" id="endPage" name="endPage" min="1" max="100"
+                            value="3" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-outline-secondary" id="crawlBtn">开始爬取</button>
+                        <button type="button" class="btn btn-outline-danger" id="clearBtn">清空新闻数据表</button>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h4 class="form-label">手动更新番剧信息</h4><br>
+                        <button type="button" class="btn btn-outline-secondary" id="animeBtn">更新</button>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h4 class="form-label">手动更新音乐信息</h4><br>
+                        <label for="timeFrom" class="form-label">_起始时间</label>
+                        <input type="number" class="form-control" id="timeFrom" name="timeFrom" value="20251201" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="timeTo" class="form-label">_结束时间</label>
+                        <input type="number" class="form-control" id="timeTo" name="timeTo" value="20251223" required>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-outline-secondary" id="musicBtn">更新</button>
+                    </div>
+                </div>
+
+                <div class="result" id="result" style="
+                            display: none;
+                            margin-top: 1rem;
+                            padding: 1rem;
+                            border-radius: 0.375rem;
+                            background-color: #e9ecef;"></div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="card rounded-3 overflow-hidden mt-5 shadow">
+            <div class="card-body text-center text-muted">
+                <p class="mb-0">© 2025 Anime-News. </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

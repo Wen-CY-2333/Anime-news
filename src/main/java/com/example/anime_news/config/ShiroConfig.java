@@ -23,7 +23,7 @@ public class ShiroConfig {
     public ShiroFilterChainDefinition filter() {
         DefaultShiroFilterChainDefinition cd = new DefaultShiroFilterChainDefinition();
 
-        // 登录注册
+        // 登录注册及首页
         cd.addPathDefinition("/home", "anon");
         cd.addPathDefinition("/login", "anon");
         cd.addPathDefinition("/dologin", "anon");
