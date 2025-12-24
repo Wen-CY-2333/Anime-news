@@ -106,33 +106,35 @@
         
         <script>
             // 点赞功能
-            $('.like-btn').click(function() {
-                var newsId = $(this).data('news-id');
-                var likeBtn = $(this);
-                var likeCountSpan = likeBtn.find('.like-count');
-                
-                $.ajax({
-                    type: 'GET',
-                    url: '/like',
-                    data: { newsId: newsId },
-                    success: function(response) {
-                        if (response.success) {
-                            // 更新点赞数
-                            likeCountSpan.text(response.likeCount);
-                            
-                            // 更新按钮样式
-                            if (response.isLiked) {
-                                likeBtn.removeClass('btn-outline-secondary').addClass('btn-danger');
+            $(document).ready(function() {
+                $('.like-btn').click(function() {
+                    var newsId = $(this).data('news-id');
+                    var likeBtn = $(this);
+                    var likeCountSpan = likeBtn.find('.like-count');
+                    
+                    $.ajax({
+                        type: 'GET',
+                        url: '/like',
+                        data: { newsId: newsId },
+                        success: function(response) {
+                            if (response.success) {
+                                // 更新点赞数
+                                likeCountSpan.text(response.likeCount);
+                                
+                                // 更新按钮样式
+                                if (response.isLiked) {
+                                    likeBtn.removeClass('btn-outline-secondary').addClass('btn-danger');
+                                } else {
+                                    likeBtn.removeClass('btn-danger').addClass('btn-outline-secondary');
+                                }
                             } else {
-                                likeBtn.removeClass('btn-danger').addClass('btn-outline-secondary');
+                                alert(response.message);
                             }
-                        } else {
-                            alert(response.message);
+                        },
+                        error: function(error) {
+                            console.error('点赞失败:', error);
                         }
-                    },
-                    error: function(error) {
-                        console.error('点赞失败:', error);
-                    }
+                    });
                 });
             });
         </script>
