@@ -10,6 +10,7 @@
     <link href="/css/common.css" rel="stylesheet">
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/news.js"></script>
 </head>
 
 <body>
@@ -118,19 +119,32 @@
                 </div>
                 
                 <!-- 评论区 -->
-                <div class="card rounded-3 overflow-hidden mb-5 shadow">
+                <div id="comment-section" class="card rounded-3 overflow-hidden mb-5 shadow">
                     <div class="card-header bg-light text-dark">
                         <h3 class="h6 mb-0">评论</h3>
                     </div>
                     <div class="card-body">
                         <!-- 评论列表 -->
-                        <div th:replace="comments :: comment-list"></div>
+                        <div id="comments-list-container" style="max-height: 500px; overflow-y: auto; padding-right: 8px;">
+                            <div th:each="comment : ${comments}" class="mb-4 pb-4 border-bottom">
+                                <div class="d-flex align-items-start g-3">
+                                    <img th:src="${comment.avatar}" alt="用户头像" class="img-fluid rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <div class="flex-grow-1 ms-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-1" th:text="${comment.userName}">用户名</h6>
+                                            <span class="text-xs text-muted" th:text="${#dates.format(comment.createTime, 'yyyy-MM-dd HH:mm')}">评论时间</span>
+                                        </div>
+                                        <p class="text-muted small" th:text="${comment.commentContent}">评论内容...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- 评论输入框 -->
                         <div class="mt-4">
-                            <form id="comment-form" th:action="@{/news/comment}" th:object="${comment}" method="post">
-                                <input type="hidden" id="comment-news-id" th:field="*{newsId}" />
-                                <textarea id="comment-content" th:field="*{commentContent}" class="form-control rounded-3 mb-3" rows="3" placeholder="写下你的评论..." required></textarea>
+                            <form id="comment-form">
+                                <input type="hidden" id="comment-news-id" th:value="${news.id}" />
+                                <textarea id="comment-content" class="form-control rounded-3 mb-3" rows="3" placeholder="写下你的评论..." required></textarea>
                                 <div class="d-flex justify-content-end">
                                     <button id="submit-comment-btn" type="submit" class="btn btn-primary rounded-3">发布评论</button>
                                 </div>
@@ -187,6 +201,7 @@
         </div>
 
     </div>
+
 
 </body>
 

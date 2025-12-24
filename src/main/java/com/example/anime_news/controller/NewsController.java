@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.anime_news.pojo.Comment;
@@ -32,12 +33,7 @@ public class NewsController {
         mv.addObject("news", newsService.findById(id));
         mv.addObject("tagCountMap", newsService.countTags());
         
-        // 添加评论列表
         mv.addObject("comments", commentService.findByNewsId(id));
-        // 添加空评论对象，用于表单提交
-        Comment comment = new Comment();
-        comment.setNewsId(id);
-        mv.addObject("comment", comment);
 
         mv.addObject("userName", UserUtils.getCurrentUser().getName());
         mv.addObject("avatar", UserUtils.getCurrentUser().getAvatar());
@@ -48,12 +44,13 @@ public class NewsController {
     
     // 提交评论
     @PostMapping("/comment")
+    @ResponseBody
     public String submitComment(@ModelAttribute Comment comment) {
-        // 设置当前用户ID
-        comment.setUserId(UserUtils.getCurrentUser().getId());
+        // 设置提交信息
+        comment.setUserName(UserUtils.getCurrentUser().getName());
+        comment.setAvatar(UserUtils.getCurrentUser().getAvatar());
         // 保存评论
         commentService.save(comment);
-        // 重定向回新闻详情页
-        return "redirect:/news/" + comment.getNewsId();
+        return "success";
     }
 }

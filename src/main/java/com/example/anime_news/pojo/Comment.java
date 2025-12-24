@@ -27,8 +27,10 @@ public class Comment {
     private Long id;
     @ApiModelProperty("新闻ID")
     private Long newsId;
-    @ApiModelProperty("用户ID")
-    private Long userId;
+    @ApiModelProperty("用户名")
+    private String userName;
+    @ApiModelProperty("用户头像")
+    private String avatar;
     @ApiModelProperty("评论内容")
     private String commentContent;
     @ApiModelProperty("创建时间")

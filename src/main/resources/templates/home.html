@@ -174,7 +174,7 @@
                                             <button class="btn btn-sm like-btn btn-outline-secondary" th:data-news-id="${news.id}">
                                                 <i class="bi bi-heart"></i> 点赞(<span class="like-count" th:text="${news.likeCount}">0</span>)
                                             </button>
-                                            <button class="btn btn-sm btn-outline-secondary">
+                                            <button class="btn btn-sm btn-outline-secondary" th:onclick="|window.open('/news/${news.id}#comment-section', '_blank')|">
                                                 <i class="bi bi-chat"></i> 评论(<span th:text="${commentCountMap.get(news.id)}"></span>)
                                             </button>
                                             <button class="btn btn-sm btn-outline-secondary">
