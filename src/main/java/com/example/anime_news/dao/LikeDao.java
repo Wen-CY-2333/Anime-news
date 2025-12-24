@@ -8,5 +8,13 @@ import com.example.anime_news.pojo.Like;
 
 @Repository
 public interface LikeDao extends JpaRepository<Like, Long>, JpaSpecificationExecutor<Like> {
+    // 通过用户ID和新闻ID查找点赞记录
+    Like findByUserIdAndNewsId(Long userId, Long newsId);
 
+    // 根据用户ID和新闻ID删除点赞记录
+    void deleteByUserIdAndNewsId(Long userId, Long newsId);
+    // 通过新闻ID查找点赞数量
+    Long countByNewsId(Long NewsId);
+    
+    
 }
