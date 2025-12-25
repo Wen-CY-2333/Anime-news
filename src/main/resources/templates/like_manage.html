@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理 - AnimeNews</title>
+    <title>点赞管理 - AnimeNews</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
-    <script src="/js/users.js"></script>
+    <script src="/js/like_manage.js"></script>
 </head>
 
 <body>
@@ -102,51 +103,39 @@
             </div>
         </div>
 
-        <!-- 用户管理卡片 -->
+        <!-- 点赞管理卡片 -->
         <div class="card rounded-3 overflow-hidden shadow mb-5">
             <div class="card-body">
-                <!-- 用户列表标题和添加按钮 -->
+                <!-- 点赞列表标题 -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="card-title text-secondary mb-0">用户列表</h3>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">添加用户</button>
+                    <h3 class="card-title text-secondary mb-0">点赞列表</h3>
                 </div>
 
-                <!-- 用户表格 -->
+                <!-- 点赞表格 -->
                 <div class="card rounded-3 overflow-hidden">
                     <table class="table table-striped table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th class="text-center align-middle">ID</th>
-                                <th class="text-center align-middle">头像</th>
-                                <th class="text-center align-middle">用户名</th>
-                                <th class="text-center align-middle">密码</th>
-                                <th class="text-center align-middle">角色</th>
+                                <th class="text-center align-middle">新闻ID</th>
+                                <th class="text-center align-middle">用户ID</th>
                                 <th class="text-center align-middle">操作</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="user:${userList}">
-                                <td class="text-center align-middle" th:text="${user.id}"></td>
+                            <tr th:each="item:${likeList}">
+                                <td class="text-center align-middle" th:text="${item.id}"></td>
+                                <td class="text-center align-middle" th:text="${item.newsId}"></td>
+                                <td class="text-center align-middle" th:text="${item.userId}"></td>
                                 <td class="text-center align-middle">
-                                    <img th:src="${user.avatar}" class="img-fluid rounded"
-                                        style="max-height: 50px; max-width: 50px; object-fit: cover;" alt="头像" />
-                                </td>
-                                <td class="text-center align-middle" th:text="${user.name}"></td>
-                                <td class="text-center align-middle" th:text="${user.password}"></td>
-                                <td class="text-center align-middle" th:text="${user.role}"></td>
-                                <td class="text-center align-middle">
-                                    <button class="btn btn-outline-primary btn-sm me-2 edit-user-btn"
-                                        th:data-id="${user.id}" data-bs-toggle="modal"
-                                        data-bs-target="#editUserModal">修改</button>
-                                    <button class="btn btn-outline-danger btn-sm delete-user-btn"
-                                        th:data-id="${user.id}">删除</button>
+                                    <button class="btn btn-outline-danger btn-sm delete-btn"
+                                        th:data-id="${item.id}">删除</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
             <!-- 分页组件 -->
             <div class="bg-white mb-3">
                 <!-- 页码 -->
@@ -156,7 +145,7 @@
                             <!-- 上一页 -->
                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
                                 <a class="page-link rounded-3"
-                                    th:href="@{/user/(page=${currentPage - 1},size=${pageSize})}" aria-label="上一页">
+                                    th:href="@{/like-manage/(page=${currentPage - 1},size=${pageSize})}" aria-label="上一页">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
@@ -165,11 +154,11 @@
                             <th:block
                                 th:with="start=${currentPage - 3 < 0 ? 0 : currentPage - 3}, 
                                          end=${currentPage + 4 > page.totalPages - 1 ? page.totalPages - 1 : currentPage + 4}">
-                                
+
                                 <!-- 第一页 -->
                                 <li class="page-item" th:classappend="${currentPage == 0} ? 'active' : ''"
                                     th:if="${start > 0}">
-                                    <a class="page-link rounded-3" th:href="@{/user/(page=0,size=${pageSize})}"
+                                    <a class="page-link rounded-3" th:href="@{/like-manage/(page=0,size=${pageSize})}"
                                         th:text="1"></a>
                                 </li>
 
@@ -181,7 +170,7 @@
                                 <!-- 中间的页码 -->
                                 <li class="page-item" th:each="i : ${#numbers.sequence(start, end)}"
                                     th:classappend="${currentPage == i} ? 'active' : ''">
-                                    <a class="page-link rounded-3" th:href="@{/user/(page=${i},size=${pageSize})}"
+                                    <a class="page-link rounded-3" th:href="@{/like-manage/(page=${i},size=${pageSize})}"
                                         th:text="${i + 1}"></a>
                                 </li>
 
@@ -195,8 +184,8 @@
                                     th:classappend="${currentPage == page.totalPages - 1} ? 'active' : ''"
                                     th:if="${end < page.totalPages - 1}">
                                     <a class="page-link rounded-3"
-                                        th:href="@{/user/(page=${page.totalPages - 1},size=${pageSize})}"
-                                        th:text="${page.totalPages}"></a>
+                                        th:href="@{/like-manage/(page=${page.totalPages - 1},size=${pageSize})}"
+                                        th:text="${page.totalPages}" style="border-radius: 5px;"></a>
                                 </li>
                             </th:block>
 
@@ -204,10 +193,11 @@
                             <li class="page-item"
                                 th:classappend="${currentPage == page.totalPages - 1} ? 'disabled' : ''">
                                 <a class="page-link rounded-3"
-                                    th:href="@{/user/(page=${currentPage + 1},size=${pageSize})}" aria-label="下一页">
+                                    th:href="@{/like-manage/(page=${currentPage + 1},size=${pageSize})}" aria-label="下一页">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
+
                         </ul>
                     </nav>
                 </div>
@@ -230,86 +220,6 @@
         </div>
     </div>
 
-    <!-- 添加用户模态框 -->
-    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addUserModalLabel">添加用户</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addUserForm">
-                        <div class="mb-3">
-                            <label for="addUserName" class="form-label">用户名</label>
-                            <input type="text" class="form-control" id="addUserName" name="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addUserPassword" class="form-label">密码</label>
-                            <input type="password" class="form-control" id="addUserPassword" name="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addUserAvatar" class="form-label">头像URL</label>
-                            <input type="text" class="form-control" id="addUserAvatar" name="avatar" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addUserRole" class="form-label">角色</label>
-                            <select class="form-select" id="addUserRole" name="role" required>
-                                <option value="user">user</option>
-                                <option value="admin">admin</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="saveAddUserBtn">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 修改用户模态框 -->
-    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editUserModalLabel">修改用户</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editUserForm">
-                        <input type="hidden" id="editUserId" name="id">
-                        <div class="mb-3">
-                            <label for="editUserName" class="form-label">用户名</label>
-                            <input type="text" class="form-control" id="editUserName" name="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editUserPassword" class="form-label">密码</label>
-                            <input type="password" class="form-control" id="editUserPassword" name="password">
-                        </div>
-                        <div class="mb-3">
-                            <label for="editUserAvatar" class="form-label">头像URL</label>
-                            <input type="text" class="form-control" id="editUserAvatar" name="avatar" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editUserRole" class="form-label">角色</label>
-                            <select class="form-select" id="editUserRole" name="role" required>
-                                <option value="user">user</option>
-                                <option value="admin">admin</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="saveEditUserBtn">保存</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
