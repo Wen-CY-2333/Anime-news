@@ -7,9 +7,11 @@
     <title th:text="${currentTag} != '全部' ? (${currentTag} + ' - AnimeNews') : 'AnimeNews'"></title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap/bootstrap-icons.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/home.js"></script>
 </head>
 
 <body>
@@ -94,51 +96,7 @@
             </div>
 
         </div>
-
-        <script>
-            // 添加回车键搜索功能
-            document.getElementById('search-input').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    this.form.submit();
-                }
-            });
-        </script>
         
-        <script>
-            // 点赞功能
-            $(document).ready(function() {
-                $('.like-btn').click(function() {
-                    var newsId = $(this).data('news-id');
-                    var likeBtn = $(this);
-                    var likeCountSpan = likeBtn.find('.like-count');
-                    
-                    $.ajax({
-                        type: 'GET',
-                        url: '/like',
-                        data: { newsId: newsId },
-                        success: function(response) {
-                            if (response.success) {
-                                // 更新点赞数
-                                likeCountSpan.text(response.likeCount);
-                                
-                                // 更新按钮样式
-                                if (response.isLiked) {
-                                    likeBtn.removeClass('btn-outline-secondary').addClass('btn-danger');
-                                } else {
-                                    likeBtn.removeClass('btn-danger').addClass('btn-outline-secondary');
-                                }
-                            } else {
-                                alert(response.message);
-                            }
-                        },
-                        error: function(error) {
-                            console.error('点赞失败:', error);
-                        }
-                    });
-                });
-            });
-        </script>
-
         <!-- 新闻展示区域 -->
         <div class="row">
             <div class="col-md-8">
@@ -171,15 +129,15 @@
                                     <div class="d-flex justify-content-between align-items-center ">
                                         <span class="text-xs text-muted" th:text="${news.time}"></span>
                                         <div class="d-flex gap-2 me-3">
-                                            <button class="btn btn-sm like-btn btn-outline-secondary" th:data-news-id="${news.id}">
-                                                <i class="bi bi-heart"></i> 点赞(<span class="like-count" th:text="${news.likeCount}">0</span>)
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-secondary" th:onclick="|window.open('/news/${news.id}#comment-section', '_blank')|">
-                                                <i class="bi bi-chat"></i> 评论(<span th:text="${commentCountMap.get(news.id)}"></span>)
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-secondary">
+                                            <div class="like-btn text-secondary" th:data-news-id="${news.id}">
+                                                <i class="bi bi-heart"></i> 点赞(<span class="like-count" th:text="${likeCountMap.get(news.id)}"></span>)
+                                            </div>
+                                            <a class="text-secondary text-decoration-none" th:onclick="|window.open('/news/${news.id}#comment-section', '_blank')|">
+                                                <i class="bi bi-chat-text"></i> 评论(<span th:text="${commentCountMap.get(news.id)}"></span>)
+                                            </a>
+                                            <a class="text-secondary text-decoration-none">
                                                 <i class="bi bi-share"></i> 分享
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

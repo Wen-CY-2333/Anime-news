@@ -7,15 +7,18 @@
     <title th:text="${news.title}">内容 - AnimeNews</title>
     <link rel="icon" href="/favicon.ico" type="image/png">
     <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap/bootstrap-icons.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <link href="/css/bootstrap/bootstrap-icons.css" rel="stylesheet">
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/news.js"></script>
 </head>
 
 <body>
     <!-- 添加仿知乎登录页面canvas-nest背景 -->
-    <iframe src="/canvas-nest/index.html" frameborder="0" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe>
+    <iframe src="/canvas-nest/index.html" frameborder="0"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe>
 
     <div class="container">
 
@@ -27,7 +30,8 @@
                         <a class="navbar-brand d-flex align-items-center" href="/home">
                             <img src="/favicon.ico" alt="Anime-News"
                                 style="height: 90px; width: 90px; margin-top: -30px; margin-bottom: -30px;">
-                            <span id="pixel-brand" class="navbar-brand text-secondary" style="margin-left: 20px;">次元资讯</span>
+                            <span id="pixel-brand" class="navbar-brand text-secondary"
+                                style="margin-left: 20px;">次元资讯</span>
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -86,38 +90,43 @@
                     <div class="card-body">
                         <!-- 新闻标题 -->
                         <h1 class="card-title text-secondary mb-3" th:text="${news.title}">新闻标题</h1>
-                        
+
                         <!-- 新闻元信息 -->
                         <div class="d-flex justify-content-between align-items-center mb-4 text-muted">
                             <span th:text="${news.time}">发布时间</span>
                             <span class="badge bg-secondary" th:text="${news.tag}">标签</span>
                         </div>
-                        
+
                         <!-- 新闻封面图片 -->
                         <div class="mb-5 text-center">
-                            <img th:src="${news.image}" th:alt="${news.title}" class="img-fluid rounded shadow" style="max-height: 500px; object-fit: cover;">
+                            <img th:src="${news.image}" th:alt="${news.title}" class="img-fluid rounded shadow"
+                                style="max-height: 500px; object-fit: cover;">
                         </div>
-                        
+
                         <!-- 新闻内容 -->
                         <div class="news-content" style="font-size: 16px; line-height: 1.8;">
                             <div th:utext="${news.content}">新闻内容...</div>
                         </div>
-                        
+
                         <!-- 互动按钮 -->
+                        <!-- 隐藏域：当前用户ID -->
+                        <input type="hidden" id="current-user-id" th:value="${userId}">
+                        <!-- 隐藏域：是否已点赞 -->
+                        <input type="hidden" id="is-liked" th:value="${isLiked}">
                         <div class="d-flex justify-content-center gap-3 mt-5 pt-4 border-top">
-                            <button class="btn btn-outline-secondary">
-                                <i class="bi bi-heart"></i> 点赞
+                            <button class="btn btn-sm like-btn btn-outline-secondary" th:data-news-id="${news.id}">
+                                <i class="bi bi-heart"></i> 点赞(<span class="like-count" th:text="${likeCountMap.get(news.id)}"></span>)
                             </button>
-                            <button class="btn btn-outline-secondary">
-                                <i class="bi bi-chat"></i> 评论 (<span th:text="${comments.size()}">0</span>)
+                            <button class="btn btn-sm btn-outline-secondary" th:onclick="location.href = '#comment-section'">
+                                <i class="bi bi-chat-text"></i> 评论(<span th:text="${commentCountMap.get(news.id)}"></span>)
                             </button>
-                            <button class="btn btn-outline-secondary">
+                            <button class="btn btn-sm btn-outline-secondary">
                                 <i class="bi bi-share"></i> 分享
                             </button>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 评论区 -->
                 <div id="comment-section" class="card rounded-3 overflow-hidden mb-5 shadow">
                     <div class="card-header bg-light text-dark">
@@ -125,28 +134,33 @@
                     </div>
                     <div class="card-body">
                         <!-- 评论列表 -->
-                        <div id="comments-list-container" style="max-height: 500px; overflow-y: auto; padding-right: 8px;">
+                        <div id="comments-list-container"
+                            style="max-height: 500px; overflow-y: auto; padding-right: 8px;">
                             <div th:each="comment : ${comments}" class="mb-4 pb-4 border-bottom">
                                 <div class="d-flex align-items-start g-3">
-                                    <img th:src="${comment.avatar}" alt="用户头像" class="img-fluid rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <img th:src="${comment.avatar}" alt="用户头像" class="img-fluid rounded-circle"
+                                        style="width: 50px; height: 50px; object-fit: cover;">
                                     <div class="flex-grow-1 ms-3">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h6 class="mb-1" th:text="${comment.userName}">用户名</h6>
-                                            <span class="text-xs text-muted" th:text="${#dates.format(comment.createTime, 'yyyy-MM-dd HH:mm')}">评论时间</span>
+                                            <span class="text-xs text-muted"
+                                                th:text="${#dates.format(comment.createTime, 'yyyy-MM-dd HH:mm')}">评论时间</span>
                                         </div>
                                         <p class="text-muted small" th:text="${comment.commentContent}">评论内容...</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- 评论输入框 -->
                         <div class="mt-4">
                             <form id="comment-form">
                                 <input type="hidden" id="comment-news-id" th:value="${news.id}" />
-                                <textarea id="comment-content" class="form-control rounded-3 mb-3" rows="3" placeholder="写下你的评论..." required></textarea>
+                                <textarea id="comment-content" class="form-control rounded-3 mb-3" rows="3"
+                                    placeholder="写下你的评论..." required></textarea>
                                 <div class="d-flex justify-content-end">
-                                    <button id="submit-comment-btn" type="submit" class="btn btn-primary rounded-3">发布评论</button>
+                                    <button id="submit-comment-btn" type="submit"
+                                        class="btn btn-primary rounded-3">发布评论</button>
                                 </div>
                             </form>
                         </div>
@@ -179,12 +193,12 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center" th:each="entry : ${tagCountMap}">
-                                <a th:href="@{/home(tag=${entry.key}, page=0, size=8)}" 
-                                   class="text-decoration-none" 
-                                   target="_blank"
-                                   th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
-                                   th:text="${entry.key}">tag</a>
+                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                th:each="entry : ${tagCountMap}">
+                                <a th:href="@{/home(tag=${entry.key}, page=0, size=8)}" class="text-decoration-none"
+                                    target="_blank"
+                                    th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
+                                    th:text="${entry.key}">tag</a>
                                 <span class="badge bg-primary rounded-pill" th:text="${entry.value}">cnt</span>
                             </li>
                         </ul>

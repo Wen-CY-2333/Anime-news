@@ -46,6 +46,4 @@ public class News {
     private String content;
     @ApiModelProperty("访问量")
     private Integer visits;
-    @ApiModelProperty("点赞数")
-    private Integer likeCount = 0;
 }

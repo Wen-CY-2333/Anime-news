@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.anime_news.pojo.News;
 import com.example.anime_news.pojo.User;
+import com.example.anime_news.service.LikeService;
 import com.example.anime_news.service.NewsService;
 import com.example.anime_news.utils.UserUtils;
 
@@ -16,6 +17,9 @@ import com.example.anime_news.utils.UserUtils;
 public class HomeController {
     @Autowired
     private NewsService newsService;
+    
+    @Autowired
+    private LikeService likeService;
 
     // logout默认跳转到/， 找不到修改的方法，所以手动重定向到/home
     @GetMapping("/") 
@@ -40,6 +44,7 @@ public class HomeController {
         mv.addObject("currentKeyword", keyword);
         mv.addObject("tagCountMap", newsService.countTags());
         mv.addObject("commentCountMap", newsService.countComments());
+        mv.addObject("likeCountMap", likeService.countLikes());
 
         // 检查用户是否已登录
         User currentUser = UserUtils.getCurrentUser();
