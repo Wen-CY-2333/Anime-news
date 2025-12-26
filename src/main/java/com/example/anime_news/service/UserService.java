@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.anime_news.dao.UserDao;
@@ -24,7 +23,7 @@ public class UserService {
             User admin = new User();
             admin.setName("miku");
             admin.setPassword("39");
-            admin.setAvatar("/img/avatar.jpg");
+            admin.setAvatar("/img/avatar.png");
             admin.setRole("admin");
             userDao.save(admin);
         }
@@ -48,7 +47,7 @@ public class UserService {
     
     //分页查询所有用户
     public Page<User> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("role", "name"));
+        Pageable pageable = PageRequest.of(page, size);
         return userDao.findAll(pageable);
     }
 

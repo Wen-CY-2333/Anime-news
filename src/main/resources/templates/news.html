@@ -17,82 +17,76 @@
 
 <body>
     <!-- 添加仿知乎登录页面canvas-nest背景 -->
-    <iframe src="/canvas-nest/index.html" frameborder="0"
-        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe>
+    <!-- <iframe src="/canvas-nest/index.html" frameborder="0"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe> -->
 
-    <div class="container">
-
-        <!-- 导航菜单 -->
-        <div class="card rounded-3 overflow-hidden mb-5 shadow">
-            <div class="card-body">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-                    <div class="container-fluid">
-                        <a class="navbar-brand d-flex align-items-center" href="/home">
-                            <img src="/favicon.ico" alt="Anime-News"
-                                style="height: 90px; width: 90px; margin-top: -30px; margin-bottom: -30px;">
-                            <span id="pixel-brand" class="navbar-brand text-secondary"
-                                style="margin-left: 20px;">次元资讯</span>
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/home?tag=动画&page=0&size=8">动画</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/home?tag=漫画&page=0&size=8">漫画</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/home?tag=漫展&page=0&size=8">漫展</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/anime/">去看番</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/music/">去听歌</a>
-                                </li>
-                                <!-- 管理员菜单 -->
-                                <span class="navbar-text me-2 ms-2" th:if="${isAdmin}">|</span>
-                                <li class="nav-item" th:if="${isAdmin}">
-                                    <a class="nav-link" href="/news/">新闻管理</a>
-                                </li>
-                                <li class="nav-item" th:if="${isAdmin}">
-                                    <a class="nav-link" href="/user/">用户管理</a>
-                                </li>
-                                <li class="nav-item" th:if="${isAdmin}">
-                                    <a class="nav-link" href="/like-manage/">点赞管理</a>
-                                </li>
-                                <li class="nav-item" th:if="${isAdmin}">
-                                    <a class="nav-link" href="/comment-manage/">评论管理</a>
-                                </li>
-                                <li class="nav-item" th:if="${isAdmin}">
-                                    <a class="nav-link" href="/anime-manage/">番剧管理</a>
-                                </li>
-                                <li class="nav-item" th:if="${isAdmin}">
-                                    <a class="nav-link" href="/music-manage/">音乐管理</a>
-                                </li>
-                                <li class="nav-item" th:if="${isAdmin}">
-                                    <a class="nav-link" href="/crawler/">爬虫管理</a>
-                                </li>
-                            </ul>
-                            <div class="d-flex ms-auto">
-                                <a th:href="@{/logout}" class="btn btn-outline-danger me-2">退出登录</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+    <!-- 导航菜单 -->
+    <nav class="card navbar navbar-expand-lg navbar-light glass mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/home">
+                <img src="/favicon.ico" alt="Anime-News"
+                    style="height: 90px; width: 90px; margin-top: -30px; margin-bottom: -30px;">
+                <span id="pixel-brand" class="navbar-brand text-secondary" style="margin-left: 20px;">次元资讯</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mb-2 mb-lg-0 rounded-3 glass">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home?tag=动画&page=0&size=8">动画</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home?tag=漫画&page=0&size=8">漫画</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home?tag=漫展&page=0&size=8">漫展</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/anime/">去看番</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/music/">去听歌</a>
+                    </li>
+                    <!-- 管理员菜单 -->
+                    <!-- <span class="navbar-text me-2 ms-2">|</span>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news/">新闻管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/">用户管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/like-manage/">点赞管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/comment-manage/">评论管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/anime-manage/">番剧管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/music-manage/">音乐管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/crawler/">爬虫管理</a>
+                    </li> -->
+                </ul>
+                <div class="d-flex ms-auto">
+                    <a th:href="@{/logout}" class="btn btn-outline-danger me-2">退出登录</a>
+                </div>
             </div>
         </div>
+    </nav>
+
+    <div class="container">
 
         <!-- 新闻内容区域 -->
         <div class="row">
             <div class="col-md-8">
                 <!-- 新闻内容卡片 -->
-                <div class="card rounded-3 overflow-hidden mb-5 shadow">
+                <div class="card rounded-3 overflow-hidden mb-5 glass">
                     <div class="card-body">
                         <!-- 新闻标题 -->
                         <h1 class="card-title text-secondary mb-3" th:text="${news.title}">新闻标题</h1>
@@ -103,14 +97,8 @@
                             <span class="badge bg-secondary" th:text="${news.tag}">标签</span>
                         </div>
 
-                        <!-- 新闻封面图片 -->
-                        <div class="mb-5 text-center">
-                            <img th:src="${news.image}" th:alt="${news.title}" class="img-fluid rounded shadow"
-                                style="max-height: 500px; object-fit: cover;">
-                        </div>
-
                         <!-- 新闻内容 -->
-                        <div class="news-content" style="font-size: 16px; line-height: 1.8;">
+                        <div class="news-content border-bottom" style="font-size: 16px; line-height: 1.8;">
                             <div th:utext="${news.content}">新闻内容...</div>
                         </div>
 
@@ -119,14 +107,17 @@
                         <input type="hidden" id="current-user-id" th:value="${userId}">
                         <!-- 隐藏域：是否已点赞 -->
                         <input type="hidden" id="is-liked" th:value="${isLiked}">
-                        <div class="d-flex justify-content-center gap-3 mt-5 pt-4 border-top">
-                            <button class="btn btn-sm like-btn btn-outline-secondary" th:data-news-id="${news.id}">
-                                <i class="bi bi-heart"></i> 点赞(<span class="like-count" th:text="${likeCountMap.get(news.id)}"></span>)
+                        <div class="d-flex justify-content-center gap-3 mt-3">
+                            <button class="btn btn-sm like-btn btn-outline-secondary glass" th:data-news-id="${news.id}">
+                                <i class="bi bi-heart"></i> 点赞(<span class="like-count"
+                                    th:text="${likeCountMap.get(news.id)}"></span>)
                             </button>
-                            <button class="btn btn-sm btn-outline-secondary" th:onclick="location.href = '#comment-section'">
-                                <i class="bi bi-chat-text"></i> 评论(<span th:text="${commentCountMap.get(news.id)}"></span>)
+                            <button class="btn btn-sm btn-outline-secondary glass"
+                                th:onclick="location.href = '#comment-section'">
+                                <i class="bi bi-chat-text"></i> 评论(<span
+                                    th:text="${commentCountMap.get(news.id)}"></span>)
                             </button>
-                            <button class="btn btn-sm btn-outline-secondary">
+                            <button class="btn btn-sm btn-outline-secondary glass">
                                 <i class="bi bi-share"></i> 分享
                             </button>
                         </div>
@@ -134,8 +125,8 @@
                 </div>
 
                 <!-- 评论区 -->
-                <div id="comment-section" class="card rounded-3 overflow-hidden mb-5 shadow">
-                    <div class="card-header bg-light text-dark">
+                <div id="comment-section" class="card rounded-3 overflow-hidden mb-5 glass">
+                    <div class="card-header text-dark rounded-3 glass">
                         <h3 class="h6 mb-0">评论</h3>
                     </div>
                     <div class="card-body">
@@ -162,7 +153,7 @@
                         <div class="mt-4">
                             <form id="comment-form">
                                 <input type="hidden" id="comment-news-id" th:value="${news.id}" />
-                                <textarea id="comment-content" class="form-control rounded-3 mb-3" rows="3"
+                                <textarea id="comment-content" class="form-control rounded-3 mb-3 glass" rows="3"
                                     placeholder="写下你的评论..." required></textarea>
                                 <div class="d-flex justify-content-end">
                                     <button id="submit-comment-btn" type="submit"
@@ -177,13 +168,13 @@
             <!-- 侧边栏 -->
             <div class="col-md-4" style="position: sticky; top: 20px; align-self: flex-start; z-index: 10;">
                 <!-- 用户信息卡片 -->
-                <div class="card rounded-3 overflow-hidden mb-5 shadow">
-                    <div class="card-header bg-light text-dark">
+                <div class="card rounded-3 overflow-hidden mb-5 shadow glass">
+                    <div class="card-header text-dark glass rounded-3">
                         <h3 class="h6 mb-0">用户</h3>
                     </div>
                     <div class="card-body text-center">
                         <div class="avatar-box mx-auto mb-3"
-                            style="width: 120px; height: 120px; background-color: #f0f0f0; border-radius: 50%; overflow: hidden;">
+                            style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden;">
                             <img th:src="${avatar}" alt="头像" class="w-100 h-100 object-cover">
                         </div>
                         <h6 class="mb-1 d-inline" th:text="${userName}">用户</h6>
@@ -193,16 +184,15 @@
                 </div>
 
                 <!-- 标签卡片 -->
-                <div class="card rounded-3 overflow-hidden mb-5 shadow">
-                    <div class="card-header bg-light text-dark">
+                <div class="card rounded-3 overflow-hidden mb-5 shadow glass">
+                    <div class="card-header text-dark glass rounded-3">
                         <h3 class="h6 mb-0">标签</h3>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center glass-noShadow"
                                 th:each="entry : ${tagCountMap}">
                                 <a th:href="@{/home(tag=${entry.key}, page=0, size=8)}" class="text-decoration-none"
-                                    target="_blank"
                                     th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"
                                     th:text="${entry.key}">tag</a>
                                 <span class="badge bg-primary rounded-pill" th:text="${entry.value}">cnt</span>
@@ -212,16 +202,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- 页脚 -->
-        <div class="card rounded-3 overflow-hidden mt-5 shadow">
-            <div class="card-body text-center text-muted">
-                <p class="mb-0">© 2025 Anime-News. </p>
-            </div>
-        </div>
-
     </div>
 
+    <!-- 页脚 -->
+    <div class="card rounded-3 overflow-hidden mt-3 glass">
+        <div class="card-body text-center text-muted">
+            <p class="mb-0">© 2025 Anime-News. </p>
+        </div>
+    </div>
 
 </body>
 

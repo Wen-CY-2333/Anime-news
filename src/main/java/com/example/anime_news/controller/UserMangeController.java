@@ -55,7 +55,7 @@ public class UserMangeController {
     @GetMapping("/")
     public ModelAndView users(@RequestParam(defaultValue = "0") int page, 
                               @RequestParam(defaultValue = "8") int size) {
-        ModelAndView mv = new ModelAndView("users");
+        ModelAndView mv = new ModelAndView("user_manage");
         mv.addObject("userList", userService.findAll(page, size).getContent());
 
         mv.addObject("userName", UserUtils.getCurrentUser().getName());

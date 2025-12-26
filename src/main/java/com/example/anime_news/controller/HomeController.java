@@ -55,7 +55,7 @@ public class HomeController {
             mv.addObject("isLogin", true);
         } else {
             mv.addObject("userName", "游客");
-            mv.addObject("avatar", "/img/index.jpg");
+            mv.addObject("avatar", "/img/index.png");
             mv.addObject("isAdmin", false);
             mv.addObject("isLogin", false);
         }

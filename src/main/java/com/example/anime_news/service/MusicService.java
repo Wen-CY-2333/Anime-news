@@ -34,7 +34,7 @@ public class MusicService {
     }
 
     public Page<Music> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("play").descending());
+        Pageable pageable = PageRequest.of(page, size);
         return musicDao.findAll(pageable);
     }
 
