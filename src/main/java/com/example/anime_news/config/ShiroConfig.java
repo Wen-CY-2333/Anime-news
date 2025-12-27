@@ -35,7 +35,8 @@ public class ShiroConfig {
         cd.addPathDefinition("/img/**", "anon");
         cd.addPathDefinition("/fonts/**", "anon");
         cd.addPathDefinition("/canvas-nest/**", "anon");
-        cd.addPathDefinition("/canvas-nest/index.html", "anon");
+        cd.addPathDefinition("/bg-music/**", "anon");
+        cd.addPathDefinition("/live2d/**", "anon");
 
         // 其他常见隐式路径
         cd.addPathDefinition("/favicon.ico", "anon");

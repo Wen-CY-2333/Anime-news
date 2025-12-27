@@ -12,12 +12,34 @@
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/home.js"></script>
+
+    <!-- 看板娘组件 -->
+    <link rel="stylesheet" href="/live2d/css/live2d.css" />
+    <script src="/live2d/js/jquery-ui.min.js"></script>
+    <script src="/live2d/js/live2d.js"></script>
 </head>
 
 <body>
     <!-- 添加仿知乎登录页面canvas-nest背景 -->
     <!-- <iframe src="/canvas-nest/index.html" frameborder="0"
         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; border: none;"></iframe> -->
+
+    <!-- 看板娘组件 -->
+    <div id="landlord">
+        <div class="message"></div>
+        <canvas id="live2d" width="300" height="650" class="live2d"></canvas>
+        <!-- 630 -->
+        <div class="hide-button">隐藏</div>
+        <div class="switch-button">切换</div>
+        <div class="outfit-button">换装</div>
+    </div>
+
+    <script src="/live2d/js/message.js"></script>
+    <script src="/live2d/js/start.js"></script>
+
+    <!-- 背景音乐组件 -->
+    <iframe src="/bg-music/bg-music.html" frameborder="0"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; border: none;"></iframe>
 
     <!-- 导航菜单 -->
     <nav class="card navbar navbar-expand-lg navbar-light glass mb-3">
@@ -83,7 +105,7 @@
     <div class="container">
 
         <!-- 搜索框 -->
-        <div class="card rounded-3 overflow-hidden mb-3 shadow-sm glass">
+        <div class="card rounded-3 overflow-hidden mb-3 shadow-sm glass searchbox">
             <div class="card-body">
                 <form action="/home" method="get" class="input-group gap-2">
                     <input type="text" class="form-control rounded-3 glass" placeholder="搜索新闻" aria-label="搜索新闻"
@@ -112,7 +134,7 @@
                                     style="height: 150px; max-width: 30%; object-fit: cover;">
                                 <div class="flex-grow-1 ms-4">
                                     <div class="news-content-box" style="width: 96%;">
-                                        <h3 class="h6 font-weight-bold"
+                                        <h3 class="h6 font-weight-bold t"
                                             style="word-wrap: break-word; overflow-wrap: anywhere; hyphens: auto;">
                                             <a target="_blank" th:href="@{/news/{id}(id=${news.id})}"
                                                 th:text="${news.title}" class="text-dark text-decoration-none"
@@ -129,10 +151,12 @@
                                     <div class="d-flex justify-content-between align-items-center ">
                                         <span class="text-xs text-muted" th:text="${news.time}"></span>
                                         <div class="d-flex gap-2 me-3 rounded-3 shadow-sm px-2 glass">
-                                            <div class="like-btn text-secondary" th:data-news-id="${news.id}">
+                                            <a class="like-btn text-secondary text-decoration-none" 
+                                                th:onclick="|window.open('/news/${news.id}#like-btn', '_blank')|"
+                                                th:data-news-id="${news.id}">
                                                 <i class="bi bi-heart"></i> 点赞(<span class="like-count"
                                                     th:text="${likeCountMap.get(news.id)}"></span>)
-                                            </div>
+                                            </a>
                                             <a class="text-secondary text-decoration-none"
                                                 th:onclick="|window.open('/news/${news.id}#comment-section', '_blank')|">
                                                 <i class="bi bi-chat-text"></i> 评论(<span
@@ -251,7 +275,7 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush rounded-3">
-                            <li class="list-group-item d-flex justify-content-between align-items-center glass-noShadow"
+                            <li class="list-group-item d-flex justify-content-between align-items-center glass-noShadow t"
                                 th:each="entry : ${tagCountMap}">
                                 <a th:href="@{/home(tag=${entry.key}, page=0, size=8)}" class="text-decoration-none"
                                     th:classappend="${currentTag == entry.key} ? 'text-primary font-weight-bold' : 'text-dark'"

@@ -32,8 +32,11 @@ $(document).ready(function () {
                 commentContent: commentContent
             },
             success: function () {
-                // 提交成功后刷新页面
-                location.reload();
+                console.log('评论提交成功:');
+                // 局部更新评论区
+                updateCommentSection();
+                // 清空评论表单
+                $('#comment-content').val('');
             },
             error: function (error) {
                 // 处理错误
@@ -92,6 +95,78 @@ function scrollToCommentSection() {
     }
 }
 
+// 更新评论区（局部刷新）
+function updateCommentSection() {
+    // 获取当前新闻ID
+    const newsId = $('#comment-news-id').val();
+
+    // 发送AJAX请求获取最新评论数据
+    $.ajax({
+        url: `/news/${newsId}/comments`,
+        type: 'GET',
+        success: function (response) {
+            console.log('获取评论数据成功:', response);
+            updateCommentsList(response.comments);
+            updateCommentCount(response.commentCount);
+        },
+        error: function (error) {
+            console.error('获取评论数据失败:', error);
+        }
+    });
+}
+
+// 更新评论列表内容
+function updateCommentsList(comments) {
+    const commentsContainer = $('#comments-list-container');
+
+    // 清空现有评论
+    commentsContainer.empty();
+
+    // 渲染评论列表
+    comments.forEach(function (comment) {
+        // 创建评论元素
+        const commentElement = $('<div class="mb-4 pb-4 border-bottom"></div>');
+        const commentContent = $('<div class="d-flex align-items-start g-3"></div>');
+
+        // 创建用户头像
+        const avatarImg = $('<img>')
+            .attr('src', comment.avatar)
+            .attr('alt', '用户头像')
+            .addClass('img-fluid rounded-circle')
+            .css({
+                'width': '50px',
+                'height': '50px',
+                'object-fit': 'cover'
+            });
+
+        // 创建右侧内容区域
+        const rightContent = $('<div class="flex-grow-1 ms-3"></div>');
+
+        // 创建用户名和时间行
+        const headerRow = $('<div class="d-flex justify-content-between align-items-center"></div>');
+        const userName = $('<h6 class="mb-1"></h6>').text(comment.userName);
+        const createTime = $('<span class="text-xs text-muted"></span>').text(formatDate(comment.createTime));
+
+        headerRow.append(userName, createTime);
+
+        // 创建评论内容
+        const commentText = $('<p class="text-muted small"></p>').text(comment.commentContent);
+
+        // 组装元素
+        rightContent.append(headerRow, commentText);
+        commentContent.append(avatarImg, rightContent);
+        commentElement.append(commentContent);
+
+        // 添加到容器
+        commentsContainer.append(commentElement);
+    });
+}
+
+// 更新评论数量显示
+function updateCommentCount(commentCount) {
+    $('.comment-count').text(commentCount);
+}
+
 // 更新点赞按钮状态
 function updateLikeButton() {
     const isLiked = $('#is-liked').val() === 'true';
@@ -104,6 +179,21 @@ function updateLikeButton() {
         likeBtn.removeClass('btn-primary').addClass('btn-outline-secondary');
         likeBtn.find('i').removeClass('bi-heart-fill').addClass('bi-heart');
     }
+}
+
+// 更新点赞状态（局部刷新）
+function updateLikeStatus(response) {
+
+    // 更新隐藏域的值
+    $('#is-liked').val(response.isLiked);
+
+    // 更新点赞数量
+    $('.like-count').text(response.likeCount);
+    console.log('点赞数量已更新为:', response.likeCount);
+
+    // 更新点赞按钮样式
+    updateLikeButton();
+    console.log('点赞按钮状态已更新');
 }
 
 // 切换点赞状态
@@ -122,8 +212,9 @@ function toggleLike(btn) {
                 userId: userId,
                 newsId: newsId
             },
-            success: function () {
-                location.reload();
+            success: function (response) {
+                console.log('取消点赞成功:', response);
+                updateLikeStatus(response);
             },
             error: function (error) {
                 console.error('取消点赞失败:', error);
@@ -140,8 +231,9 @@ function toggleLike(btn) {
                 userId: userId,
                 newsId: newsId
             },
-            success: function () {
-                location.reload();
+            success: function (response) {
+                console.log('点赞成功:', response);
+                updateLikeStatus(response);
             },
             error: function (error) {
                 console.error('点赞失败:', error);
@@ -195,4 +287,20 @@ function showCopyNotification() {
             }, 200);
         }, 300);
     }, 2000);
+}
+
+// 格式化日期显示
+function formatDate(dateString) {
+    if (!dateString) return '';
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
 }

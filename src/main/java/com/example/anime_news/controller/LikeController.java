@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class LikeController {
 
@@ -19,15 +22,29 @@ public class LikeController {
     // 点赞
     @PostMapping("/like")
     @ResponseBody
-    public void likeBymodel(@ModelAttribute Like like) {
+    public Map<String, Object> like(@ModelAttribute Like like) {
         likeService.save(like);
+        
+        // 返回点赞结果
+        Map<String, Object> result = new HashMap<>();
+        result.put("isLiked", true);
+        result.put("likeCount", likeService.getLikeCountByNewsId(like.getNewsId()));
+        
+        return result;
     }
 
     // 取消点赞
     @PostMapping("/unlike")
     @ResponseBody
-    public void unlike(@RequestParam Long userId,
-                       @RequestParam Long newsId) {
+    public Map<String, Object> unlike(@RequestParam Long userId,
+                                      @RequestParam Long newsId) {
         likeService.deleteByUserIdAndNewsId(userId, newsId);
+        
+        // 返回取消点赞结果
+        Map<String, Object> result = new HashMap<>();
+        result.put("isLiked", false);
+        result.put("likeCount", likeService.getLikeCountByNewsId(newsId));
+        
+        return result;
     }
 }

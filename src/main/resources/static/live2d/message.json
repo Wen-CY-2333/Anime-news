@@ -1,0 +1,71 @@
+{
+    "mouseover": [
+        {
+            "selector": ".t a",
+            "text": [
+                "要看看 {text} 么？"
+            ]
+        },
+        {
+            "selector": ".a-title a",
+            "text": [
+                "要看看 {text} 么？"
+            ]
+        },
+        {
+            "selector": ".searchbox",
+            "text": [
+                "在找什么东西呢，需要帮忙吗？"
+            ]
+        },
+        {
+            "selector": ".like-btn",
+            "text": [
+                "觉得不错就给我点个赞吧～",
+                "一个赞就是对我最大的鼓励！",
+                "点点赞，让我看看你的支持～"
+            ],
+            "timeout": 2500
+        },
+        {
+            "selector": "#comment-content",
+            "text": [
+                "友善评论哦",
+                "期待你的精彩评论～",
+                "来说点什么吧，我会认真看的！",
+                "有什么想聊的吗？"
+            ],
+            "timeout": 4000
+        },
+        {
+            "selector": ".navbar-nav .nav-link",
+            "text": [
+                "要去{text}吗？我也想去看看～",
+                "这个页面有什么有趣的内容呢？"
+            ],
+            "timeout": 2000
+        }
+    ],
+    "click": [
+        {
+            "selector": "#landlord #live2d",
+            "text": [
+                "呀！不要戳我的脸啦～",
+                "呜呜，被发现了…",
+                "嘿嘿，你想和我玩吗？",
+                "今天天气真好呢！",
+                "要一起聊天吗？"
+            ],
+            "timeout": 4000
+        },
+        {
+            "selector": ".like-btn",
+            "text": [
+                "谢谢点赞！",
+                "你的支持是我最大的动力～",
+                "太好了！又有新朋友给我点赞了！"
+            ],
+            "timeout": 3000
+        }
+    ]
+}

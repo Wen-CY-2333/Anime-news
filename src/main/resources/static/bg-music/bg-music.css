@@ -1,0 +1,15 @@
+/* 专辑封面样式 */
+.album-cover {
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url('album-cover.jpg');
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}

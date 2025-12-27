@@ -64,4 +64,9 @@ public class LikeService {
         }
         return likeCountMap;
     }
+    
+    // 获取单个新闻的点赞数
+    public Long getLikeCountByNewsId(Long newsId) {
+        return likeDao.countByNewsId(newsId);
+    }
 }

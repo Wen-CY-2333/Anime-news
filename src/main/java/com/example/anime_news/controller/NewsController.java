@@ -1,5 +1,8 @@
 package com.example.anime_news.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,5 +61,15 @@ public class NewsController {
         // 保存评论
         commentService.save(comment);
         return "success";
+    }
+
+    //获取当前新闻的评论信息
+    @GetMapping("/{id}/comments")
+    @ResponseBody
+    public Map<String, Object> getComments(@PathVariable Long id) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("comments", commentService.findByNewsId(id));
+        result.put("commentCount", commentService.countByNewsId(id));
+        return result;
     }
 }
