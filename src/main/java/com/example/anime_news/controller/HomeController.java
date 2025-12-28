@@ -36,7 +36,6 @@ public class HomeController {
             @RequestParam(defaultValue = "8") int size) {
         ModelAndView mv = new ModelAndView("home");
 
-        // 使用Specification实现多字段搜索
         Page<News> newsPage = newsService.search(keyword, tag, page, size);
         mv.addObject("newsList", newsPage.getContent());
         mv.addObject("page", newsPage);
