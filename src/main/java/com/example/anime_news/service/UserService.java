@@ -32,28 +32,26 @@ public class UserService {
         }
     }
 
-    @CachePut(value = "user", key = "'id:' + #user.id")
+    @CachePut(value = "user", key = "#user.id")
     public User save(User user) {
         return userDao.save(user);
     }
-
-    @CacheEvict(value = "user", key = "'id:' + #id")
+    
+    @CacheEvict(value = "user", key = "#id")
     public void deleteById(Long id) {
         userDao.deleteById(id);
     }
 
-    @Cacheable(value = "user", key = "'name:' + #name")
     public User findTopByName(String name) {
         return userDao.findTopByName(name);
     }
 
-    @Cacheable(value = "user", key = "'id:' + #id")
+    @Cacheable(value = "user", key = "#id")
     public User findById(Long id) {
         return userDao.findById(id).orElse(null);
     }
     
     //分页查询所有用户
-    @Cacheable(value = "user", key = "'page:' + #page + ':size:' + #size")
     public Page<User> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return userDao.findAll(pageable);

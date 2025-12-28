@@ -20,34 +20,31 @@ public class MusicService {
     @Autowired
     private MusicDao musicDao;
 
-    @Cacheable(value = "music", key = "'all'")
     public List<Music> findAll() {
         return musicDao.findAll();
     }
 
-    @CachePut(value = "music", key = "'id:' + #music.id")
+    @CachePut(value = "music", key = "#music.id")
     public Music save(Music music) {
         return musicDao.save(music);
     }
 
-    @CacheEvict(value = "music", key = "'id:' + #id")
+    @CacheEvict(value = "music", key = "#id")
     public void deleteById(Long id) {
         musicDao.deleteById(id);
     }
 
-    @Cacheable(value = "music", key = "'id:' + #id")
+    @Cacheable(value = "music", key = "#id")
     public Music findById(Long id) {
         return musicDao.findById(id).orElse(null);
     }
 
-    @Cacheable(value = "music", key = "'page:' + #page + ':size:' + #size")
     public Page<Music> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return musicDao.findAll(pageable);
     }
 
     // 根据分区ID分页查询（支持查询所有）
-    @Cacheable(value = "music", key = "'cateId:' + #cateId + ':page:' + #page + ':size:' + #size")
     public Page<Music> findByCateId(Integer cateId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("play").descending());
         if (cateId == null) {

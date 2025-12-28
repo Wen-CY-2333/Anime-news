@@ -19,34 +19,31 @@ public class AnimeService {
     @Autowired
     private AnimeDao animeDao;
 
-    @Cacheable(value = "anime", key = "'all'")
     public List<Anime> findAll() {
         return animeDao.findAll();
     }
 
-    @CachePut(value = "anime", key = "'id:' + #anime.id")
+    @CachePut(value = "anime", key = "#anime.id")
     public Anime save(Anime anime) {
         return animeDao.save(anime);
     }
 
-    @CacheEvict(value = "anime", key = "'id:' + #id")
+    @CacheEvict(value = "anime", key = "#id")
     public void deleteById(Long id) {
         animeDao.deleteById(id);
     }
 
-    @Cacheable(value = "anime", key = "'id:' + #id")
+    @Cacheable(value = "anime", key = "#id")
     public Anime findById(Long id) {
         return animeDao.findById(id).orElse(null);
     }
 
-    @Cacheable(value = "anime", key = "'page:' + #page + ':size:' + #size")
     public Page<Anime> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return animeDao.findAll(pageable);
     }
 
     //根据星期分页查询（支持查询所有）
-    @Cacheable(value = "anime", key = "'week:' + #week + ':page:' + #page + ':size:' + #size")
     public Page<Anime> findByWeek(Integer week, int page, int size) {
         if (week == null) {
             // 查询所有番剧
@@ -56,7 +53,6 @@ public class AnimeService {
     }
 
     //查询今日更新（支持分页）
-    @Cacheable(value = "anime", key = "'today:page:' + #page + ':size:' + #size")
     public Page<Anime> findTodayAnime(int page, int size) {
         return animeDao.findByIsToday(1, PageRequest.of(page, size));
     }

@@ -13,6 +13,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -55,5 +57,6 @@ public class News {
     @ApiModelProperty("评论列表")
     @OneToMany
     @JoinColumn(name = "newsId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 }

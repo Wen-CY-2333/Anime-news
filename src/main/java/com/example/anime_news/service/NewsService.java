@@ -32,12 +32,12 @@ public class NewsService {
     @Autowired
     private CommentService commentService;
 
-    @CachePut(value = "news", key = "'id:' + #news.id")
+    @CachePut(value = "news", key = "#news.id")
     public News save(News news) {
         return newsDao.save(news);
     }
 
-    @CacheEvict(value = "news", key = "'id:' + #id")
+    @CacheEvict(value = "news", key = "#id")
     public void deleteById(Long id) {
         newsDao.deleteById(id);
     }
@@ -47,25 +47,22 @@ public class NewsService {
         newsDao.deleteAll();
     }
 
-    @Cacheable(value = "news", key = "'title:' + #title")
     public News findByTitle(String title) {
         return newsDao.findByTitle(title);
     }
 
-    @Cacheable(value = "news", key = "'id:' + #id")
+    @Cacheable(value = "news", key = "#id")
     public News findById(Long id) {
         return newsDao.findById(id).orElse(null);
     }
 
     // 分页查询所有新闻
-    @Cacheable(value = "news", key = "'page:' + #page + ':size:' + #size")
     public Page<News> findAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return newsDao.findAll(pageable);
     }
 
     // 获取所有新闻的评论数映射
-    @Cacheable(value = "news", key = "'count:comments'")
     public Map<Long, Long> countComments() {
         List<News> newsList = newsDao.findAll();
         Map<Long, Long> commentCountMap = new HashMap<>();
@@ -79,7 +76,6 @@ public class NewsService {
     }
 
     // 统计所有标签及其出现次数
-    @Cacheable(value = "news", key = "'count:tags'")
     public Map<String, Long> countTags() {
         List<News> newsList = newsDao.findAll();
         Map<String, Long> tagCountMap = new HashMap<>();
@@ -95,9 +91,6 @@ public class NewsService {
     }
 
     //多字段跨表搜索，合并标签检索和分页功能
-    @Cacheable(value = "news", key = "'search:v2:keyword:' + (#keyword == null ? 'null' : #keyword) + " 
-                                   + "':tag:' + (#tag == null ? 'null' : #tag) + " 
-                                   + "':page:' + #page + ':size:' + #size")
     public Page<News> search(String keyword, String tag, int page, int size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "visits", "time");
         Pageable pageable = PageRequest.of(page, size, sort);

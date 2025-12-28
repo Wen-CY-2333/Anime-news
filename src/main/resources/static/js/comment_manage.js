@@ -7,7 +7,6 @@ $(document).ready(function() {
                 url: '/comment-manage/delete/' + id,
                 type: 'POST',
                 success: function() {
-                    alert('删除成功！');
                     window.location.reload();
                 },
                 error: function() {

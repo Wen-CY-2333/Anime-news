@@ -121,7 +121,6 @@ $('.switch-button').click(function () {
     currentModelIndex = (currentModelIndex + 1) % models.length;
     loadlive2d("live2d", models[currentModelIndex]);
     console.log(currentModelIndex, models[currentModelIndex]);
-    checkAndShowOutfitButton();
     saveState(); // 保存状态
 });
 
@@ -134,16 +133,6 @@ function getCurrentCharacter() {
         return "33";
     }
     return null;
-}
-
-// 检查并显示换装按钮
-function checkAndShowOutfitButton() {
-    var currentChar = getCurrentCharacter();
-    if (currentChar && (currentChar === "22" || currentChar === "33")) {
-        $('.outfit-button').show();
-    } else {
-        $('.outfit-button').hide();
-    }
 }
 
 // 绑定换装按钮点击事件，先解绑所有现有的事件处理器，避免重复绑定
@@ -197,14 +186,6 @@ $('#landlord').draggable({
 
 // 页面加载完成后初始化
 $(document).ready(function () {
-    // 初始化按钮状态
-    checkAndShowOutfitButton();
-
-    // 确保按钮初始时是隐藏的（只有22和33模型时才显示）
-    var currentChar = getCurrentCharacter();
-    if (!currentChar || (currentChar !== "22" && currentChar !== "33")) {
-        $('.outfit-button').hide();
-    }
     
     // 添加清除缓存功能（按Shift+Ctrl+Alt+Enter）
     $(document).keydown(function(e) {
