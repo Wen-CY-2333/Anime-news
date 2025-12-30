@@ -23,6 +23,11 @@ public class LikeService {
     @Autowired
     private NewsDao newsDao;
 
+    // 检查用户是否已点赞
+    public boolean existsByUserIdAndNewsId(Long userId, Long newsId) {
+        return likeDao.existsByUserIdAndNewsId(userId, newsId);
+    }
+
     // 点赞
     public Like save(Like like){
         return likeDao.save(like);

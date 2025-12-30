@@ -23,10 +23,17 @@ public class LikeController {
     @PostMapping("/like")
     @ResponseBody
     public Map<String, Object> like(@ModelAttribute Like like) {
+        
+        Map<String, Object> result = new HashMap<>();
+
+        if (likeService.existsByUserIdAndNewsId(like.getUserId(), like.getNewsId())) {
+            result.put("error", "用户已点赞");
+            return result;
+        }
+
         likeService.save(like);
         
         // 返回点赞结果
-        Map<String, Object> result = new HashMap<>();
         result.put("isLiked", true);
         result.put("likeCount", likeService.getLikeCountByNewsId(like.getNewsId()));
         

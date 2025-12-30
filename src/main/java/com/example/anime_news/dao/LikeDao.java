@@ -16,5 +16,6 @@ public interface LikeDao extends JpaRepository<Like, Long>, JpaSpecificationExec
     // 通过新闻ID查找点赞数量
     Long countByNewsId(Long NewsId);
     
-    
+    // 检查用户是否已点赞
+    boolean existsByUserIdAndNewsId(Long userId, Long newsId);
 }
