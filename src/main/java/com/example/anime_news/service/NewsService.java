@@ -119,12 +119,13 @@ public class NewsService {
 
                 Predicate newsMatch = cb.or(newsPredicates.toArray(new Predicate[0]));
 
-                // 跨表：评论内容匹配
+                // 跨表：评论内容匹配、评论者匹配
                 Join<News, Comment> commentJoin = root.join("comments", JoinType.LEFT);
                 Predicate commentMatch = cb.like(commentJoin.get("commentContent"), likePattern);
+                Predicate commenterMatch = cb.like(commentJoin.get("userName"), likePattern);
 
-                // 关键逻辑：新闻字段 OR 评论内容，只要命中一个即返回该新闻
-                Predicate keywordMatch = cb.or(newsMatch, commentMatch);
+                // 关键逻辑：新闻字段 OR 评论内容 OR 评论者，只要命中一个即返回该新闻
+                Predicate keywordMatch = cb.or(newsMatch, commentMatch, commenterMatch);
                 predicates.add(keywordMatch);
             }
 
