@@ -364,9 +364,9 @@ public class CrawlerService {
             img.addClass("rounded-3");
         });
 
-        // 将class为keywordlink的a标签的href替换为 http://10.160.3.131:3399/home?tag= + 标签
+        // 将class为keywordlink的a标签的href替换为 http://localhost:3399/home?tag= + 标签
         contentEl.select("a.keywordlink").forEach(link -> {
-            link.attr("href", "http://10.160.3.131:3399/home?tag=" + link.text());
+            link.attr("href", "http://localhost:3399/home?tag=" + link.text());
         });
 
         // 保存新闻内容
