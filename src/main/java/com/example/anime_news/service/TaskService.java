@@ -21,7 +21,7 @@ public class TaskService {
     @Autowired
     private CrawlerService crawlerService;
 
-    // 定时任务：每秒自动增加新闻访问量
+    // 定时任务：每1分钟自动增加一次新闻访问量
     @Scheduled(cron = "0 */1 * * * ?")
     public void autoAddNewsVisits() {
         List<News> newsList = newsDao.findAll();
