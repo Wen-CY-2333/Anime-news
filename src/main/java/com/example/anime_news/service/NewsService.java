@@ -95,10 +95,12 @@ public class NewsService {
         Sort sort = Sort.by(Sort.Direction.DESC, "visits", "time");
         Pageable pageable = PageRequest.of(page, size, sort);
 
+        // lambda表达式，root：查询的根对象（实体News），query：设置查询结构（distinct、orderBy...），cb：查询构造器
         Specification<News> spec = (root, query, cb) -> {
-            // 开启distinct，确保每个新闻只返回一次
+            // 开启distinct，去重
             query.distinct(true);
 
+            // 构建查询的条件，每个 Predicate 对应 WHERE 子句中的一个条件
             List<Predicate> predicates = new ArrayList<>();
 
             // 1. 标签精确匹配（可选）
