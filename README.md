@@ -1,8 +1,12 @@
-# 动漫新闻网站
+# 次元资讯 Anime_News
 
 ## 项目简介
 
-这是一个基于Spring Boot开发的动漫新闻网站，集成了新闻展示、动漫资讯、音乐播放、用户评论、点赞等功能。网站使用了现代化的前端技术和后端框架，提供了完整的用户交互体验。
+这是一个基于Spring Boot开发的动漫新闻网站，集成了新闻展示、动漫更新、热门音乐、用户评论、点赞等功能。网站使用了现代化的前端技术和后端框架，提供了完整的用户交互体验。
+
+## 网站预览
+
+![网站首页](/2026-01-07%20015657.png)
 
 ## 技术栈
 
@@ -61,10 +65,11 @@ src/main/resources/
 - 动漫分类浏览
 - 动漫后台管理
 
-### 3. 音乐播放
-- 在线音乐播放
-- 音乐列表管理
-- 背景音乐播放
+### 2. 音乐管理
+- 音乐信息展示
+- 音乐分类浏览
+- 音乐后台管理
+- 背景音乐控制
 
 ### 4. 用户系统
 - 用户注册/登录
@@ -89,7 +94,7 @@ src/main/resources/
 
 1. **克隆项目**
    ```bash
-   git clone [项目地址]
+   git clone https://github.com/Wen-CY-2333/Anime-news.git
    cd anime_news
    ```
 
@@ -139,16 +144,29 @@ http://localhost:3399/swagger-ui.html
 - 交互式看板娘
 - 多种角色模型
 - 动态表情和动作
+- 加入换装按钮
 
 ### 3. 动态背景
 - Canvas-Nest粒子效果
-- 响应式设计
-- 性能优化
 
 ### 4. 音乐播放器
 - 背景音乐播放
 - 播放列表管理
 - 音乐可视化效果
+
+### 5. 缓存系统
+- 基于Spring Boot Cache实现的高效缓存机制
+- 应用于新闻、动漫、音乐和用户数据
+- 使用@Cacheable、@CachePut、@CacheEvict等注解管理缓存
+- 提升系统响应速度和减轻数据库压力
+
+### 6. 定时任务系统
+- 基于Spring Scheduling实现的定时任务管理
+- 每1分钟自动增加新闻访问量
+- 每天自动爬取最新动漫新闻
+- 每天自动更新番剧信息
+- 每天自动更新音乐信息
+- 支持Cron表达式灵活配置任务执行时间
 
 ## 开发指南
 
@@ -165,36 +183,3 @@ http://localhost:3399/swagger-ui.html
 - 数据库连接配置
 - JPA配置
 - Shiro安全配置
-
-## 部署说明
-
-### 打包部署
-```bash
-mvn clean package
-java -jar target/anime_news-1.0-SNAPSHOT.jar
-```
-
-### Docker部署
-```dockerfile
-FROM openjdk:8-jdk-alpine
-COPY target/anime_news-1.0-SNAPSHOT.jar app.jar
-EXPOSE 3399
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
-
-## 贡献指南
-
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
-
-## 更新日志
-
-### v1.0.0
-- 初始版本发布
-- 实现基本的新闻展示功能
-- 集成用户认证系统
-- 添加Live2D看板娘
-- 实现音乐播放功能
